@@ -1,0 +1,577 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  text-align: center;
+}
+
+body {
+  background: #f4f8fc;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+  background: linear-gradient(90deg, #7f00ff, #e100ff);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-wrap: wrap;
+}
+
+.navbar .logo {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.navbar nav {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.navbar nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.navbar nav a:hover, 
+.navbar nav a.active {
+  color: #ffeb3b;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #4cafef, #2196f3);
+  color: white;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+}
+
+.hero p {
+  margin: 15px 0;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #ffeb3b;
+  color: #333;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #ffc107;
+}
+
+/* Quick Links Section */
+.quick-links {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.quick-links h2 {
+  margin-bottom: 30px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  text-align: center;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #000000;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* Footer */
+footer {
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}
+
+/* ✅ Responsive Media Queries */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+  }
+  .navbar nav {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 60px 15px;
+  }
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+  .btn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+.logo img {
+  height: 30px;
+  width: auto;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #0a192f, #112240);
+  color: white;
+  flex-wrap: wrap;
+}
+
+.hero-content {
+  flex: 1;
+  min-width: 280px;
+  padding: 1rem;
+}
+
+.hero-content h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+}
+
+.hero-content h1 span {
+  color: #00bcd4; /* cyan highlight */
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.hero-content .btn {
+  background: #00bcd4;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: bold;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.hero-content .btn:hover {
+  background: #0097a7;
+}
+
+.hero-image {
+  flex: 1;
+  text-align: center;
+  min-width: 280px;
+  padding: 1rem;
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0px 4px 20px rgba(0,0,0,0.3);
+}
+
+/* Modal Background */
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+}
+
+/* Modal Box */
+.modal-content {
+  background: #112240;
+  color: white;
+  margin: 10% auto;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0px 6px 20px rgba(0,0,0,0.3);
+  animation: fadeIn 0.4s ease;
+}
+
+.modal-content h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.option-btn {
+  background: #00bcd4;
+  color: white;
+  padding: 0.8rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.option-btn:hover {
+  background: #0097a7;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {opacity: 0; transform: scale(0.9);}
+  to {opacity: 1; transform: scale(1);}
+}
+/* ===========================
+   Dropdown (Start Learning)
+=========================== */
+.dropdown { 
+  position: relative; 
+  display: inline-block; 
+}
+
+.dropdown .dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 220px;
+  background: linear-gradient(135deg, #1e3c72, #2a5298); /* fancy gradient */
+  border-radius: 14px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+  padding: 8px;
+  display: none;
+  z-index: 1001;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+.dropdown .dropdown-menu a {
+  display: block;
+  padding: 12px 14px;
+  color: #f9f9f9; /* bright text */
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.dropdown .dropdown-menu a:hover {
+  background: rgba(255,255,255,0.15); /* glass hover */
+  color: #00f7ff; /* neon cyan */
+  transform: translateX(5px); /* little slide */
+}
+
+/* hover se open */
+.dropdown:hover .dropdown-menu { display: block; }
+
+/* click se open (mobile support) */
+.dropdown.open .dropdown-menu { display: block; }
+
+/* smooth fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Accountancy styling */
+/* ===== CUET Outer Tabs ===== */
+.cuet-tabs {
+  width: 80%;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.cuet-tabs .tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.cuet-tabs .tab-button {
+  padding: 10px 20px;
+  border: none;
+  background: #eee;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.cuet-tabs .tab-button:hover {
+  background: #ddd;
+}
+
+.cuet-tabs .tab-button.active {
+  background: #0077ff;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* ===== CUET Inner Tabs ===== */
+.cuet-tabs .inner-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.cuet-tabs .inner-tab-button {
+  padding: 8px 16px;
+  border: none;
+  background: #eee;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.cuet-tabs .inner-tab-button:hover {
+  background: #ddd;
+}
+
+.cuet-tabs .inner-tab-button.active {
+  background: #0077ff;
+  color: white;
+}
+
+/* ===== Tab Contents ===== */
+.cuet-tabs .tab-content {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #f9f9f9;
+}
+
+.cuet-tabs .tab-content.active {
+  display: block;
+  opacity: 1;
+}
+
+.cuet-tabs .inner-tab-content {
+  display: none;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #f9f9f9;
+  margin-top: 1rem;
+}
+
+.cuet-tabs .inner-tab-content.active {
+  display: block;
+}
+
+/* ===== Inner Tab Links ===== */
+.cuet-tabs .inner-tab-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.cuet-tabs .inner-tab-content li {
+  margin: 0.5rem 0;
+}
+
+.cuet-tabs .inner-tab-content a {
+  text-decoration: none;
+  color: #0077ff;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.cuet-tabs .inner-tab-content a:hover {
+  color: #0055aa;
+  text-decoration: underline;
+}
+.download-btn {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 5px 12px;
+  background: #00bcd4;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.download-btn:hover {
+  background: #0097a7;
+}
+.view-btn {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 5px 12px;
+  background: #ffc107; /* yellow-ish for view */
+  color: #112240; /* dark text */
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.view-btn:hover {
+  background: #ffeb3b; /* lighter yellow on hover */
+  color: #000;
+}
+ 
+
+
+
+
+
+
+
+
+
+
+.syllabus-container {
+  display: flex;
+  justify-content: center; /* horizontally center */
+  margin: 30px 0;
+}
+
+.syllabus-item {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.view-btn, .download-btn {
+  display: inline-block;
+  margin: 10px 8px 0 8px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.view-btn {
+  background: #00bcd4;
+  color: white;
+}
+
+.view-btn:hover {
+  background: #0097a7;
+}
+
+.download-btn {
+  background: #4caf50;
+  color: white;
+}
+
+.download-btn:hover {
+  background: #388e3c;
+}
+
+
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  transition: 0.3s;
+}
+
+.lecture-title {
+  cursor: pointer;
+  color: #00bcd4;
+  transition: 0.3s;
+}
+
+.lecture-title:hover {
+  color: #0097a7;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
