@@ -50,7 +50,7 @@ body {
   color: #ffeb3b;
 }
 
-/* Hero Section */
+/* Hero Section
 .hero {
   text-align: center;
   padding: 80px 20px;
@@ -64,7 +64,7 @@ body {
 
 .hero p {
   margin: 15px 0;
-}
+} */
 
 .btn {
   display: inline-block;
@@ -167,7 +167,7 @@ footer {
   align-items: center;
   justify-content: space-between;
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, #0a192f, #112240);
+  background: linear-gradient(135deg, #808389, #112240);
   color: white;
   flex-wrap: wrap;
 }
