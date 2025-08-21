@@ -36,10 +36,26 @@ innerButtons.forEach(btn => {
 
 
 
+const modal = document.getElementById("videoModal");
+const iframe = document.getElementById("videoIframe");
+const closeBtn = modal.querySelector(".close");
 
-document.querySelectorAll('.playLecture').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const iframe = btn.nextElementSibling;
-    iframe.src = btn.getAttribute('data-src'); // set src on click
+document.querySelectorAll(".lecture-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const videoURL = btn.getAttribute("data-video");
+    iframe.src = videoURL + "?autoplay=1";
+    modal.style.display = "block";
   });
+});
+
+closeBtn.addEventListener("click", () => {
+  modal.style.display = "none";
+  iframe.src = "";
+});
+
+window.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    modal.style.display = "none";
+    iframe.src = "";
+  }
 });
