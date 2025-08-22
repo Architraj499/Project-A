@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CUET - Business Studies</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+.navbar .user-info { float: right; color: #fff; font-weight: 600; margin-right: 20px; }
+.navbar .user-info button {
+  margin-left: 10px; padding: 4px 10px; border: none; border-radius: 5px;
+  cursor: pointer; background: #db4d4d; color: #fff; font-weight: 600;
+}
+</style>
 </head>
 <body>
 
@@ -16,6 +23,10 @@
       <a href="cafoundation.html">CA Foundation</a>
       <a href="personal.html">Personal</a>
     </nav>
+    <div class="user-info">
+    Welcome, <span id="usernameDisplay">User</span>
+    <button id="logoutBtn">Logout</button>
+  </div>
   </header>
 
   <section class="hero">
@@ -151,6 +162,53 @@
   <footer>
     <p>© 2025 Asprient</p>
   </footer>
+
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+// 🔹 Firebase config (same as signup/login page)
+const firebaseConfig = {
+  apiKey: "AIzaSyDvxGvUkBkOcYtn8_pl7E50pQd1B2oc904",
+  authDomain: "project-a-c6f8a.firebaseapp.com",
+  projectId: "project-a-c6f8a",
+  storageBucket: "project-a-c6f8a.appspot.com",
+  messagingSenderId: "855860821473",
+  appId: "1:855860821473:web:bbc9d21bcf7f3ee5ee26a0",
+  measurementId: "G-4FK33PZL8J"
+};
+
+// 🔹 Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// 🔹 Display fullname from localStorage
+const usernameDisplay = document.getElementById("usernameDisplay");
+usernameDisplay.textContent = localStorage.getItem("fullname") || "User";
+
+// 🔹 Logout
+const logoutBtn = document.getElementById("logoutBtn");
+logoutBtn.addEventListener('click', () => {
+  signOut(auth).then(() => {
+    localStorage.removeItem("fullname");
+    window.location.href = "index.html"; // redirect to login
+  });
+});
+
+// 🔹 Redirect if user not logged in
+onAuthStateChanged(auth, user => {
+  if(!user){
+    localStorage.removeItem("fullname");
+    window.location.href = "index.html";
+  }
+});
+
+
+
+
+</script>
 
 </body>
 </html>

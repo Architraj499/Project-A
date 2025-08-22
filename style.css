@@ -155,7 +155,7 @@ footer {
   }
 }
 .logo img {
-  height: 80px;
+  height: 120px;
   width: auto;
   vertical-align: middle;
   margin-right: 8px;
@@ -629,7 +629,7 @@ footer {
 
 
 .ca-logo {
-  width: 200px; /* Desktop ke liye normal size */
+  width: 340px; /* Desktop ke liye normal size */
   height: auto;
 }
 
@@ -652,7 +652,13 @@ footer {
   .cuet-logo {
     display: block;
     padding-right: 100 ;   /* horizontally center */
-    width: 200px;     /* Mobile pe chhota size */
+    width: 125.74px; 
+    #p{
+      padding-left: 32px;
+      display: flex;
+  align-items: center; /* vertical alignment */
+  gap: 0; 
+    }  
   }
 }
 
