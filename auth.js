@@ -52,3 +52,6 @@ onAuthStateChanged(auth, (user) => {
     window.location.href = "home.html"; // agar already login hai to directly home le jao
   }
 });
+
+
+

@@ -628,3 +628,31 @@ footer {
 
 
 
+.ca-logo {
+  width: 200px; /* Desktop ke liye normal size */
+  height: auto;
+}
+
+/* Phone ke liye */
+@media (max-width: 600px) {
+  .ca-logo {
+    width: 90px;   /* Mobile pe chhota size */
+  }
+}
+
+.cuet-logo {
+  margin-left: 0px;
+  width: 300px; /* Desktop ke liye normal size */
+  height: auto;
+}
+
+/* Phone ke liye */
+@media (max-width: 600px) {
+
+  .cuet-logo {
+    display: block;
+    padding-right: 100 ;   /* horizontally center */
+    width: 200px;     /* Mobile pe chhota size */
+  }
+}
+
