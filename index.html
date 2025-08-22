@@ -70,7 +70,6 @@ button.submit-btn:hover { background: linear-gradient(90deg,#ff6ec7,#00f7ff); tr
         <div class="form-group">
             <label for="loginPassword">Password</label>
             <input type="password" id="loginPassword" placeholder="Enter password" required>
-            
         </div>
         <button type="submit" class="submit-btn">Login</button>
         <div class="switch-link">Don't have an account? <a href="#" id="toSignup">Sign Up</a></div>
@@ -89,12 +88,10 @@ button.submit-btn:hover { background: linear-gradient(90deg,#ff6ec7,#00f7ff); tr
         <div class="form-group">
             <label for="signupPassword">Password</label>
             <input type="password" id="signupPassword" placeholder="Enter password" required>
-         
         </div>
         <div class="form-group">
             <label for="signupConfirm">Confirm Password</label>
             <input type="password" id="signupConfirm" placeholder="Confirm password" required>
-           
         </div>
         <button type="submit" class="submit-btn">Sign Up</button>
         <div class="switch-link">Already have an account? <a href="#" id="toLogin">Login</a></div>
@@ -105,9 +102,10 @@ button.submit-btn:hover { background: linear-gradient(90deg,#ff6ec7,#00f7ff); tr
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } 
-from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyDvxGvUkBkOcYtn8_pl7E50pQd1B2oc904",
   authDomain: "project-a-c6f8a.firebaseapp.com",
@@ -117,8 +115,10 @@ const firebaseConfig = {
   appId: "1:855860821473:web:bbc9d21bcf7f3ee5ee26a0",
   measurementId: "G-4FK33PZL8J"
 };
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 const loginForm = document.getElementById('loginForm');
 const signupForm = document.getElementById('signupForm');
@@ -137,23 +137,13 @@ function switchForm(form){
         signupTab.classList.add('active'); loginTab.classList.remove('active');
     }
 }
-
 loginTab.addEventListener('click', ()=>switchForm('login'));
 signupTab.addEventListener('click', ()=>switchForm('signup'));
 toSignup.addEventListener('click', ()=>switchForm('signup'));
 toLogin.addEventListener('click', ()=>switchForm('login'));
 
-// Toggle Password
-document.querySelectorAll('.toggle-password').forEach(span=>{
-    span.addEventListener('click', ()=>{
-        const input = span.previousElementSibling;
-        if(input.type==='password'){ input.type='text'; span.textContent='🙈'; }
-        else{ input.type='password'; span.textContent='👁️'; }
-    });
-});
-
-// Signup with Fullname + Confirm password validation
-signupForm.addEventListener('submit', e=>{
+// Signup
+signupForm.addEventListener('submit', async e=>{
     e.preventDefault();
     const name = document.getElementById('signupName').value.trim();
     const email = document.getElementById('signupEmail').value;
@@ -163,29 +153,48 @@ signupForm.addEventListener('submit', e=>{
     if(!name){ message.innerText="Fullname required"; return; }
     if(password!==confirm){ message.innerText="Passwords do not match"; return; }
 
-    createUserWithEmailAndPassword(auth,email,password)
-    .then(()=>{ 
+    try{
+        const userCredential = await createUserWithEmailAndPassword(auth,email,password);
+        const user = userCredential.user;
+        await setDoc(doc(db,"users",user.uid),{ fullname: name, email: email });
         message.innerText=`Signup Successful ✅ Welcome, ${name}`;
         switchForm('login');
-    })
-    .catch(err=>message.innerText=err.message);
+    } catch(err){ message.innerText = err.message; }
 });
 
 // Login
-loginForm.addEventListener('submit', e=>{
+loginForm.addEventListener('submit', async e=>{
     e.preventDefault();
     const email = document.getElementById("loginEmail").value;
     const password = document.getElementById("loginPassword").value;
-    signInWithEmailAndPassword(auth,email,password)
-    .then(()=>{ message.innerText="Login Successful ✅"; window.location.href="home.html"; })
-    .catch(err=>message.innerText=err.message);
+
+    try{
+        const userCredential = await signInWithEmailAndPassword(auth,email,password);
+        const user = userCredential.user;
+        const docSnap = await getDoc(doc(db,"users",user.uid));
+        const fullname = docSnap.exists()? docSnap.data().fullname : "User";
+        localStorage.setItem("fullname",fullname); // store for home page
+        message.innerText = `Login Successful ✅ Welcome, ${fullname}`;
+        window.location.href = "home.html";
+    } catch(err){ message.innerText = err.message; }
 });
 
 // Already logged in
-onAuthStateChanged(auth,user=>{
-    if(user){ window.location.href="home.html"; }
-});
-</script>
+onAuthStateChanged(auth,user=>{ if(user){ window.location.href="home.html"; }});
 
+
+
+
+
+createUserWithEmailAndPassword(auth,email,password)
+.then(()=>{ 
+    localStorage.setItem("fullname", name); // <-- yahi fullname save ho raha
+    message.innerText=`Signup Successful ✅ Welcome, ${name}`;
+    switchForm('login');
+})
+
+
+
+</script>
 </body>
 </html>
