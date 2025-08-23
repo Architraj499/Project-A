@@ -660,9 +660,7 @@ footer {
   gap: 0; 
     }  
   }
-} 
-
-
+}
 
 
 /* By default iframe 100% width */
@@ -678,5 +676,3 @@ footer {
     height: 250px; /* Mobile ke liye chhoti height */
   }
 }
-
-
