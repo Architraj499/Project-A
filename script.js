@@ -34,31 +34,70 @@ innerButtons.forEach(btn => {
 });
 
 // ================== VIDEO MODAL ==================
-const modal = document.getElementById("videoModal");
-const iframe = document.getElementById("videoIframe");
-const closeBtn = modal?.querySelector(".close");
+// VIDEO MODAL — paste/replace into script.js
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('videoModal');
+  const iframe = document.getElementById('videoIframe');
 
-if (modal && iframe && closeBtn) {
-  document.querySelectorAll(".lecture-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const videoURL = btn.getAttribute("data-video");
-      iframe.src = videoURL + "?autoplay=1";
-      modal.style.display = "block";
+  if (!modal || !iframe) {
+    console.warn('Video modal or iframe not found. Ensure HTML contains #videoModal and #videoIframe');
+    return;
+  }
+
+  // try multiple selectors for close button to be tolerant to class name mismatches
+  const closeBtn = modal.querySelector('.close-btn') || modal.querySelector('.close') || modal.querySelector('[data-close]');
+
+  function toEmbedUrl(raw) {
+    if (!raw) return '';
+    // already embed
+    if (raw.includes('/embed/')) return raw.split('?')[0];
+    // full watch url -> extract id
+    let m = raw.match(/[?&]v=([A-Za-z0-9_-]{6,})/) || raw.match(/youtu\.be\/([A-Za-z0-9_-]{6,})/) || raw.match(/\/embed\/([A-Za-z0-9_-]{6,})/);
+    if (m && m[1]) return `https://www.youtube-nocookie.com/embed/${m[1]}`;
+    // maybe raw is just an id
+    if (/^[A-Za-z0-9_-]{6,}$/.test(raw)) return `https://www.youtube-nocookie.com/embed/${raw}`;
+    // fallback: return raw (could be already an embed)
+    return raw;
+  }
+
+  function openModal(videoRaw) {
+    const embed = toEmbedUrl(videoRaw);
+    if (!embed) {
+      console.warn('Invalid video value:', videoRaw);
+      return;
+    }
+    // add autoplay params
+    const sep = embed.includes('?') ? '&' : '?';
+    iframe.src = embed + sep + 'autoplay=1&rel=0&modestbranding=1';
+    modal.style.display = 'flex'; // modal should be flex-centered in CSS
+    document.body.style.overflow = 'hidden'; // prevent background scroll
+    modal.setAttribute('aria-hidden', 'false');
+    console.log('Video opened:', iframe.src);
+  }
+
+  function closeModal() {
+    modal.style.display = 'none';
+    iframe.src = '';
+    document.body.style.overflow = '';
+    modal.setAttribute('aria-hidden', 'true');
+    console.log('Video closed');
+  }
+
+  // open on each lecture button click
+  document.querySelectorAll('.lecture-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const videoVal = btn.dataset.video;
+      if (!videoVal) { console.warn('lecture-btn missing data-video', btn); return; }
+      openModal(videoVal);
     });
   });
 
-  closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-    iframe.src = "";
-  });
-
-  window.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.style.display = "none";
-      iframe.src = "";
-    }
-  });
-}
+  // close handlers
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+});
 
 // ================== FIREBASE AUTH ==================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
@@ -112,3 +151,14 @@ links.forEach(link => {
     link.classList.add('active');
   }
 });
+
+
+
+
+
+createUserWithEmailAndPassword(auth,email,password)
+.then(()=>{ 
+    localStorage.setItem("fullname", name);
+    message.innerText=`Signup Successful ✅ Welcome, ${name}`;
+    switchForm('login');
+})

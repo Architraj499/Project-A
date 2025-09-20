@@ -23,7 +23,6 @@ body {
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     color: #fff;
     text-align: center;
-    position: relative;
 }
 .auth-tabs { display: flex; justify-content: space-around; margin-bottom: 20px; }
 .auth-tabs button {
@@ -41,7 +40,6 @@ form.active { display: block; }
 }
 .form-group input::placeholder { color: rgba(255,255,255,0.7); }
 .form-group input:focus { outline: none; background: rgba(255,255,255,0.25); box-shadow: 0 0 8px #00fff7; }
-.toggle-password { position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; }
 button.submit-btn {
     width: 100%; padding: 10px; margin-top: 10px; border: none; border-radius: 10px;
     background: linear-gradient(90deg,#00f7ff,#ff6ec7); color: #fff; font-weight: 600; cursor: pointer; font-size: 1em; transition: 0.3s;
@@ -72,6 +70,10 @@ button.submit-btn:hover { background: linear-gradient(90deg,#ff6ec7,#00f7ff); tr
             <input type="password" id="loginPassword" placeholder="Enter password" required>
         </div>
         <button type="submit" class="submit-btn">Login</button>
+        <!-- Forget Password -->
+        <div class="switch-link">
+            <a href="#" id="forgotPassword">Forgot Password?</a>
+        </div>
         <div class="switch-link">Don't have an account? <a href="#" id="toSignup">Sign Up</a></div>
     </form>
 
@@ -102,7 +104,7 @@ button.submit-btn:hover { background: linear-gradient(90deg,#ff6ec7,#00f7ff); tr
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 // Firebase config
@@ -128,6 +130,7 @@ const toSignup = document.getElementById('toSignup');
 const toLogin = document.getElementById('toLogin');
 const message = document.getElementById('message');
 
+// Toggle forms
 function switchForm(form){
     if(form==='login'){
         loginForm.classList.add('active'); signupForm.classList.remove('active');
@@ -173,28 +176,34 @@ loginForm.addEventListener('submit', async e=>{
         const user = userCredential.user;
         const docSnap = await getDoc(doc(db,"users",user.uid));
         const fullname = docSnap.exists()? docSnap.data().fullname : "User";
-        localStorage.setItem("fullname",fullname); // store for home page
+        localStorage.setItem("fullname",fullname); 
         message.innerText = `Login Successful ✅ Welcome, ${fullname}`;
         window.location.href = "home.html";
     } catch(err){ message.innerText = err.message; }
 });
 
-// Already logged in
-onAuthStateChanged(auth,user=>{ if(user){ window.location.href="home.html"; }});
+// Forgot Password
+document.getElementById("forgotPassword").addEventListener("click", async (e)=>{
+  e.preventDefault();
+  const email = document.getElementById("loginEmail").value;
+  if(!email){
+    message.innerText = "⚠️ Enter your email to reset password.";
+    return;
+  }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    message.innerText = "📩 Password reset link sent!";
+  } catch(err){
+    message.innerText = "❌ " + err.message;
+  }
+});
 
-
-
-
-
-createUserWithEmailAndPassword(auth,email,password)
-.then(()=>{ 
-    localStorage.setItem("fullname", name); // <-- yahi fullname save ho raha
-    message.innerText=`Signup Successful ✅ Welcome, ${name}`;
-    switchForm('login');
-})
-
-
-
+// Auth State Listener
+onAuthStateChanged(auth, (user)=>{
+  if(user){
+    window.location.href = "home.html"; // ✅ sirf redirect karega
+  }
+});
 </script>
 </body>
 </html>
