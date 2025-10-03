@@ -121,7 +121,7 @@ const auth = firebase.auth();
 // Show username from localStorage
 const usernameDisplay = document.getElementById("usernameDisplay");
 if (usernameDisplay) {
-  usernameDisplay.textContent = localStorage.getItem("fullname") || "User";
+  usernameDisplay.textContent = localStorage.getItem("fullname") || 'User';
 }
 
 // Logout
