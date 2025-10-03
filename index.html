@@ -211,7 +211,7 @@ document.getElementById("forgotPassword").addEventListener("click", async (e)=>{
   }
   try {
     await sendPasswordResetEmail(auth, email);
-    message.innerText = "📩 Password reset link sent! Please Cheack spam folder ";
+    message.innerText = "📩 Password reset link sent! Please Check spam folder ";
   } catch(err){
     message.innerText = "❌ " + err.message;
   }
