@@ -1,284 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CA-Business Economics</title>
-  <link rel="stylesheet" href="style.css">
-   <!-- Favicon -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounting</title>
+    <link rel="stylesheet" href="Accounting.css">
 <link rel="icon" href="images\logo.png" type="image/png">
-              
- <!-- Apple Touch Icon -->
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-                                          
-<!-- Android / Chrome Icons -->
 <link rel="icon" type="image/png" sizes="210x210" href="android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
-                                                                                                    
- <!-- Safari Pinned Tab (vector) -->
 <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
-                                                                                                                                                              
-<!-- Optional: Theme color for mobile address bar -->
 <meta name="theme-color" content="#1f4068">
-<link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-
-  <header class="navbar">
-    <div class="logo"><img class="cuet-logo" src="images\clipart702255.png" alt="CUET Logo"></div>
-    <nav>
-      <a href="home.html">Home</a>
-      <a href="Boards.html">Boards</a> 
-      <a href="cuet.html">CUET</a>
-      <a href="cafoundation.html" class="active">CA Foundation</a>
-      
-    </nav>
-    <div class="user-info">
+ <header class="navbar">
+  <div class="logo"><img class="cuet-logo" src="images\logo.png" alt="CUET Logo"></div>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="Boards.html">Boards</a> 
+    <a href="cuet.html">CUET</a>
+    <a href="cafoundation.html"class="active">CA Foundation</a>
+  </nav>
+  <div class="user-info">
     Welcome, <span id="usernameDisplay">User</span>
     <button id="logoutBtn">Logout</button>
+    <button class="btn" id="themeToggle">🌙</button>
   </div>
-  </header>
+</header> 
+<section class="hero">
+  <div class="hero-content">
+    <div class="surf">
+      <a href ="Accounting.html"class="hero.active">Accounting</a>
+      <a href="Business_law.html"">Business Law</a>
+      <a href="Business_eco.html">Business Economics</a>
+      <a href="Quant.html">Quantative Aptitude</a>
+    </div>
+    </div>
+   <div class="actions">
+        <div class="search" role="search" aria-label="Search lectures">
+          🔎 <input id="searchInput" placeholder="Search chapters, topics..." />
+        </div>
+        </section>
+   <div class="container">
+  <section class="subject-hero">
+    <div class="subject-card">
+      <h1>Accounting</h1>
+      <div class="subject-meta">Class 12 | CA Foundation </div>
+      <div class="subject-actions">
+        <button class="tab active" onclick="filterBy('all')">All</button>
+        <button class="tab" onclick="filterBy('completed')">Completed</button>
+        <button class="tab" onclick="filterBy('pending')">Pending</button>
+      </div>
+    </div>
+    <div style="min-width:260px">
+      <div style="padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));">
+        <div style="display:flex; justify-content:space-between; gap:12px; align-items:center">
+        </div>
+            <div style="font-weight:800">Overall Progress</div>
+            <div class="muted">You have finished <strong id="overallPercent">0%</strong> of this subject</div>
+          </div>
+          <div class="ring" id="ringPercent">0%</div>
+        </div>
+        <div style="margin-top:10px" class="progress"><i id="overallBar"></i></div>
+      </div>
+    </div>
+  </section>
+  </div>
+   <nav class="tabs">
+    <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
+    <button class="tab" data-tab="notes" onclick="openTab(event)">Notes</button>
+    <button class="tab" data-tab="pyqs" onclick="openTab(event)">PYQs</button>
+  </nav>
+ <section id="lectures" class="tabpanel">
+    <div class="grid" id="cardsGrid"></div>
+  </section>
 
-  <section class="hero">
-    
-    <div class="hero-content">
+  <section id="notes" class="tabpanel" style="display:none">
+    <div class="grid" id="notesGrid"></div>
+  </section>
 
-       <div class="surf">
-  <a href="Accounting.html" class="active">Book Keeping</a>
-  <a href="Business_law.html">Business Law</a>
-  <a href="Quant.html" >Quantative Aptitude</a>
-  <a href="Bussiness_eco.html">Business Economics </a>
+  <section id="pyqs" class="tabpanel" style="display:none">
+    <div class="grid" id="pyqGrid"></div>
+  </section>
+</div> 
+<div id="videoModal" class="modal"><div class="modal-box">
+  <div class="modal-header">
+    <div id="modalTitle">Playing</div>
+    <div style="display:flex; gap:8px; align-items:center">
+      <button class="btn ghost" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+  <div class="modal-body">
+    <iframe id="videoIframe" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div></div>
+<footer class="footer">
+  <div class="footer-content">
+    <p><b>© 2025 Asprient</b>All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="mailto:support@cuetdashboard.in">Contact Us</a>
+    </div>
+  </div>
+</footer>
+
+<script src="Accounting.js"></script>
   
-</div>
-
-
-      <h1>Accounting </h1>
-      <p>Detailed lectures,Organized notes, PYQs & mock tests 🚀</p>
-    </div>
-  </section>
-
-  <!-- Syllabus Section -->
-  <section class="subject-content">
-    
-    <div class="syllabus-container">
-  <div class="syllabus-item">
-    <h2>Syllabus</h2>
-    <h3>Accounting Syllabus</h3>
-    <a href="Pdfs\Accounting_syllabus.pdf" target="_blank" class="view-btn">View</a>
-    <a href="Pdfs\Accounting_syllabus.pdf" download class="download-btn">Download</a>
-  </div>
-</div>
- 
-  </section>
-  <section class="subject-content">
-      <!-- Lectures Section -->
-<!-- Lectures Section -->
-<section class="subject-content">
-  <h2>Lectures</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>Lecture 1 - Theoritical Framework</h3>
-      <button class="lecture-btn" data-video="https://www.youtube-nocookie.com/embed/ahk3IfMxEN8">Play Video</button>
-    </div>
-    <div class="card">
-      <h3>Lecture 2 - Accounting Process</h3>
-      <button class="lecture-btn" data-video="https://www.youtube-nocookie.com/embed/xHDPXnsOjPw">Play Video</button>
-    </div>
-    <div class="card">
-      <h3>Lecture 3 - Bank Reconciliation Statement</h3>
-      <button class="lecture-btn" data-video="https://www.youtube-nocookie.com/embed/5JeAF7PU8dM">Play Video</button>
-    </div>
-    <div class="card">
-      <h3>Lecture 4  - Inventories</h3>
-      <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>
-    </div>
-    <div class="card">
-      <h3>Lecture 5 - Depreciation and Amortisation</h3>
-      <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>
-    </div>
-    <div class="card">
-      <h3>Lecture 6 - Bills of exchange And Promissory Notes</h3>
-      <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>    </div>
-    <div class="card">
-      <h3>Lecture 7 - Final Accounts Of Sole Proprietors</h3>
-      <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>    </div>
-    <var><var><var>
-      <div class="card">
-      <h3>Lecture 8 - Financial Statement of NPO</h3>
-     <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>    </div></var></var></var>
-    <div class="card">
-      <h3>Lecture 9 - Accounts from Incomplete Records </h3>
-     <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>    </div></var></var></var>
-     <div class="card">
-      <h3>Lecture 10 - Partnership and LLP Accounts</h3>
-     <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>    </div></var></var></var>
-    <div class="card">
-      <h3>Lecture 11 - Company Accounts</h3>
-    <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>    </div></var></var></var>
-
-    
-</section>
-
-
-
-
-
-
-
-
-
-
-  <!-- Notes Section -->
-  <section class="syllabus-content">
-    <h2>Notes</h2>
-    <div class="cards">
-      
-      <div class="card">
-        <h3>Lecture 1 - Theoretical framework</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-    <h3>Lecture 2 - Accounting Process</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-      <h3>Lecture 3 - Bank Reconciliation Statement</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Lecture 4  - Inventories</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Lecture 5 -Depreciation and Amortisation</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Lecture 6 -Bills of Exchange and Promissory Notes </h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-          <h3>Lecture 7 - Final accounts of Sole Proprietors</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Lecture 8 - Financial Statements of NPO</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-         <h3>Lecture 9 - Accounts from Incomplete Records</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Lecture 10 - Partnership and LLP Accounts</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Lecture 11 - Company Accounts</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      
-  </section>
-
-  <!-- PYQs Section -->
-  <section class="subject-content">
-    <h2>PYQs</h2>
-        <div class="cards">
-      
-       <div class="card">
-        <h3>Lecture 1 - Theoretical framework</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-    <h3>Lecture 2 - Accounting Process</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-      <h3>Lecture 3 - Bank Reconciliation Statement</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Lecture 4  - Inventories</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Lecture 5 -Depreciation and Amortisation</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Lecture 6 -Bills of Exchange and Promissory Notes </h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-          <h3>Lecture 7 - Final accounts of Sole Proprietors</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Lecture 8 - Financial Statements of NPO</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-         <h3>Lecture 9 - Accounts from Incomplete Records</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Lecture 10 - Partnership and LLP Accounts</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Lecture 11 - Company Accounts</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      
-      
-  </section>
-
- 
-
-<!-- Video Modal -->
-<div id="videoModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <iframe id="videoIframe" width="560" height="315" src="" title="YouTube video player" frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowfullscreen></iframe>
-  </div>
-</div>
-
- 
-
-<script src="script.js"></script>
 </body>
-<footer>
-    <p>© 2025 Asprient| Built by Archit</p>
-  </footer>
-
-
-
-<script type="module" src="script.js"></script>
-
-
 </html>

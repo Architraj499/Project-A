@@ -1,371 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CUET - Accountancy</title>
-  <link rel="stylesheet" href="style.css">
-   <!-- Favicon -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economics</title>
+    <link rel="stylesheet" href="eco.css">
 <link rel="icon" href="images\logo.png" type="image/png">
-              
- <!-- Apple Touch Icon -->
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-                                          
-<!-- Android / Chrome Icons -->
 <link rel="icon" type="image/png" sizes="210x210" href="android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
-                                                                                                    
- <!-- Safari Pinned Tab (vector) -->
 <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
-                                                                                                                                                              
-<!-- Optional: Theme color for mobile address bar -->
 <meta name="theme-color" content="#1f4068">
-<link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-
-  <header class="navbar">
-  <div class="logo"><img class="cuet-logo" src="images\cuet.png" alt="CUET Logo"></div>
-    <nav>
-      <a href="home.html">Home</a>
-      <a href="Boards.html">Boards</a>
-      <a href="cuet.html" class="active">CUET</a>
-      <a href="cafoundation.html">CA Foundation</a>
-      
-    </nav>
-    <div class="user-info">
+ <header class="navbar">
+  <div class="logo"><img class="cuet-logo" src="images\logo.png" alt="CUET Logo"></div>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="Boards.html">Boards</a> 
+    <a href="cuet.html" class="active">CUET</a>
+    <a href="cafoundation.html">CA Foundation</a>
+  </nav>
+  <div class="user-info">
     Welcome, <span id="usernameDisplay">User</span>
     <button id="logoutBtn">Logout</button>
+    <button class="btn" id="themeToggle">🌙</button>
   </div>
-  </header>
-
-  <section class="hero">
-    <div class="hero-content">
-
-      
-       <div class="surf">
-  <a href="Accountancy.html">Accountancy</a>
-  <a href="bst.html">Business Studies</a>
-  <a href="eco.html" class="active">Economics</a>
-  <a href="eng.html">English</a>
-</div>
-
-
-      <h1>Economics - CUET Preparation</h1>
-       <p>Detailed lectures,Organized notes, PYQs & mock tests 🚀</p>
+</header> 
+<section class="hero">
+  <div class="hero-content">
+    <div class="surf">
+      <a href ="Accountancy.html">Accountancy</a>
+      <a href="bst.html"">Business Studies</a>
+      <a href="eco.html"class="hero.active"> Economics</a>
+      <a href="eng.html">English</a>
+    </div>
+    </div>
+   <div class="actions">
+        <div class="search" role="search" aria-label="Search lectures">
+          🔎 <input id="searchInput" placeholder="Search chapters, topics..." />
+        </div>
+        </section>
+   <div class="container">
+  <section class="subject-hero">
+    <div class="subject-card">
+      <h1>Economics</h1>
+      <div class="subject-meta">Class 12 | CUET 2026 </div>
+      <div class="subject-actions">
+        <button class="tab active" onclick="filterBy('all')">All</button>
+        <button class="tab" onclick="filterBy('completed')">Completed</button>
+        <button class="tab" onclick="filterBy('pending')">Pending</button>
+      </div>
+    </div>
+    <div style="min-width:260px">
+      <div style="padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));">
+        <div style="display:flex; justify-content:space-between; gap:12px; align-items:center">
+        </div>
+            <div style="font-weight:800">Overall Progress</div>
+            <div class="muted">You have finished <strong id="overallPercent">0%</strong> of this subject</div>
+          </div>
+          <div class="ring" id="ringPercent">0%</div>
+        </div>
+        <div style="margin-top:10px" class="progress"><i id="overallBar"></i></div>
+      </div>
     </div>
   </section>
-
-  <!-- Syllabus Section -->
-  <section class="subject-content">
-    
-    <div class="syllabus-container">
-  <div class="syllabus-item">
-    <h2>Syllabus</h2>
-    <h3>Economics Syllabus</h3>
-    <a href="Pdfs\eco.pdf" target="_blank" class="view-btn">View</a>
-    <a href="Pdfs\eco.pdf" download class="download-btn">Download</a>
   </div>
-</div>
+   <nav class="tabs">
+    <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
+    <button class="tab" data-tab="notes" onclick="openTab(event)">Notes</button>
+    <button class="tab" data-tab="pyqs" onclick="openTab(event)">PYQs</button>
+  </nav>
+ <section id="lectures" class="tabpanel">
+    <div class="grid" id="cardsGrid"></div>
+  </section>
+
+  <section id="notes" class="tabpanel" style="display:none">
+    <div class="grid" id="notesGrid"></div>
+  </section>
+
+  <section id="pyqs" class="tabpanel" style="display:none">
+    <div class="grid" id="pyqGrid"></div>
+  </section>
+</div> 
+<div id="videoModal" class="modal"><div class="modal-box">
+  <div class="modal-header">
+    <div id="modalTitle">Playing</div>
+    <div style="display:flex; gap:8px; align-items:center">
+      <button class="btn ghost" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+  <div class="modal-body">
+    <iframe id="videoIframe" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div></div>
+<footer class="footer">
+  <div class="footer-content">
+    <p><b>© 2025 Asprient.</b>All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="mailto:support@cuetdashboard.in">Contact Us</a>
+    </div>
+  </div>
+</footer>
+
+<script src="eco.js"></script>
   
-  </section>
-   <!-- Lectures Section -->
-<section class="subject-content">
-  <h2>Lectures : Microeconomics</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>Lecture 1 - Economics and Economy </h3>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/ZYfdzVAdEGI">Play Video </button>
-      
-    </div>
-    <div class="card">
-      <h3>Lecture 2 -Central Problems of an Economy</h3>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/7MWGayP7Fss">Play Video 1</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/vaWCBubuuVw">Play Video 2</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/tDOmQjjF2t8">Play Video 3</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/j06yZQVAH8Y">Play Video 4</button>
-
-    </div>
-    <div class="card">
-      <h3>Lecture 3 - Consumer's Equilibrium - Utility Analysis</h3>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/e6VXKEczL-4">Play Video 1</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/vdZQrADuwtU">Play Video 2</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/vW-QoXxNgqA">Play Video 3</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/kCirS7B9Guc">Play Video 4</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/d1zZQq2Q9Jc">Play Video 5</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/GHA_Hh53U2w4">Play Video 6</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/SAPVFWYba_U">Play Video 7</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/gNEKLHh157Q">Play Video 8</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/TnIWihItYN4">Play Video 9</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/35g2aNEMEkI">Play Video 10</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/kciTty9paLA">Play Video 11</button>
-
-    </div>
-    <div class="card">
-      <h3>Lecture 4  - Theory of Demand</h3>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/JaBff_VZiiw">Play Video 1</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/4mmW4zU6hrc">Play Video 2</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/Lq1EfX47hU4">Play Video 3</button>
-    </div>
-    <div class="card">
-      <h3>Lecture 5 - Price Elasticity of Demand</h3>
-      <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>
-    </div>
-    <div class="card">
-      <h3>Lecture 6 - Production Function and Returns to a Factor</h3>
-      <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>    </div>
-    <div class="card">
-      <h3>Lecture 7 - Concept of Cost</h3>
-      <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>    </div>
-    <var><var><var>
-      <div class="card">
-      <h3>Lecture 8 - Concept of Revenue</h3>
-     <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>    </div></var></var></var>
-    <div class="card">
-      <h3>Lecture 9 - Producer's Equlibrium</h3>
-     <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>    </div></var></var></var>
-     <div class="card">
-      <h3>Lecture 10 - Theory of Supply </h3>
-     <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>    </div></var></var></var>
-     <div class="card">
-      <h3>Lecture 11 - Forms of Market</h3>
-     <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>    </div></var></var></var>
-     <div class="card">
-      <h3>Lecture 12 - Market Equlibrium </h3>
-     <button class="lecture-btn" data-video="soon.html">Cooming Soon</button>    </div></var></var></var>
-       </div>
-</section></var></var></var></var></var></var>
-                 
-     <section class="subject-content">
-  <h2>Lectures : Macroeconomics</h2></var></var></var>
-  <div class="cards">
-    <div class="card">
-      <h3>Lecture 1 - National Income </h3>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/b3Y78ICAEpI">Play Video 1</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/rvZgc_jyK-">Play Video 2</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/kXfP-CAa5k4">Play Video 3</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/kXfP-CAa5k4">Play Video 4</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/0_jLYaNL3SA">Play Video 5</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/WjX359i3K3k">Play Video 6</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/i7z98NqvBYY">Play Video 7</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/ar4e2LcYp_U">Play Video 8</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/ar4e2LcYp_U">Play Video 9</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/yl3szPIzlWw">Play Video 10</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/PIFROF4FUpo">Play Video 11</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/x8Y4F_COBTs">Play Video 12</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/feVAdoWGvxA">Play Video 13</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/9DJ69m9nXO0">Play Video 14</button>
-     
-    </div></var></var></var>
-    
-    <div class="card">
-      <h3>Lecture 3 - Money</h3>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/ArobUb475ZUl">Play Video 1</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/cfzdkMIaCpg">Play Video 2</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/WC6xl_QvuvU">Play Video 3</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/_NEqSl8gxrIl">Play Video 4</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/F75QUdHoTcUl">Play Video 5</button>
-    
-    </div></var></var></var>
-   
-    <div class="card">
-      <h3>Lecture 5 - Aggregate Demand & Supply</h3>
-      <button class="lecture-btn" data-video="soon.html">Coming Soon</button> </div></var></var></var>
-    <div class="card">
-      <h3>Lecture 6 - Short Run Equilibrium Output</h3>
-      <button class="lecture-btn" data-video="soon.html">Coming Soon</button> </div></var></var></var>
-    <div class="card">
-      <h3>Lecture 7 - Problem of Deficient Demand & Excess Demand</h3>
-      <button class="lecture-btn" data-video="soon.html">Coming Soon</button></div></var></var></var>
-    <div class="card">
-      <h3>Lecture 8 - Government Budget & The Economy</h3>
-      
-      <button class="lecture-btn" data-video=" https://www.youtube.com/embed/niE6G5rmHvY">Play Video 1</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/6fe0Iok04Qo">Play Video 2</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/8u2Symyg6Xo">Play Video 3</button>
-      <button class="lecture-btn" data-video="https://www.youtube.com/embed/sS5HPxcNU_E">Play Video 4</button></div></var></var></var>
-    <div class="card">
-      <h3>Lecture 9 - Foreign Exchange Rate</h3>
-      <button class="lecture-btn" data-video="soon.html">Coming Soon</button></div></var></var></var>
-    <div class="card">
-      <h3>Lecture 10 - Balance of Payments</h3>
-      <button class="lecture-btn" data-video="soon.html">Coming Soon</button></div></var></var></var>
-  </div>
-</section>
-
-
-
-
-
-  <!-- Notes Section -->
-  <section class="syllabus-content">
-    <h2>Notes</h2>
-    <div class="cards">
-      
-      <div class="card">
-        <h3>Chapter 1 -Economics and Economy</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 2 - Central Problems of an Economy</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 3 - Consumer's Equilibrium - Utility Analysis</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 4 - Theory of Demand</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 5 - Price Elasticity of Demand</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 6 - Production Function and Returns to a Factor</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 7 - Concept of Cost</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 8 - Concept of Revenue</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 9 - Producer's Equlibrium</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 10 -Theory of Supply</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 11 - Forms of Market</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 12 - Market Equlibrium</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-     <div class="card">
-        <h3>Chapter 13 - Cash Flow Statement</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- PYQs Section -->
-  <section class="subject-content">
-    <h2>PYQs</h2>
-        <div class="cards">
-      
-      <div class="card">
-        <h3>Chapter 1 - Economics and Economy</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 2 - Central Problems of an Econom</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 3 - Consumer's Equilibrium - Utility Analysis</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 4 - Theory of Demand</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 5 - Price Elasticity of Demand</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 6 - Production Function and Returns to a Factor</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 7 -Concept of Cost</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 8 - Concept of Revenue</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 9 - Producer's Equlibrium</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 10 - Theory of Supply</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 11 - Forms of Market</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h3>Chapter 12 - Market Equlibrium</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-     <div class="card">
-        <h3>Chapter 13 - Cash Flow Statement</h3>
-        <a href="soon.html" target="_blank" class="view-btn">View</a>
-        <a href="soon.html" download class="download-btn">Download</a>
-      </div>
-
-    </div>
-  </section>
-
- 
-
-
-<!-- Video Modal -->
-<div id="videoModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <iframe id="videoIframe" width="560" height="315" src="" title="YouTube video player" frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowfullscreen></iframe>
-  </div>
-</div>
-
-
 </body>
-
-<footer>
-    <p>© 2025 Asprient| Built by Archit</p>
-  </footer>
-
-  
-<script type="module" src="script.js"></script>
 </html>
