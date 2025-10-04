@@ -99,3 +99,13 @@ const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 root.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
 document.getElementById('themeToggle').innerText = prefersDark ? '☀' : '🌙';
 
+// Logout button logic
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  // Remove user data from storage (depends on your login logic)
+  localStorage.removeItem("loggedInUser");
+  sessionStorage.removeItem("loggedInUser");
+
+  
+  // Redirect to login page
+  window.location.href = "index.html";
+});

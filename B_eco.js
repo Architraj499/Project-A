@@ -1,16 +1,16 @@
 const LECTURES = [
-  { id: 'AC1', min:'TBA', title: 'Theoretical Framework', video: 'https://www.youtube-nocookie.com/embed/ahk3IfMxEN8', notes: '#', pyq: '#', progress: 0, teacher: 'Accountancy Sir' },
-  { id: 'AC2', min:'TBA', title: 'Accounting Process', video: 'https://www.youtube-nocookie.com/embed/xHDPXnsOjPw', notes: '#', pyq: '#', progress: 0, teacher: 'Accountancy Sir' },
-  { id: 'AC3', min:'TBA', title: 'Bank Reconciliation Statement', video: 'https://www.youtube-nocookie.com/embed/5JeAF7PU8dM', notes: '#', pyq: '#', progress: 0, teacher: 'Accountancy Sir' },
-  { id: 'AC4', min:'TBA', title: 'Inventories', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Accountancy Sir' },
-  { id: 'AC5', min:'TBA', title: 'Depreciation and Amortisation', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Accountancy Sir' },
-  { id: 'AC6', min:'TBA', title: 'Bills of Exchange and Promissory Notes', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Accountancy Sir' },
-  { id: 'AC7', min:'TBA', title: 'Final Accounts of Sole Proprietors', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Accountancy Sir' },
-  { id: 'AC8', min:'TBA', title: 'Financial Statement of NPO', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Accountancy Sir' },
-  { id: 'AC9', min:'TBA', title: 'Accounts from Incomplete Records', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Accountancy Sir' },
-  { id: 'AC10', min:'TBA', title: 'Partnership and LLP Accounts', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Accountancy Sir' },
-  { id: 'AC11', min:'TBA', title: 'Company Accounts', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Accountancy Sir' },
+  { id: 'BE1', min:'TBA', title: 'Introduction to Business Economics', video: 'https://www.youtube-nocookie.com/embed/ahk3IfMxEN8', notes: '#', pyq: '#', progress: 0, teacher: 'Economics Sir' },
+  { id: 'BE2', min:'TBA', title: 'Theory of Demand and Supply', video: 'https://www.youtube-nocookie.com/embed/xHDPXnsOjPw', notes: '#', pyq: '#', progress: 0, teacher: 'Economics Sir' },
+  { id: 'BE3', min:'TBA', title: 'Theory of Production Cost', video: 'https://www.youtube-nocookie.com/embed/5JeAF7PU8dM', notes: '#', pyq: '#', progress: 0, teacher: 'Economics Sir' },
+  { id: 'BE4', min:'TBA', title: 'Price Determination in Different Markets', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Economics Sir' },
+  { id: 'BE5', min:'TBA', title: 'Determination of National Income', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Economics Sir' },
+  { id: 'BE6', min:'TBA', title: 'Business Cycle', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Economics Sir' },
+  { id: 'BE7', min:'TBA', title: 'Public Finance', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Economics Sir' },
+  { id: 'BE8', min:'TBA', title: 'Money Market', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Economics Sir' },
+  { id: 'BE9', min:'TBA', title: 'International Trade', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Economics Sir' },
+  { id: 'BE10', min:'TBA', title: 'Indian Economy', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Economics Sir' },
 ];
+
 
 
 function renderAll(){
@@ -82,27 +82,12 @@ document.getElementById('searchInput').addEventListener('input',(ev)=>{
     card.style.display = title.includes(q) ? '' : 'none';
   });
 });
-const themeToggle = document.getElementById('themeToggle');
+const root = document.documentElement;
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+root.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+document.getElementById('themeToggle').innerText = prefersDark ? '☀' : '🌙';
 
-  // Load saved theme from localStorage
-  if(localStorage.getItem('theme')){
-      document.body.setAttribute('data-theme', localStorage.getItem('theme'));
-      themeToggle.textContent = localStorage.getItem('theme') === 'dark' ? '🌙' : '☀️';
-  }
-
-  themeToggle.addEventListener('click', () => {
-      let currentTheme = document.body.getAttribute('data-theme');
-      if(currentTheme === 'dark'){
-          document.body.setAttribute('data-theme', 'light');
-          themeToggle.textContent = '☀️';
-          localStorage.setItem('theme','light');
-      } else {
-          document.body.setAttribute('data-theme', 'dark');
-          themeToggle.textContent = '🌙';
-          localStorage.setItem('theme','dark');
-      }
-  });
-  // Logout button logic
+// Logout button logic
 document.getElementById("logoutBtn").addEventListener("click", () => {
   // Remove user data from storage (depends on your login logic)
   localStorage.removeItem("loggedInUser");
@@ -112,4 +97,3 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
   // Redirect to login page
   window.location.href = "index.html";
 });
-

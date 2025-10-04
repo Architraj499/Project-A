@@ -1,126 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Asprients - Study Hub</title>
+<title>Asprients - Login</title>
 <style>
-body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #1a1a2e, #162447, #1f4068);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+:root{
+  --bg:#f6f8fb; 
+  --card:#ffffff;
+  --muted:#6b7280;
+  --accent:#6b21a8; 
+  --accent-2:#0ea5b7;
+  --glass: rgba(0,0,0,0.03); 
+  --card-2:#fff;
+  --text:#0b1220;
 }
-.auth-container {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(12px);
-    padding: 35px 25px;
-    border-radius: 20px;
-    width: 320px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    color: #fff;
-    text-align: center;
+
+body{
+  margin:0; padding:0; height:100vh; font-family:Inter,sans-serif;
+  background: var(--bg); color: var(--text);
+  display:flex; justify-content:center; align-items:center;
 }
-.auth-tabs { display: flex; justify-content: space-around; margin-bottom: 20px; }
-.auth-tabs button {
-    background: none; border: none; color: #fff; font-size: 1em; cursor: pointer;
-    font-weight: 600; padding-bottom: 5px; transition: 0.3s;
+
+.auth-container{
+  width:380px; padding:50px 30px;
+  background: var(--glass); backdrop-filter:blur(12px);
+  border-radius:20px; box-shadow:0 15px 30px rgba(0,0,0,0.08);
+  text-align:center; border:1px solid rgba(0,0,0,0.05);
+  position:relative;
+  transition:0.3s;
 }
-.auth-tabs button.active { border-bottom: 2px solid #ff6ec7; }
-form { display: none; text-align: left; }
-form.active { display: block; }
-.form-group { margin-bottom: 15px; position: relative; }
-.form-group label { display: block; margin-bottom: 5px; }
-.form-group input {
-    width: 100%; padding: 10px 12px; border-radius: 10px; border: none;
-    background: rgba(255,255,255,0.15); color: #fff; font-size: 0.95em; transition: 0.3s;
+
+.auth-tabs{
+  display:flex; justify-content:space-around; margin-bottom:35px;
 }
-.form-group input::placeholder { color: rgba(255,255,255,0.7); }
-.form-group input:focus { outline: none; background: rgba(255,255,255,0.25); box-shadow: 0 0 8px #00fff7; }
-button.submit-btn {
-    width: 100%; padding: 10px; margin-top: 10px; border: none; border-radius: 10px;
-    background: linear-gradient(90deg,#00f7ff,#ff6ec7); color: #fff; font-weight: 600; cursor: pointer; font-size: 1em; transition: 0.3s;
+
+.auth-tabs button{
+  background:none; border:none; color:var(--text); font-weight:600; font-size:1.05em;
+  cursor:pointer; padding:10px 0; position:relative; transition:0.3s;
 }
-button.submit-btn:hover { background: linear-gradient(90deg,#ff6ec7,#00f7ff); transform: translateY(-1px); }
-.switch-link { text-align: center; margin-top: 15px; font-size: 0.9em; }
-.switch-link a { color: #00f7ff; text-decoration: none; font-weight: 600; cursor: pointer; }
-.switch-link a:hover { color: #ff6ec7; }
-#message { text-align: center; margin-top: 10px; font-weight: 600; color: #ffb347; }
+
+.auth-tabs button.active::after{
+  content:''; position:absolute; bottom:0; left:0; width:100%; height:3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius:5px;
+}
+
+form{ display:none; text-align:left; animation:fadeIn 0.4s ease forwards; }
+form.active{ display:block; }
+@keyframes fadeIn{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+
+.form-group{ margin-bottom:18px; }
+.form-group label{ display:block; margin-bottom:6px; font-size:0.9em; font-weight:500; }
+.form-group input{
+  width:100%; padding:12px 14px; border-radius:10px; border:1px solid rgba(0,0,0,0.1);
+  background: var(--card); color:var(--text);
+  font-size:0.95em; box-shadow: inset 1px 1px 3px rgba(0,0,0,0.03);
+  transition:0.3s;
+}
+.form-group input::placeholder{ color: var(--muted); }
+.form-group input:focus{
+  outline:none; border-color: var(--accent);
+  box-shadow:0 0 6px var(--accent-2);
+}
+
+button.submit-btn{
+  width:100%; padding:14px; border:none; border-radius:12px;
+  font-weight:600; font-size:1em; cursor:pointer;
+  background: linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:#fff; transition:0.3s; box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+button.submit-btn:hover{
+  background: linear-gradient(90deg,var(--accent-2),var(--accent));
+  transform:translateY(-2px);
+}
+
+.switch-link{ text-align:center; margin-top:12px; font-size:0.9em; }
+.switch-link a{ color: var(--accent-2); font-weight:600; transition:0.3s; cursor:pointer;}
+.switch-link a:hover{ color: var(--accent); }
+
+#message{ text-align:center; margin-top:10px; font-weight:600; color:var(--accent); min-height:20px; }
+
+@media(max-width:420px){ .auth-container{ width:90%; padding:40px 20px; } }
+
 </style>
-<!-- Favicon -->
-      <link rel="icon" href="images\logo.png" type="image/png">
-            
-                    <!-- Apple Touch Icon -->
-                              <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-                                        
-                                                    <!-- Android / Chrome Icons -->
-                                                                  <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png">
-                                                                                  <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
-                                                                                                  
-                                                                                                                    <!-- Safari Pinned Tab (vector) -->
-                                                                                                                                        <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
-                                                                                                                                                            
-                                                                                                                                                                                  <!-- Optional: Theme color for mobile address bar -->
-                                                                                                                                                                                                          <meta name="theme-color" content="#1f4068">
-                                                                                                                                                                                                          
-                                                                                                                                                                                                          
-                                                                                                                                                                                                          </head>
+<link rel="icon" href="logo.png" type="image/png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="210x210" href="android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
+<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#1f4068">
+
 </head>
 <body>
 
 <div class="auth-container">
-    <div class="auth-tabs">
-        <button id="loginTab" class="active">Login</button>
-        <button id="signupTab">Sign Up</button>
+  <div class="auth-tabs">
+    <button id="loginTab" class="active">Login</button>
+    <button id="signupTab">Sign Up</button>
+  </div>
+
+  <!-- Login Form -->
+  <form id="loginForm" class="active">
+    <div class="form-group">
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" placeholder="Enter your email" required>
     </div>
+    <div class="form-group">
+      <label for="loginPassword">Password</label>
+      <input type="password" id="loginPassword" placeholder="Enter password" required>
+    </div>
+    <button type="submit" class="submit-btn">Login</button>
+    <div class="switch-link"><a id="forgotPassword">Forgot Password?</a></div>
+    <div class="switch-link">Don't have an account? <a id="toSignup">Sign Up</a></div>
+  </form>
 
-    <!-- Login Form -->
-    <form id="loginForm" class="active">
-        <div class="form-group">
-            <label for="loginEmail">Email</label>
-            <input type="email" id="loginEmail" placeholder="Enter your email" required>
-        </div>
-        <div class="form-group">
-            <label for="loginPassword">Password</label>
-            <input type="password" id="loginPassword" placeholder="Enter password" required>
-        </div>
-        <button type="submit" class="submit-btn">Login</button>
-        <!-- Forget Password -->
-        <div class="switch-link">
-            <a href="#" id="forgotPassword">Forgot Password?</a>
-        </div>
-        <div class="switch-link">Don't have an account? <a href="#" id="toSignup">Sign Up</a></div>
-      
-    </form>
+  <!-- Sign Up Form -->
+  <form id="signupForm">
+    <div class="form-group">
+      <label for="signupName">Fullname</label>
+      <input type="text" id="signupName" placeholder="Enter full name" required>
+    </div>
+    <div class="form-group">
+      <label for="signupEmail">Email</label>
+      <input type="email" id="signupEmail" placeholder="Enter email" required>
+    </div>
+    <div class="form-group">
+      <label for="signupPassword">Password</label>
+      <input type="password" id="signupPassword" placeholder="Enter password" required>
+    </div>
+    <div class="form-group">
+      <label for="signupConfirm">Confirm Password</label>
+      <input type="password" id="signupConfirm" placeholder="Confirm password" required>
+    </div>
+    <button type="submit" class="submit-btn">Sign Up</button>
+    <div class="switch-link">Already have an account? <a id="toLogin">Login</a></div>
+  </form>
 
-    <!-- Sign Up Form -->
-    <form id="signupForm">
-        <div class="form-group">
-            <label for="signupName">Fullname</label>
-            <input type="text" id="signupName" placeholder="Enter full name" required>
-        </div>
-        <div class="form-group">
-            <label for="signupEmail">Email</label>
-            <input type="email" id="signupEmail" placeholder="Enter email" required>
-        </div>
-        <div class="form-group">
-            <label for="signupPassword">Password</label>
-            <input type="password" id="signupPassword" placeholder="Enter password" required>
-        </div>
-        <div class="form-group">
-            <label for="signupConfirm">Confirm Password</label>
-            <input type="password" id="signupConfirm" placeholder="Confirm password" required>
-        </div>
-        <button type="submit" class="submit-btn">Sign Up</button>
-        <div class="switch-link">Already have an account? <a href="#" id="toLogin">Login</a></div>
-    </form>
-
-    <div id="message"></div>
+  <div id="message"></div>
 </div>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";

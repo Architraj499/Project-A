@@ -1,0 +1,131 @@
+:root {
+  --bg: #0f1724; 
+  --card: #0b1220; 
+  --muted: #98a0ad; 
+  --accent: #7e5bff; 
+  --accent-2: #00d4ff;
+  --glass: rgba(255,255,255,0.04);
+  --card-2:#0d1420;
+  --text:#e6eef8;
+}
+
+[data-theme="light"] {
+  --bg:#f6f8fb;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --accent:#6b21a8;
+  --accent-2:#0ea5b7;
+  --glass: rgba(0,0,0,0.03);
+  --card-2:#fff;
+  --text:#0b1220;
+}
+
+/* =========================
+   GLOBAL STYLES
+========================= */
+* { box-sizing:border-box; margin:0; padding:0; font-family:Inter, system-ui, sans-serif; }
+body { background: var(--bg); color: var(--text); line-height:1.5; }
+a { text-decoration:none; color:var(--text); }
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:12px 24px;
+  background:var(--card); box-shadow:0 6px 18px rgba(0,0,0,0.3);
+  position:sticky; top:0; z-index:100;
+}
+.navbar .logo img { height:40px; }
+.navbar nav a { margin:0 10px; font-weight:600; }
+.navbar nav a.active { color:var(--accent); }
+.navbar .user-info { display:flex; align-items:center; gap:10px; }
+.navbar button {
+  padding:6px 10px; border-radius:8px; border:none; cursor:pointer;
+  background:var(--accent); color:#fff; transition:0.3s;
+}
+.navbar button:hover { opacity:0.85; }
+
+/* =========================
+   HERO SECTION
+========================= */
+.hero {
+  display:flex; justify-content:center; align-items:center; flex-wrap:wrap;
+  min-height:70vh; padding:40px 20px; gap:40px;
+}
+.hero-content {
+  flex:1; min-width:280px; display:flex; flex-direction:column;
+  justify-content:center; text-align:center;
+}
+.hero-content h1 {
+  margin:0; font-size:3rem; font-weight:800; line-height:1.2;
+}
+.hero-content h1 span { color:#00bcd4; font-size:3.2rem; }
+.hero-content p { font-size:1.2rem; opacity:0.9; margin-bottom:20px; }
+.hero .surf { display:flex; justify-content:center; gap:12px; margin-bottom:12px; }
+.hero .surf a {
+  padding:8px 12px; border-radius:10px; font-weight:600; background:transparent; color:var(--muted); transition:0.3s;
+}
+.hero .surf a.active {
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:#fff; box-shadow:0 8px 30px rgba(126,91,255,0.12);
+}
+.hero-image {
+  flex:1; min-width:280px; display:flex; justify-content:center; align-items:center;
+}
+.hero-image img {
+  max-width:60%; height:auto; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.3);
+}
+
+/* =========================
+   QUICK LINKS CARDS
+========================= */
+.container { max-width:1180px; margin:32px auto; padding:0 20px; }
+h2 { margin-bottom:20px; text-align:center; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:33px; }
+.card {
+  background:var(--card); padding:16px; border-radius:12px;
+  box-shadow:0 6px 20px rgba(2,6,23,0.5); border:1px solid rgba(255,255,255,0.03);
+  display:flex; flex-direction:column; gap:12px; transition:0.3s;
+}
+.card:hover { transform:translateY(-5px); }
+.card h3 { margin-bottom:6px; }
+.card .actions { margin-top:auto; display:flex; gap:8px; }
+.card .play {
+  flex:1; padding:8px; border:none; border-radius:8px; font-weight:700;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#fff; cursor:pointer; transition:0.3s;
+}
+.card .play:hover { opacity:0.9; transform:translateY(-2px); }
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+  background:var(--card); border-top:1px solid rgba(255,255,255,0.05);
+  margin-top:40px; padding:24px 20px; color:var(--muted); text-align:center;
+}
+footer p {
+  text-align:center; margin:8px 0;
+}
+.footer-links {
+  margin-top:8px; display:flex; justify-content:center; gap:16px; flex-wrap:wrap;
+}
+.footer-links a {
+  color:var(--muted); font-weight:600; transition:0.3s;
+}
+.footer-links a:hover { color:var(--accent-2); }
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width:768px) {
+  .hero { flex-direction:column; }
+  .hero-content h1 { font-size:2rem; }
+  .hero-content h1 span { font-size:2.2rem; }
+  .hero-image img { max-width:50%; }
+}
+@media (max-width:480px) {
+  .hero-content h1 { font-size:1.6rem; }
+  .hero-content h1 span { font-size:1.8rem; }
+  .hero-image img { max-width:40%; }
+}

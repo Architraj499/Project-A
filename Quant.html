@@ -1,392 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CA-Quantative Aptitude</title>
-  
-   <!-- Favicon -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CA- Quantative Aptitude</title>
+    <link rel="stylesheet" href="quant.css">
 <link rel="icon" href="images\logo.png" type="image/png">
-              
- <!-- Apple Touch Icon -->
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-                                          
-<!-- Android / Chrome Icons -->
 <link rel="icon" type="image/png" sizes="210x210" href="android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
-                                                                                                    
- <!-- Safari Pinned Tab (vector) -->
 <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
-                                                                                                                                                              
-<!-- Optional: Theme color for mobile address bar -->
 <meta name="theme-color" content="#1f4068">
-<link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-
-  <header class="navbar">
-    <div class="logo">
-      <img class="cuet-logo" src="images\clipart702255.png" alt="CUET Logo">
-    </div>
-    <nav>
-      <a href="home.html">Home</a>
-      <a href="Boards.html">Boards</a> 
-      <a href="cuet.html">CUET</a>
-      <a href="cafoundation.html" class="active">CA Foundation</a>
-      
-    </nav>
-    <div class="user-info">
-      Welcome, <span id="usernameDisplay">User</span>
-      <button id="logoutBtn">Logout</button>
-    </div>
-  </header>
-
-  <section class="hero">
-    <div class="hero-content">
-      <div class="surf">
-        <a href="Accounting.html">Book Keeping</a>
-        <a href="Business_law.html">Business Law</a>
-        <a href="Quant.html" class="active" >Quantative Aptitude</a>
-        <a href="Bussiness_eco.html">Business Economics</a>
-        
-      </div>
-<h1>Quantative Aptitude</h1>
-      <p>Detailed lectures,Organized notes, PYQs & mock tests 🚀</p>
-    </div>
-  </section>
-<section class="subject-content">
-    
-    <div class="syllabus-container">
-  <div class="syllabus-item">
-    <h2>Syllabus</h2>
-    <h3>Quantative Aptitude Syllabus</h3>
-    <a href="Pdfs\Quant_syllabus.pdf" target="_blank" class="view-btn">View</a>
-    <a href="Pdfs\Quant_syllabus.pdf" download class="download-btn">Download</a>
+ <header class="navbar">
+  <div class="logo"><img class="cuet-logo" src="images\logo.png" alt="CUET Logo"></div>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="Boards.html">Boards</a> 
+    <a href="cuet.html">CUET</a>
+    <a href="cafoundation.html" class="active">CA Foundation</a>
+  </nav>
+  <div class="user-info">
+    Welcome, <span id="usernameDisplay">User</span>
+    <button id="logoutBtn">Logout</button>
+    <button class="btn" id="themeToggle">🌙</button>
   </div>
+</header> 
+<section class="hero">
+  <div class="hero-content">
+    <div class="surf">
+  <a href="Accounting.html">Book Keeping</a>
+  <a href="law.html">Business Law</a>
+  <a href="Quant.html" class="active">Quantative Aptitude</a>
+  <a href="B_eco.html">Business Economics </a>
+  
 </div>
- 
-<main>
-  <!-- ===== Lectures (original content kept) ===== -->
-  <section class="subject-content">
-    <h2>Lectures : Part-A Business Mathematics</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>Lecture 1 - Ratio and Proportion, Indices and Logarithms</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/C7mg-WbYm-w?si=RGK-9UbUd1U4yUEj">Play Video</button>
+    </div>
+   <div class="actions">
+        <div class="search" role="search" aria-label="Search lectures">
+          🔎 <input id="searchInput" placeholder="Search chapters, topics..." />
+        </div>
+        </section>
+   <div class="container">
+  <section class="subject-hero">
+    <div class="subject-card">
+      <h1>CA- Quantative Aptitude</h1>
+      <div class="subject-meta">CA Foundation</div>
+      <div class="subject-actions">
+        <button class="tab active" onclick="filterBy('all')">All</button>
+        <button class="tab" onclick="filterBy('completed')">Completed</button>
+        <button class="tab" onclick="filterBy('pending')">Pending</button>
       </div>
-      <div class="card">
-        <h3>Lecture 2 - Equations</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/7MWGayP7Fss">Play Video</button>
-      </div>
-      <div class="card">
-        <h3>Lecture 3 - Linear Inequalities with Objective Functions and Optimization</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/e6VXKEczL-4">Play Video</button>
-      </div>
-      <div class="card">
-        <h3>Lecture 4 - Mathematics of Finance</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/qJm1ieRiae0">Play Video</button>
-      </div>
-      <div class="card">
-        <h3>Lecture 5 - Permutations and Combinations</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/lmNy6AozqUE">Play Video</button>
-      </div>
-      <div class="card">
-        <h3>Lecture 6 - Sequence and Series</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/0Qn7LnklT4c">Play Video</button>
-      </div>
-      <div class="card">
-        <h3>Lecture 7 - Sets, Relations and Functions; Basics of Limits & Continuity</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/5KZ-kMMorqY">Play Video</button>
-      </div>
-      <div class="card">
-        <h3>Lecture 8 - Applications of Differential & Integral Calculus</h3>
-        <button class="lecture-btn" data-video="soon.html">Coming Soon</button>
+    </div>
+    <div style="min-width:260px">
+      <div style="padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));">
+        <div style="display:flex; justify-content:space-between; gap:12px; align-items:center">
+        </div>
+            <div style="font-weight:800">Overall Progress</div>
+            <div class="muted">You have finished <strong id="overallPercent">0%</strong> of this subject</div>
+          </div>
+          <div class="ring" id="ringPercent">0%</div>
+        </div>
+        <div style="margin-top:10px" class="progress"><i id="overallBar"></i></div>
       </div>
     </div>
   </section>
-
-  <section class="subject-content">
-    <h2>Lectures :Part-B Logical Reasoning</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>Lecture 1 - Number Series, Coding & Decoding, Odd Man Out</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/b3Y78ICAEpI">Play Video</button>
-      </div>
-      <div class="card">
-        <h3>Lecture 2 - Direction Tests</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/ArobUb475ZUl">Play Video</button>
-      </div>
-      <div class="card">
-        <h3>Lecture 3 - Seating Arrangements</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/ArobUb475ZUl">Play Video</button>
-      </div>
-      <div class="card">
-        <h3>Lecture 4 - Blood Relations</h3>
-        <button class="lecture-btn" data-video="soon.html">Coming Soon</button>
-      </div>
-    </div>
-  </section>
-
-  <section class="subject-content">
-    <h2>Lectures :Part-C Statistics</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>Lecture 1 - Statistical Description of Data</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/b3Y78ICAEpI">Play Video</button>
-      </div>
-      <div class="card">
-        <h3>Lecture 2 - Measures of Central Tendency & Dispersion</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/b3Y78ICAEpI">Play Video</button>
-      </div>
-      <div class="card">
-        <h3>Lecture 3 - Probability</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/b3Y78ICAEpI">Play Video</button>
-      </div>
-      <div class="card">
-        <h3>Lecture 4 - Theoretical Distributions</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/b3Y78ICAEpI">Play Video</button>
-      </div>
-      <div class="card">
-        <h3>Lecture 5 - Correlation & Regression</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/b3Y78ICAEpI">Play Video</button>
-      </div>
-      <div class="card">
-        <h3>Lecture 6 - Index Numbers</h3>
-        <button class="lecture-btn" data-video="https://www.youtube.com/embed/b3Y78ICAEpI">Play Video</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Notes: mirrored & organized by same parts ===== -->
-  <section class="syllabus-content">
-    <h2>Notes</h2>
-
-    <h3>Part A — Business Mathematics</h3>
-    <div class="cards">
-      <div class="card">
-        <h4>Chapter 1 – Ratio & Proportion, Indices & Logarithms</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 2 – Equations</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 3 – Linear Inequalities & Optimization</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 4 – Mathematics of Finance</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 5 – Permutations & Combinations</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 6 – Sequence & Series</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 7 – Sets, Relations & Functions; Limits & Continuity</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 8 – Differential & Integral Calculus (Applications)</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-    </div>
-
-    <h3>>Part B — Logical Reasoning</h3>
-    <div class="cards">
-      <div class="card">
-        <h4>Chapter 1 – Number Series, Coding & Decoding, Odd Man Out</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 2 – Direction Tests</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 3 – Seating Arrangements</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 4 – Blood Relations</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-    </div>
-
-    <h3>Part C — Statistics</h3>
-    <div class="cards">
-      <div class="card">
-        <h4>Chapter 1 – Statistical Description of Data</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 2 – Measures of Central Tendency & Dispersion</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 3 – Probability</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 4 – Theoretical Distributions</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 5 – Correlation & Regression</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 6 – Index Numbersw</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== PYQs: mirrored same grouping ===== -->
-  <section class="subject-content">
-    <h2>PYQs</h2>
-
-    <h3>Part A — Business Mathematics</h3>
-    <div class="cards">
-      <div class="card">
-        <h4>Chapter 1 – Ratio & Proportion, Indices & Logarithms</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 2 – Equations</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 3 – Linear Inequalities & Optimization</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 4 – Mathematics of Finance</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 5 – Permutations & Combinations</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 6 – Sequence and Series</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 7 – Sets, Relations and Functions; Basics of Limits & Continuity
-</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 8 – Applications of Differential & Integral Calculus</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-    </div>
-
-    <h3>>Part B — Logical Reasoning</h3>
-    <div class="cards">
-      <div class="card">
-        <h4>Chapter 1 – Number Series, Coding & Decoding, Odd Man Out</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 2 – Direction Tests</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 3 – Seating Arrangements</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 4 – Blood Relations</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-    </div>
-
-    <h3>Part C — Statistics</h3>
-    <div class="cards">
-      <div class="card">
-        <h4>Chapter 1 – Statistical Description of Data</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 2 – Measures of Central Tendency & Dispersion</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 3 – Probability</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 4 – Theoretical Distributions</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 5 – Correlation & Regression</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-      <div class="card">
-        <h4>Chapter 6 – Index Numbers</h4>
-        <a href="soon.html" class="view-btn">View</a>
-        <a href="soon.html" class="download-btn">Download</a>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<!-- Video Modal (keep your modal HTML in one place) -->
-<div id="videoModal" class="modal" aria-hidden="true" style="display:none;">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <iframe id="videoIframe" src="" title="YouTube video player" frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowfullscreen></iframe>
   </div>
-</div>
+   <nav class="tabs">
+    <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
+    <button class="tab" data-tab="notes" onclick="openTab(event)">Notes</button>
+    <button class="tab" data-tab="pyqs" onclick="openTab(event)">PYQs</button>
+  </nav>
+ <section id="lectures" class="tabpanel">
+    <div class="grid" id="cardsGrid"></div>
+  </section>
 
-<script type="module" src="script.js"></script>
+  <section id="notes" class="tabpanel" style="display:none">
+    <div class="grid" id="notesGrid"></div>
+  </section>
+
+  <section id="pyqs" class="tabpanel" style="display:none">
+    <div class="grid" id="pyqGrid"></div>
+  </section>
+</div> 
+<div id="videoModal" class="modal"><div class="modal-box">
+  <div class="modal-header">
+    <div id="modalTitle">Playing</div>
+    <div style="display:flex; gap:8px; align-items:center">
+      <button class="btn ghost" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+  <div class="modal-body">
+    <iframe id="videoIframe" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div></div>
+<footer class="footer">
+  <div class="footer-content">
+    <p><b>© 2025 Asprient</b>All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="mailto:support@cuetdashboard.in">Contact Us</a>
+    </div>
+  </div>
+</footer>
+
+<script src="quant.js"></script>
+  
 </body>
-<footer>
-    <p>© 2025 Asprient | Built by Archit</p>
-  </footer>
 </html>
