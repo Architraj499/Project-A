@@ -1,3 +1,5 @@
+console.log("JS connected! 🚀");
+
 const LECTURES = [
   { id: 'A1', min:'TBA', title: 'Partnership Fundamentals', video: 'https://www.youtube.com/embed/I5kdnDq8uHs', notes:'Cuet Accountancy.pdf', pyq:'#', progress:0., teacher:'Manish Sir' },
   { id: 'A2', min:'TBA', title: 'Accounting for Admission', video: '', notes:'#', pyq:'#', progress:0., teacher:'Ms. Y' },
