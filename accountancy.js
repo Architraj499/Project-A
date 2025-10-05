@@ -63,16 +63,23 @@ function openVideo(rawUrl,title){
   iframe.src=embed+sep+'autoplay=1&rel=0&modestbranding=1';
   modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
 }
-function closeModal(){ const iframe=document.getElementById('videoIframe'); const modal=document.getElementById('videoModal'); iframe.src=''; modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-function openTab(e){ const tab=e.currentTarget.dataset.tab; document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab)); document.querySelectorAll('.tabpanel').forEach(p=>p.style.display=p.id===tab?'':'none'); }
+function closeModal(){ const iframe=document.getElementById('videoIframe'); const modal=document.getElementById('videoModal');
+ iframe.src=''; modal.classList.remove('open'); 
+ modal.setAttribute('aria-hidden','true');
+  document.body.style.overflow=''; }
+function openTab(e){ const tab=e.currentTarget.dataset.tab; 
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab)); document.querySelectorAll('.tabpanel').forEach(p=>p.style.display=p.id===tab?'':'none'); }
 function filterBy(mode){ document.querySelectorAll('#cardsGrid .card').forEach((card,idx)=>{ const prog=LECTURES[idx].progress; if(mode==='completed') card.style.display=prog>=0.99?'':'none'; else if(mode==='pending') card.style.display=prog<0.99?'':'none'; else card.style.display=''; }); }
-const themeBtn=document.getElementById('themeToggle'); themeBtn.addEventListener('click',()=>{ const root=document.documentElement; const cur=root.getAttribute('data-theme')||'dark'; const next=cur==='dark'?'light':'dark'; root.setAttribute('data-theme',next); themeBtn.innerText=next==='light'?'🌙':'☀️'; });
-function updateOverall(){ const avg=Math.round((LECTURES.reduce((s,l)=>s+(l.progress||0),0)/LECTURES.length)*100); document.getElementById('overallPercent').innerText=avg+'%'; document.getElementById('ringPercent').innerText=avg+'%'; document.getElementById('overallBar').style.width=avg+'%'; }
+const themeBtn=document.getElementById('themeToggle'); 
+themeBtn.addEventListener('click',()=>{ const root=document.documentElement; 
+  const cur=root.getAttribute('data-theme')||'dark'; const next=cur==='dark'?'light':'dark'; 
+  root.setAttribute('data-theme',next); themeBtn.innerText=next==='light'?'🌙':'☀️'; });
+function updateOverall(){ const avg=Math.round((LECTURES.reduce((s,l)=>s+(l.progress||0),0)/LECTURES.length)*100); 
+  document.getElementById('overallPercent').innerText=avg+'%'; document.getElementById('ringPercent').innerText=avg+'%'; document.getElementById('overallBar').style.width=avg+'%'; }
 function escapeHtml(s){return (s||'').replace(/"/g,'&quot;').replace(/'/g,"&apos;");}
 document.getElementById('videoModal').addEventListener('click',(e)=>{ if(e.target===e.currentTarget) closeModal(); });
 document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeModal() });
 renderAll();
-
 
 /* search & filter */
 document.getElementById('searchInput').addEventListener('input',(ev)=>{
@@ -82,8 +89,33 @@ document.getElementById('searchInput').addEventListener('input',(ev)=>{
     card.style.display = title.includes(q) ? '' : 'none';
   });
 });
-const root = document.documentElement;
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-root.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
-document.getElementById('themeToggle').innerText = prefersDark ? '☀' : '🌙';
+const themeToggle = document.getElementById('themeToggle');
 
+  // Load saved theme from localStorage
+  if(localStorage.getItem('theme')){
+      document.body.setAttribute('data-theme', localStorage.getItem('theme'));
+      themeToggle.textContent = localStorage.getItem('theme') === 'dark' ? '🌙' : '☀️';
+  }
+
+  themeToggle.addEventListener('click', () => {
+      let currentTheme = document.body.getAttribute('data-theme');
+      if(currentTheme === 'dark'){
+          document.body.setAttribute('data-theme', 'light');
+          themeToggle.textContent = '🌙';
+          localStorage.setItem('theme','light');
+      } else {
+          document.body.setAttribute('data-theme', 'dark');
+          themeToggle.textContent = '☀️';
+          localStorage.setItem('theme','dark');
+      }
+  });
+  // Logout button logic
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  // Remove user data from storage (depends on your login logic)
+  localStorage.removeItem("loggedInUser");
+  sessionStorage.removeItem("loggedInUser");
+
+  
+  // Redirect to login page
+  window.location.href = "index.html";
+});

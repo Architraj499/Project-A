@@ -87,7 +87,7 @@ const themeToggle = document.getElementById('themeToggle');
   // Load saved theme from localStorage
   if(localStorage.getItem('theme')){
       document.body.setAttribute('data-theme', localStorage.getItem('theme'));
-      themeToggle.textContent = localStorage.getItem('theme') === 'dark' ? '🌙' : '☀️';
+      themeToggle.textContent = localStorage.getItem('theme') === 'dark' ? '🌙' : '☀️';
   }
 
   themeToggle.addEventListener('click', () => {

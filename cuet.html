@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CUET - Asprient</title>
-  <link rel="stylesheet" href="boards.css">
+  <link rel="stylesheet" href="CSS\cuet.css">
 <link rel="icon" href="images/logo.png" type="image/png">
 </head>
 <body>
@@ -65,7 +65,7 @@
   // Load saved theme from localStorage
   if(localStorage.getItem('theme')){
       document.body.setAttribute('data-theme', localStorage.getItem('theme'));
-      themeToggle.textContent = localStorage.getItem('theme') === 'dark' ? '🌙' : '☀️';
+      themeToggle.textContent = localStorage.getItem('theme') === 'dark' ? '🌙' : '☀️';
   }
 
   themeToggle.addEventListener('click', () => {

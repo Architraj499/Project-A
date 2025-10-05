@@ -186,3 +186,16 @@ footer {
 @media (max-width:520px){
   .subject-card h1{font-size:1.2rem}
 }
+@media (max-width: 768px) {
+  nav {
+    display: none; /* Hide navbar links on mobile */
+  }
+
+  .hamburger {
+    display: none; /* Hide hamburger too */
+  }
+
+  .user-info {
+    display: flex; /* Keep welcome, logout & theme toggle visible */
+  }
+}

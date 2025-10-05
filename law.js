@@ -78,12 +78,27 @@ document.getElementById('searchInput').addEventListener('input',(ev)=>{
     card.style.display = title.includes(q) ? '' : 'none';
   });
 });
-const root = document.documentElement;
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-root.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
-document.getElementById('themeToggle').innerText = prefersDark ? '☀' : '🌙';
+const themeToggle = document.getElementById('themeToggle');
 
-// Logout button logic
+  // Load saved theme from localStorage
+  if(localStorage.getItem('theme')){
+      document.body.setAttribute('data-theme', localStorage.getItem('theme'));
+      themeToggle.textContent = localStorage.getItem('theme') === 'dark' ? '🌙' : '☀️';
+  }
+
+  themeToggle.addEventListener('click', () => {
+      let currentTheme = document.body.getAttribute('data-theme');
+      if(currentTheme === 'dark'){
+          document.body.setAttribute('data-theme', 'light');
+          themeToggle.textContent = '🌙';
+          localStorage.setItem('theme','light');
+      } else {
+          document.body.setAttribute('data-theme', 'dark');
+          themeToggle.textContent = '☀️';
+          localStorage.setItem('theme','dark');
+      }
+  });
+  // Logout button logic
 document.getElementById("logoutBtn").addEventListener("click", () => {
   // Remove user data from storage (depends on your login logic)
   localStorage.removeItem("loggedInUser");

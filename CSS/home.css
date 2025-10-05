@@ -129,3 +129,54 @@ footer p {
   .hero-content h1 span { font-size:1.8rem; }
   .hero-image img { max-width:40%; }
 }
+@media (max-width: 768px) {
+  nav {
+    display: none; /* Hide navbar links on mobile */
+  }
+
+  .hamburger {
+    display: none; /* Hide hamburger too */
+  }
+
+  .user-info {
+    display: flex; /* Keep welcome, logout & theme toggle visible */
+  }
+}
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    padding: 20px 10px; /* Reduce top-bottom & left-right padding */
+    gap: 20px; /* Reduce space between hero-content and image */
+  }
+
+  .hero-image img {
+    max-width: 70%; /* Adjust image size for mobile */
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content h1 span {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 15px 5px;
+    gap: 15px;
+  }
+
+  .hero-image img {
+    max-width: 60%;
+  }
+
+  .hero-content h1 {
+    font-size: 1.6rem;
+  }
+
+  .hero-content h1 span {
+    font-size: 1.8rem;
+  }
+}

@@ -51,7 +51,7 @@ a { text-decoration: none; color: inherit; }
   transition:0.3s;
 }
 .hero-buttons .btn-primary:hover { opacity:0.9; transform:translateY(-2px); }
-.hero-image img {margin-left: 400px; max-width: 60%; height:auto; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.3); }
+.hero-image img { max-width: 60%; height:auto; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.3); }
 
 
 
@@ -97,4 +97,17 @@ footer p {
   .hero-content h1 { font-size:2rem; }
   .hero-content h1 span { font-size:2.2rem; }
   .hero-image img { max-width: 80%; }
+}
+@media (max-width: 768px) {
+  nav {
+    display: none; /* Hide navbar links on mobile */
+  }
+
+  .hamburger {
+    display: none; /* Hide hamburger too */
+  }
+
+  .user-info {
+    display: flex; /* Keep welcome, logout & theme toggle visible */
+  }
 }
