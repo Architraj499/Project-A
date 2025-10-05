@@ -23,7 +23,7 @@
 /* =========================
    GLOBAL STYLES
 ========================= */
-* { box-sizing:border-box; margin:0; padding:0; font-family:Inter, system-ui, sans-serif; }
+* { box-sizing:border-box; margin:0; padding:0; font-family:Inter, sans-serif; }
 body { background: var(--bg); color: var(--text); line-height:1.5; }
 a { text-decoration:none; color:var(--text); }
 
@@ -36,7 +36,7 @@ a { text-decoration:none; color:var(--text); }
   background:var(--card); box-shadow:0 6px 18px rgba(0,0,0,0.3);
   position:sticky; top:0; z-index:100;
 }
-.navbar .logo img { height:40px; }
+.navbar .logo img { height:40px; border-radius: 90%; }
 .navbar nav a { margin:0 10px; font-weight:600; }
 .navbar nav a.active { color:var(--accent); }
 .navbar .user-info { display:flex; align-items:center; gap:10px; }

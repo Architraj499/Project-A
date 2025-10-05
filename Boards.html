@@ -72,9 +72,10 @@
     </div>
   </section>
 
-  <footer>
+ <div class="footer-wrapper">
+<footer class="footer">
   <div class="footer-content">
-    <p><b>© 2025 Asprient</b> All rights reserved.</p>
+    <p><b>© 2025 Asprient</b>All rights reserved.</p>
     <div class="footer-links">
       <a href="#">Privacy Policy</a>
       <a href="#">Terms of Use</a>
@@ -82,6 +83,8 @@
     </div>
   </div>
 </footer>
+</div>
+
   <script>
   const themeToggle = document.getElementById('themeToggle');
 
@@ -95,11 +98,11 @@
       let currentTheme = document.body.getAttribute('data-theme');
       if(currentTheme === 'dark'){
           document.body.setAttribute('data-theme', 'light');
-          themeToggle.textContent = '☀️';
+          themeToggle.textContent = '🌙';
           localStorage.setItem('theme','light');
       } else {
           document.body.setAttribute('data-theme', 'dark');
-          themeToggle.textContent = '🌙';
+          themeToggle.textContent = '☀️';
           localStorage.setItem('theme','dark');
       }
   });
@@ -113,7 +116,6 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
   // Redirect to login page
   window.location.href = "index.html";
 });
-
 </script>
 </body>
 </html>

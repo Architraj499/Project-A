@@ -3,70 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CA Foundation - Asprient</title>
-  <link rel="stylesheet" href="style.css">
-   <!-- Favicon -->
-<link rel="icon" href="images\logo.png" type="image/png">
-              
- <!-- Apple Touch Icon -->
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-                                          
-<!-- Android / Chrome Icons -->
-<link rel="icon" type="image/png" sizes="210x210" href="android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
-                                                                                                    
- <!-- Safari Pinned Tab (vector) -->
-<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
-                                                                                                                                                              
-<!-- Optional: Theme color for mobile address bar -->
-<meta name="theme-color" content="#1f4068">
-<link rel="stylesheet" href="style.css">
+  <title>CUET - Asprient</title>
+  <link rel="stylesheet" href="CSS\ca.css">
+<link rel="icon" href="images/logo.png" type="image/png">
 </head>
 <body>
 
-  <header class="navbar">
-    <div class="logo">
-       <div class="logo"> <img src="images\logo.png" alt=" Logo"></div>
-  <!-- <img src="images\clipart702255.png" alt="CA Foundation Logo"> -->
-<!-- <span>CA Foundation</span> -->
-</div>
 
-    <nav>
-      <a href="home.html">Home</a>
-      <a href="Boards.html">Boards</a>
-      <a href="cuet.html">CUET</a>
-      <a href="cafoundation.html" class="active">CA Foundation</a>
-    
-    </nav>
-    <div class="user-info">
+<header class="navbar">
+  <div class="logo">
+    <img src="images\logo.png" alt="Logo">
+  </div>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="Boards.html">Boards</a>
+    <a href="cuet.html">CUET</a>
+    <a href="cafoundation.html" class="active">CA Foundation</a>
+  </nav>
+  <div class="user-info">
     Welcome, <span id="usernameDisplay">User</span>
     <button id="logoutBtn">Logout</button>
+    <button id="themeToggle">🌙</button> <!-- Dark/Light toggle -->
   </div>
-  </header>
+</header>
 
-  <section class="hero">
-    
-    <img class="ca-logo" src="images\clipart702255.png" alt="CA Foundation Logo">
-    
-    <h1>CA Foundation Prep</h1>
-     <p>Accounting, Law, Quant & Economics </p>
-  </section>
+<section class="hero">
+   
+  <div class="hero-content">
+    <h1>CA<br><span>Foundation</span></h1>
+    <p>Detailed lectures, Organized notes, PYQs & mock tests 🚀</p>
 
-  <section class="quick-links">
-    <h2>Subjects</h2>
-    <div class="cards">
-      <div class="card"><a href="Accounting.html">Accounting/Book Keeping</a><p>Notes + Practice</p></div>
-      <div class="card"><a href="law.html">Business Law</a><p>Important Acts</p></div>
-      <div class="card"><a href="Quant.html">Quantative Aptitude</a><p>Formulas + Tests</p></div>
-      <div class="card"><a href="Bussiness_eco.html">Business Economics</a><p>Summary Notes</p></div>
+  </div>
+  <div class="hero-image">
+      <img src="images\clipart702255.png" alt="CUET Logo">
     </div>
-  </section>
+</section>
 
- <footer>
-    <p>© 2025 Asprient| Built by Archit</p>
-  </footer>
+<section class="quick-links">
+  <h2>Subjects</h2>
+  <div class="cards">
+    <div class="card"><a href="Accounting.html">Accounting</a><p>Practice Qs</p></div>
+    <div class="card"><a href="law.html">Business Laws</a><p>Important Topics</p></div>
+    <div class="card"><a href="B_eco.html">Business Economics</a><p>Notes & PYQs</p></div>
+    <div class="card"><a href="Quant.html">Quantative Aptitude</a><p>Grammar & Reading</p></div>
+  </div>
+</section>
+
+<div class="footer-wrapper">
+<footer class="footer">
+  <div class="footer-content">
+    <p><b>© 2025 Asprient</b>All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="mailto:support@cuetdashboard.in">Contact Us</a>
+    </div>
+  </div>
+</footer>
+</div>
+
+<script>
+  const themeToggle = document.getElementById('themeToggle');
+
+  // Load saved theme from localStorage
+  if(localStorage.getItem('theme')){
+      document.body.setAttribute('data-theme', localStorage.getItem('theme'));
+      themeToggle.textContent = localStorage.getItem('theme') === 'dark' ? '🌙' : '☀️';
+  }
+
+  themeToggle.addEventListener('click', () => {
+      let currentTheme = document.body.getAttribute('data-theme');
+      if(currentTheme === 'dark'){
+          document.body.setAttribute('data-theme', 'light');
+          themeToggle.textContent = '☀️';
+          localStorage.setItem('theme','light');
+      } else {
+          document.body.setAttribute('data-theme', 'dark');
+          themeToggle.textContent = '🌙';
+          localStorage.setItem('theme','dark');
+      }
+  });
+  // Logout button logic
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  // Remove user data from storage (depends on your login logic)
+  localStorage.removeItem("loggedInUser");
+  sessionStorage.removeItem("loggedInUser");
 
   
-<script type="module" src="script.js"></script>
+  // Redirect to login page
+  window.location.href = "index.html";
+});
+
+</script>
 </body>
 </html>
