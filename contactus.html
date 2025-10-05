@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us - Asprients Study Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+:root {
+  --primary: #7e5bff;
+  --secondary: #0ea5b7;
+  --bg: #f6f8fb;
+  --card: #fff;
+  --text: #0b1220;
+  --muted: #6b7280;
+  --shadow: rgba(0,0,0,0.2);
+  --transition: 0.3s ease;
+}
+* {box-sizing:border-box; margin:0; padding:0;}
+body {font-family:'Inter', sans-serif; background-color: var(--bg); color: var(--text);}
+.container {max-width: 900px; margin: 50px auto; padding: 30px 40px; background: var(--card); border-radius: 12px; box-shadow: 0 10px 25px var(--shadow);}
+h1 {font-size:2.2rem; margin-bottom:10px; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+p.subtitle {color: var(--muted); margin-bottom:30px;}
+.contact-info {display:flex; flex-wrap:wrap; gap:20px; margin-bottom:40px;}
+.contact-card {flex:1 1 250px; background: var(--card); padding:20px; border-radius:12px; box-shadow:0 8px 20px var(--shadow); display:flex; align-items:center; gap:15px; transition: var(--transition);}
+.contact-card:hover {transform: translateY(-5px);}
+.contact-card i {font-size:1.8rem; color: var(--secondary);}
+form {display:flex; flex-direction:column; gap:15px;}
+input, textarea {padding:12px 15px; border-radius:8px; border:1px solid #ddd; font-size:1rem; transition: var(--transition);}
+input:focus, textarea:focus {border-color: var(--primary); outline:none; box-shadow:0 0 8px rgba(126,91,255,0.2);}
+button {padding:12px 20px; border:none; border-radius:8px; background: linear-gradient(90deg, var(--primary), var(--secondary)); color:#fff; font-weight:600; cursor:pointer; transition: var(--transition);}
+button:hover {opacity:0.9; transform: translateY(-2px);}
+@media(max-width:768px){.container{padding:20px;} .contact-info{flex-direction:column;}}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Contact Us</h1>
+  <p class="subtitle">Have questions or suggestions? Reach out to us and we'll get back to you as soon as possible!</p>
+
+  <div class="contact-info">
+    <div class="contact-card">
+      <i class="fa-solid fa-envelope"></i>
+      <div>
+        <h3>Email</h3>
+        <p>asprients.info@gmail.com</p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <i class="fa-solid fa-phone"></i>
+      <div>
+        <h3>Phone</h3>
+        <p>+91 98765 43210</p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <i class="fa-solid fa-location-dot"></i>
+      <div>
+        <h3>Address</h3>
+        <p>123 Study Lane, Knowledge City, India</p>
+      </div>
+    </div>
+  </div>
+
+  <form id="contactForm">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <input type="text" name="subject" placeholder="Subject" required>
+    <textarea name="message" rows="6" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</div>
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+(function(){
+   emailjs.init("46Tgd8p1iUW4cSexp"); // Replace with your EmailJS User ID
+})();
+
+document.getElementById('contactForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  emailjs.sendForm('service_7aplvuz','template_tdh9kws', this)
+    .then(function(){
+      alert('Thank you! Your message has been sent successfully.');
+      document.getElementById('contactForm').reset();
+    }, function(error){
+      alert('Oops! Something went wrong. Please try again later.');
+      console.error(error);
+    });
+});
+</script>
+
+</body>
+</html>
