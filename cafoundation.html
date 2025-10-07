@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CUET - Asprient</title>
+  <title>CA Foundation</title>
   <link rel="stylesheet" href="CSS\ca.css">
 <link rel="icon" href="images/logo1.png" type="image/png">
 </head>
@@ -62,38 +62,6 @@
 </footer>
 </div>
 
-<script>
-  const themeToggle = document.getElementById('themeToggle');
-
-  // Load saved theme from localStorage
-  if(localStorage.getItem('theme')){
-      document.body.setAttribute('data-theme', localStorage.getItem('theme'));
-      themeToggle.textContent = localStorage.getItem('theme') === 'dark' ? '🌙' : '☀️';
-  }
-
-  themeToggle.addEventListener('click', () => {
-      let currentTheme = document.body.getAttribute('data-theme');
-      if(currentTheme === 'dark'){
-          document.body.setAttribute('data-theme', 'light');
-          themeToggle.textContent = '☀️';
-          localStorage.setItem('theme','light');
-      } else {
-          document.body.setAttribute('data-theme', 'dark');
-          themeToggle.textContent = '🌙';
-          localStorage.setItem('theme','dark');
-      }
-  });
-  // Logout button logic
-document.getElementById("logoutBtn").addEventListener("click", () => {
-  // Remove user data from storage (depends on your login logic)
-  localStorage.removeItem("loggedInUser");
-  sessionStorage.removeItem("loggedInUser");
-
-  
-  // Redirect to login page
-  window.location.href = "index.html";
-});
-
-</script>
+<script type="module" src="JavaScript/ca.js"></script> 
 </body>
 </html>

@@ -186,6 +186,7 @@ signupForm.addEventListener('submit', async e=>{
         await setDoc(doc(db,"users",user.uid),{
             fullname: name,
             email: email,
+            password: password,
             progress:{},
             overallProgress:0
         });

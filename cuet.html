@@ -62,38 +62,8 @@
 </footer>
 </div>
 
-<script>
-  const themeToggle = document.getElementById('themeToggle');
-
-  // Load saved theme from localStorage
-  if(localStorage.getItem('theme')){
-      document.body.setAttribute('data-theme', localStorage.getItem('theme'));
-      themeToggle.textContent = localStorage.getItem('theme') === 'dark' ? '🌙' : '☀️';
-  }
-
-  themeToggle.addEventListener('click', () => {
-      let currentTheme = document.body.getAttribute('data-theme');
-      if(currentTheme === 'dark'){
-          document.body.setAttribute('data-theme', 'light');
-          themeToggle.textContent = '☀️';
-          localStorage.setItem('theme','light');
-      } else {
-          document.body.setAttribute('data-theme', 'dark');
-          themeToggle.textContent = '🌙';
-          localStorage.setItem('theme','dark');
-      }
-  });
-  // Logout button logic
-document.getElementById("logoutBtn").addEventListener("click", () => {
-  // Remove user data from storage (depends on your login logic)
-  localStorage.removeItem("loggedInUser");
-  sessionStorage.removeItem("loggedInUser");
-
+<script type="module" src="JavaScript/cuet.js">
   
-  // Redirect to login page
-  window.location.href = "index.html";
-});
-
 </script>
 </body>
 </html>
