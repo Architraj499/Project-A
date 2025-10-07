@@ -46,6 +46,24 @@ a { text-decoration:none; color:var(--text); }
 }
 .navbar button:hover { opacity:0.85; }
 
+/* Phones only */
+@media (max-width: 768px) {
+
+  div.time-tracker p {
+    font-size: 0px;
+
+  }
+  #websiteTime{
+    font-size: 10px !important;
+    padding: 2px 6px !important;
+    position: absolute;   /* ya relative agar parent navbar ho */
+    bottom: 0;            /* navbar ke bottom pe */
+    left: 50%;            /* center me */
+    transform: translateX(-50%);
+  }
+}
+
+
 /* =========================
    HERO SECTION
 ========================= */
