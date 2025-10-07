@@ -72,7 +72,7 @@ button.submit-btn:hover{
 @media(max-width:420px){ .auth-container{ width:90%; padding:40px 20px; } }
 </style>
 
-<link rel="icon" href="images/logo1.png" type="image/png">
+<link rel="icon" href="images/logo.png" type="image/png">
 
 </head>
 <body>
@@ -173,20 +173,30 @@ signupForm.addEventListener('submit', async e=>{
     const email = document.getElementById('signupEmail').value;
     const password = document.getElementById('signupPassword').value;
     const confirm = document.getElementById('signupConfirm').value;
+    
     if(!name){ message.innerText="Fullname required"; return; }
     if(password!==confirm){ message.innerText="Passwords do not match"; return; }
+    
     try{
         const userCredential = await createUserWithEmailAndPassword(auth,email,password);
         const user = userCredential.user;
+        console.log("✅ User created:", user.uid);
+
+        // Firestore document
         await setDoc(doc(db,"users",user.uid),{
             fullname: name,
             email: email,
             progress:{},
             overallProgress:0
         });
+        console.log("✅ Firestore document created");
+        
         message.innerText=`Signup Successful ✅ Welcome, ${name}`;
         switchForm('login');
-    } catch(err){ message.innerText=err.message; }
+    } catch(err){
+        console.error("❌ Error:", err);
+        message.innerText=err.message;
+    }
 });
 
 // Login
@@ -215,10 +225,10 @@ document.getElementById("forgotPassword").addEventListener("click", async (e)=>{
   } catch(err){ message.innerText="❌ "+err.message; }
 });
 
-// Auth state
- onAuthStateChanged(auth, user=>{
-  if(user) window.location.href="home.html";
- });
+// // Auth state
+//  onAuthStateChanged(auth, user=>{
+//   if(user) window.location.href="home.html";
+//  });
 </script>
 </body>
 </html>
