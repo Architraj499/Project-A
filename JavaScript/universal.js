@@ -113,13 +113,18 @@ function openTab(e){
   document.querySelectorAll('.tabpanel').forEach(p=>p.style.display=p.id===tab?'':'none'); 
 }
 
-function filterBy(mode){ 
-  document.querySelectorAll('#cardsGrid .card').forEach((card,idx)=>{
-    const prog=LECTURES[idx].progress; 
-    if(mode==='completed') card.style.display=prog>=0.99?'':'none'; 
-    else if(mode==='pending') card.style.display=prog<0.99?'':'none'; 
-    else card.style.display=''; 
-  }); 
+function filterBy(mode, event){ 
+  // 1️⃣ Active tab switch
+  document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+  if(event && event.target) event.target.classList.add('active');
+
+  // 2️⃣ Filter logic
+  document.querySelectorAll('#cardsGrid .card').forEach((card, idx) => {
+    const prog = LECTURES[idx].progress || 0;
+    if(mode === 'completed') card.style.display = prog >= 0.99 ? '' : 'none';
+    else if(mode === 'pending') card.style.display = prog < 0.99 ? '' : 'none';
+    else card.style.display = '';
+  });
 }
 
 // ---------- Lecture progress ----------
