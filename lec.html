@@ -169,14 +169,15 @@
   import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
   import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "REPLACE_ME",
-    authDomain: "REPLACE_ME",
-    projectId: "REPLACE_ME",
-    storageBucket: "REPLACE_ME",
-    messagingSenderId: "REPLACE_ME",
-    appId: "REPLACE_ME"
-  };
+  // ---------- Firebase config ----------
+const firebaseConfig = {
+    apiKey: "AIzaSyDHRDRRm2KBmCuUf3qvTIRI5hO0aXFFx3w",
+    authDomain: "asprients-95c1f.firebaseapp.com",
+    projectId: "asprients-95c1f",
+    storageBucket: "asprients-95c1f.appspot.com",
+    messagingSenderId: "453218332819",
+    appId: "1:453218332819:web:5740173fa4d8156dae9d66"
+};
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
