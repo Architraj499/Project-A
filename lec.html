@@ -1,0 +1,432 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Asprients — Lecture Player</title>  <!-- Plyr (player UI) -->  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />  <style>
+    :root{
+      --bg: #f6f8fb;
+      --card: #fff;
+      --muted: #6b7280;
+      --accent: #6b21a8; /* Asprients purple */
+      --glass: rgba(255,255,255,0.6);
+      --danger: #ef4444;
+      --success: #10b981;
+    }
+    [data-theme='dark']{
+      --bg: #0b1020;
+      --card: #0f1724;
+      --muted: #94a3b8;
+      --glass: rgba(255,255,255,0.03);
+    }
+
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{background:linear-gradient(180deg,var(--bg),#ffffff);padding:12px;color:var(--muted)}
+
+    .app{max-width:1100px;margin:12px auto;display:grid;grid-template-columns:1fr 340px;gap:18px}
+    .card{background:var(--card);border-radius:12px;padding:12px;box-shadow:0 6px 18px rgba(11,15,30,0.06);overflow:hidden}
+
+    /* Player area */
+    .player-wrap{display:flex;flex-direction:column;gap:10px}
+    .player-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .meta{display:flex;gap:12px;align-items:center}
+    .title{font-size:18px;font-weight:600;color:var(--accent)}
+    .controls{display:flex;gap:8px}
+    .btn{background:var(--accent);color:white;padding:8px 10px;border-radius:8px;border:none;cursor:pointer}
+    .btn.secondary{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+
+    /* sidebar */
+    .sidebar{display:flex;flex-direction:column;gap:10px}
+    .notes{font-size:14px;color:var(--muted);line-height:1.4}
+
+    /* responsive */
+    @media (max-width:980px){
+      .app{grid-template-columns:1fr}
+      .sidebar{order:2}
+    }
+
+    /* small elements */
+    .row{display:flex;gap:8px;align-items:center}
+    .muted{color:var(--muted);font-size:13px}
+    .pill{padding:6px 8px;border-radius:999px;font-size:13px;border:1px solid rgba(0,0,0,0.06)}
+
+    /* lecture list */
+    .lecture-list{max-height:320px;overflow:auto;padding:6px;display:flex;flex-direction:column;gap:6px}
+    .lecture-item{padding:8px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+    .lecture-item.active{background:linear-gradient(90deg,var(--accent),#8b5cf6);color:white}
+
+    .small{font-size:13px}
+
+    /* history modal */
+    .modal{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center}
+    .modal.show{display:flex}
+    .modal .card{width:90%;max-width:720px}
+
+    /* tiny */
+    .switch{display:inline-flex;align-items:center;gap:8px}
+
+  </style></head>
+<body data-theme="light"><div style="max-width:1100px;margin:6px auto;display:flex;justify-content:space-between;align-items:center;gap:12px;">
+  <div style="display:flex;gap:12px;align-items:center;">
+    <img src="" alt="" style="width:42px;height:42px;border-radius:8px;background:linear-gradient(90deg,var(--accent),#8b5cf6)"> 
+    <div>
+      <div style="font-weight:700;color:var(--accent)">Asprients</div>
+      <div class="muted small">Custom Lecture Player</div>
+    </div>
+  </div>  <div style="display:flex;gap:10px;align-items:center">
+    <div class="switch">
+      <label class="muted small">Dark</label>
+      <input id="darkToggle" type="checkbox" />
+    </div>
+    <button id="historyBtn" class="btn secondary">Watch History</button>
+  </div>
+</div><div class="app">
+  <div class="card player-wrap"><div class="player-top">
+  <div class="meta">
+    <div class="title" id="lectureTitle">Loading...</div>
+    <div class="muted small" id="lectureSub">Accountancy • Lecture</div>
+  </div>
+
+  <div class="controls">
+    <button id="prevBtn" class="btn secondary">Prev</button>
+    <button id="nextBtn" class="btn">Next</button>
+  </div>
+</div>
+
+<!-- Player -->
+<div id="playerContainer">
+  <video id="player" playsinline controls crossorigin="anonymous">
+    <!-- source set dynamically -->
+  </video>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center">
+  <div class="row muted small">
+    <div id="progressLabel">0 / 0</div>
+    <div style="width:8px"></div>
+    <div id="statusLabel">Not signed in</div>
+  </div>
+
+  <div class="row">
+    <select id="speed" class="pill small">
+      <option>0.5</option>
+      <option>0.75</option>
+      <option selected>1</option>
+      <option>1.25</option>
+      <option>1.5</option>
+      <option>1.75</option>
+      <option>2</option>
+    </select>
+    <button id="downloadBtn" class="btn secondary">Download</button>
+  </div>
+</div>
+
+  </div>  <div class="sidebar">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:700">Lectures</div>
+        <div class="muted small">Click to switch</div>
+      </div>
+      <div class="lecture-list" id="lectureList"> </div>
+    </div><div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div style="font-weight:700">Notes & Resources</div>
+    <div class="muted small" id="completeBadge">Incomplete</div>
+  </div>
+  <div class="notes" id="notesArea">Loading notes...</div>
+</div>
+
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div style="font-weight:700">Settings</div>
+    <div class="muted small">Autoplay • Save</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+    <label class="row small"><input id="autoNext" type="checkbox"/> Autoplay next</label>
+    <label class="row small"><input id="autoSave" type="checkbox" checked/> Auto-save progress</label>
+    <label class="row small"><input id="anonSignIn" type="checkbox" checked/> Sign-in anonymously if not signed in</label>
+  </div>
+</div>
+
+  </div>
+</div><!-- History modal --><div id="historyModal" class="modal">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="font-weight:700">Watch History</div>
+      <button id="closeHistory" class="btn secondary">Close</button>
+    </div>
+    <div id="historyList" style="margin-top:10px"></div>
+  </div>
+</div><!-- Firebase + Plyr + app logic --><script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script><script type="module">
+  // -------------------------
+  //  IMPORTANT: Replace the firebaseConfig with your project's config
+  // -------------------------
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "REPLACE_ME",
+    authDomain: "REPLACE_ME",
+    projectId: "REPLACE_ME",
+    storageBucket: "REPLACE_ME",
+    messagingSenderId: "REPLACE_ME",
+    appId: "REPLACE_ME"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // -------------------------
+  // LECTURES: sample list — replace with Firestore fetch if you store there
+  // ids must be stable strings
+  // -------------------------
+  const LECTURES = [
+    {id:'acc_ch1_1', title:'Partnership — Intro', subject:'Accountancy', videoURL:'https://storage.googleapis.com/example-bucket/lecture1.mp4', notes:'Topics: Features of Partnership. Resources: Chapter PDF', order:1},
+    {id:'acc_ch1_2', title:'Partnership — Goodwill', subject:'Accountancy', videoURL:'https://storage.googleapis.com/example-bucket/lecture2.mp4', notes:'Topics: Goodwill valuation. Practice sums included', order:2},
+    {id:'econ_ch1_1', title:'Macro — Intro', subject:'Economics', videoURL:'https://storage.googleapis.com/example-bucket/econ1.mp4', notes:'Macro basics + national income', order:3}
+  ];
+
+  // -------------------------
+  // Elements
+  // -------------------------
+  const lectureTitle = document.getElementById('lectureTitle');
+  const lectureSub = document.getElementById('lectureSub');
+  const lectureList = document.getElementById('lectureList');
+  const notesArea = document.getElementById('notesArea');
+  const progressLabel = document.getElementById('progressLabel');
+  const statusLabel = document.getElementById('statusLabel');
+  const completeBadge = document.getElementById('completeBadge');
+  const speed = document.getElementById('speed');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const autoNext = document.getElementById('autoNext');
+  const autoSave = document.getElementById('autoSave');
+  const darkToggle = document.getElementById('darkToggle');
+  const historyBtn = document.getElementById('historyBtn');
+  const historyModal = document.getElementById('historyModal');
+  const historyList = document.getElementById('historyList');
+  const closeHistory = document.getElementById('closeHistory');
+  const anonSignIn = document.getElementById('anonSignIn');
+
+  // Plyr player
+  const playerElement = document.getElementById('player');
+  const plyr = new Plyr(playerElement, {controls:['play','progress','current-time','mute','volume','settings','airplay','fullscreen']});
+
+  // state
+  let currentIndex = 0;
+  let user = null;
+  let saveInterval = null;
+
+  // helpers
+  function setTheme(isDark){
+    document.body.setAttribute('data-theme', isDark? 'dark':'light');
+    darkToggle.checked = isDark;
+  }
+
+  function renderLectureList(){
+    lectureList.innerHTML = '';
+    LECTURES.sort((a,b)=>a.order - b.order).forEach((l, idx)=>{
+      const div = document.createElement('div');
+      div.className = 'lecture-item' + (idx===currentIndex? ' active':'');
+      div.innerHTML = `<div style="display:flex;flex-direction:column"><div style="font-weight:600">${l.title}</div><div class="muted small">${l.subject}</div></div><div class="small muted">${Math.ceil(l.duration||0/60)}m</div>`;
+      div.onclick = ()=>{ loadLecture(idx); }
+      lectureList.appendChild(div);
+    })
+  }
+
+  function setMeta(lecture){
+    lectureTitle.textContent = lecture.title;
+    lectureSub.textContent = lecture.subject + ' • Lecture';
+    notesArea.textContent = lecture.notes || 'No notes available.';
+    completeBadge.textContent = 'Checking...';
+    downloadBtn.onclick = ()=>{ window.open(lecture.videoURL, '_blank'); }
+  }
+
+  async function saveProgress(lectureId){
+    if(!user) return;
+    const time = plyr.currentTime || 0;
+    const duration = plyr.duration || 0;
+    const completed = duration>0 && (time/duration)>=0.95;
+    const pDoc = doc(db, 'users', user.uid, 'progress', lectureId);
+    try{
+      await setDoc(pDoc, {time, duration, completed, lastUpdated: new Date().toISOString()}, {merge:true});
+    }catch(e){ console.error('save err',e) }
+  }
+
+  async function loadProgress(lectureId){
+    if(!user) return null;
+    try{
+      const p = await getDoc(doc(db, 'users', user.uid, 'progress', lectureId));
+      if(p.exists()) return p.data();
+    }catch(e){console.error(e)}
+    return null;
+  }
+
+  async function markCompleteUI(completed){
+    completeBadge.textContent = completed? 'Completed':'Incomplete';
+    if(completed) completeBadge.style.color = 'var(--success)'; else completeBadge.style.color = 'var(--muted)';
+  }
+
+  async function loadLecture(index){
+    if(index<0 || index>=LECTURES.length) return;
+    currentIndex = index;
+    const lecture = LECTURES[currentIndex];
+    renderLectureList();
+    setMeta(lecture);
+
+    // set source
+    plyr.source = {type:'video',title:lecture.title,sources:[{src:lecture.videoURL,type:'video/mp4'}]};
+
+    // once metadata loaded, seek to saved time if exists
+    plyr.once('loadedmetadata', async ()=>{
+      const p = await loadProgress(lecture.id);
+      if(p && p.time){
+        // if less than 90% watched, resume; if completed, start from 0 or show prompt (simple resume)
+        if((p.time / (p.duration||plyr.duration)) < 0.95){
+          plyr.currentTime = p.time || 0;
+        }
+        await markCompleteUI(p.completed || false);
+      } else {
+        await markCompleteUI(false);
+      }
+    });
+
+    // update progress label on timeupdate
+    plyr.on('timeupdate', ()=>{
+      const t = Math.floor(plyr.currentTime||0);
+      const d = Math.floor(plyr.duration||0);
+      progressLabel.textContent = `${formatTime(t)} / ${formatTime(d)}`;
+      // auto mark complete when passes 95%
+      if(d>0 && (plyr.currentTime/d)>=0.95){ markCompleteUI(true); }
+    });
+
+    // ended => optional autoNext
+    plyr.on('ended', async ()=>{
+      await saveProgress(lecture.id);
+      await markCompleteUI(true);
+      if(autoNext.checked){ loadLecture((currentIndex+1)%LECTURES.length); }
+    });
+
+    // when user pauses, save immediately
+    plyr.on('pause', ()=>{ if(autoSave.checked) saveProgress(lecture.id); });
+
+    // replace download link
+    downloadBtn.onclick = ()=> window.open(lecture.videoURL, '_blank');
+
+  }
+
+  function formatTime(s){
+    if(!s || s<0) return '0:00';
+    const h = Math.floor(s/3600); const m = Math.floor((s%3600)/60); const sec = Math.floor(s%60);
+    if(h>0) return `${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+    return `${m}:${String(sec).padStart(2,'0')}`;
+  }
+
+  // prev/next
+  prevBtn.onclick = ()=> loadLecture(Math.max(0,currentIndex-1));
+  nextBtn.onclick = ()=> loadLecture(Math.min(LECTURES.length-1,currentIndex+1));
+
+  // speed
+  speed.onchange = ()=> plyr.speed = parseFloat(speed.value || 1);
+
+  // theme toggle
+  darkToggle.onchange = ()=> setTheme(darkToggle.checked);
+
+  // history modal
+  historyBtn.onclick = async ()=>{
+    if(!user){ alert('Sign-in required to view history'); return; }
+    historyModal.classList.add('show');
+    // fetch progress docs
+    try{
+      const snaps = await getDocs(collection(db, 'users', user.uid, 'progress'));
+      historyList.innerHTML = '';
+      snaps.forEach(d=>{
+        const data = d.data();
+        const item = document.createElement('div');
+        const lectureMeta = LECTURES.find(x=>x.id===d.id) || {title:d.id};
+        item.className = 'row';
+        item.style.justifyContent = 'space-between';
+        item.style.padding = '8px 0';
+        item.innerHTML = `<div style="display:flex;flex-direction:column"><div style="font-weight:600">${lectureMeta.title}</div><div class="muted small">${formatTime(Math.floor(data.time||0))} • ${data.completed? 'Completed':'In progress'}</div></div><div style="display:flex;gap:8px"><button class="btn secondary" data-id="${d.id}">Jump</button></div>`;
+        const jumpBtn = item.querySelector('button');
+        jumpBtn.onclick = ()=>{
+          const idx = LECTURES.findIndex(x=>x.id===d.id);
+          if(idx>=0) loadLecture(idx);
+          historyModal.classList.remove('show');
+        }
+        historyList.appendChild(item);
+      })
+    }catch(e){ console.error(e); historyList.textContent = 'Failed to load history'; }
+  }
+  closeHistory.onclick = ()=> historyModal.classList.remove('show');
+
+  // auto-save interval
+  function startAutoSave(){
+    if(saveInterval) clearInterval(saveInterval);
+    saveInterval = setInterval(()=>{
+      if(!autoSave.checked) return;
+      const lecture = LECTURES[currentIndex];
+      if(lecture && user) saveProgress(lecture.id);
+    }, 5000);
+  }
+
+  // auth handling
+  onAuthStateChanged(auth, async (u)=>{
+    user = u;
+    statusLabel.textContent = user? ('Signed in: ' + (user.isAnonymous? 'Anonymous':'User')) : 'Not signed in';
+    // ensure first lecture load when auth resolved
+    if(!window._started){
+      window._started = true;
+      renderLectureList();
+      // load first lecture
+      loadLecture(0);
+      startAutoSave();
+    }
+  });
+
+  // optionally sign in anonymously if not signed in
+  if(anonSignIn.checked){
+    // signInAnonymously will not do anything if already signed in
+    signInAnonymously(auth).catch(e=>console.warn('anon sign-in failed',e));
+  }
+
+  // keyboard shortcuts (space play/pause, arrow left/right seek)
+  window.addEventListener('keydown', (e)=>{
+    if(['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+    if(e.code==='Space'){ e.preventDefault(); plyr.togglePlay(); }
+    if(e.code==='ArrowRight'){ plyr.forward(10); }
+    if(e.code==='ArrowLeft'){ plyr.rewind(10); }
+  });
+
+  // initial UI state
+  setTheme(false);
+
+  // analytics / completion watcher
+  plyr.on('timeupdate', async ()=>{
+    const lecture = LECTURES[currentIndex];
+    if(!lecture) return;
+    const d = plyr.duration || 0; const t = plyr.currentTime || 0;
+    // auto mark complete when >95%
+    if(d>0 && (t/d)>=0.95){
+      await saveProgress(lecture.id);
+      await markCompleteUI(true);
+    }
+  });
+
+  // protect: if user navigates away, save progress
+  window.addEventListener('beforeunload', ()=>{
+    const lecture = LECTURES[currentIndex];
+    if(lecture && user) navigator.sendBeacon && navigator.sendBeacon('/saveProgress', JSON.stringify({id:lecture.id,time:plyr.currentTime}));
+  });
+
+  // initial render
+  renderLectureList();
+  loadLecture(0);
+  startAutoSave();
+
+</script></body>
+</html>
