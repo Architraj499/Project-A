@@ -280,3 +280,26 @@ onAuthStateChanged(auth, async (user) => {
   updateLectureTimeDisplay();
   startSiteTimer();
 });
+
+// ---------- Asprients Custom Video Player (Global) ----------
+
+const playerModal = document.getElementById('playerModal');
+const player = document.getElementById('customPlayer');
+const playerSource = document.getElementById('playerSource');
+const playerTitle = document.getElementById('playerTitle');
+
+window.openPlayer = function (src, title) {
+  if (!playerModal || !player || !playerSource) return;
+  playerSource.src = src;
+  playerTitle.textContent = title || "Lecture";
+  player.load();
+  playerModal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closePlayer = function () {
+  if (!playerModal || !player) return;
+  player.pause();
+  playerModal.classList.add('hidden');
+  document.body.style.overflow = 'auto';
+};
