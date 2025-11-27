@@ -45,11 +45,11 @@
     <div class="subject-card">
       <h1>Business Studies</h1>
       <div class="subject-meta">Class 12 | CUET 2026 </div>
-      <div class="subject-actions">
-        <button class="tab active" onclick="filterBy('all')">All</button>
-        <button class="tab" onclick="filterBy('completed')">Completed</button>
-        <button class="tab" onclick="filterBy('pending')">Pending</button>
-      </div>
+    <div class="subject-actions">
+  <button class="tab active" onclick="filterBy('all', event)">All</button>
+  <button class="tab" onclick="filterBy('completed', event)">Completed</button>
+  <button class="tab" onclick="filterBy('pending', event)">Pending</button>
+</div>
     </div>
     <div style="min-width:260px">
       <div style="padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));">
@@ -108,7 +108,14 @@
 
 <script>
   window.LECTURES = [
-  { id: 'B1', min: 'TBA', title: 'Nature and Significance of Management', video: '', notes: '#', pyq: '#', progress: 0.0, teacher: 'Manish Sir' },
+  { id: 'B1.1', min: '31min', title: 'Nature and Significance of Management', video: 'https://www.youtube.com/embed/n9nIR3cnv4Ey-v9J', notes: '#', pyq: '#', progress: 0.0, teacher: 'Sunil Panda Sir' },
+
+ { id: 'B1.2', min: '31min', title: 'Nature and Significance of Management', video: 'https://www.youtube.com/embed/YGEaVxTTfPM', notes: '#', pyq: '#', progress: 0.0, teacher: 'Sunil Panda Sir' },
+
+{ id: 'B1.3', min: '11min', title: 'Nature and Significance of Management', video: 'https://www.youtube.com/embed/3gQdyRoTTMA', notes: '#', pyq: '#', progress: 0.0, teacher: 'Sunil Panda Sir' },
+
+
+
   { id: 'B2', min: 'TBA', title: 'Principles of Management', video: '', notes: '#', pyq: '#', progress: 0.0, teacher: 'Ms. Y' },
   { id: 'B3', min: 'TBA', title: 'Business Environment', video: '', notes: '#', pyq: '#', progress: 0.0, teacher: 'Mr. Z' },
   { id: 'B4', min: 'TBA', title: 'Planning', video: '', notes: '#', pyq: '#', progress: 0.0, teacher: 'Manish Sir' },

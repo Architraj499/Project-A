@@ -47,10 +47,10 @@
       <h1>Accountancy</h1>
       <div class="subject-meta">Class 12 | CUET 2026 | CA Foundation</div>
       <div class="subject-actions">
-        <button class="tab active" onclick="filterBy('all')">All</button>
-        <button class="tab" onclick="filterBy('completed')">Completed</button>
-        <button class="tab" onclick="filterBy('pending')">Pending</button>
-      </div>
+  <button class="tab active" onclick="filterBy('all', event)">All</button>
+  <button class="tab" onclick="filterBy('completed', event)">Completed</button>
+  <button class="tab" onclick="filterBy('pending', event)">Pending</button>
+</div>
     </div>
     <div style="min-width:260px">
       <div style="padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));">
@@ -90,6 +90,26 @@
       <button class="btn ghost" onclick="closeModal()">Close</button>
     </div>
   </div>
+
+<!-- ---------- Custom Asprients Video Player ---------- -->
+<div id="playerModal" class="player-modal hidden">
+  <div class="player-box">
+    <div class="player-header">
+      <span id="playerTitle">Lecture Title</span>
+      <div class="player-controls">
+        <button onclick="closePlayer()">&times;</button>
+      </div>
+    </div>
+
+    <video id="customPlayer" controls preload="metadata" style="width:100%; border-radius:8px;">
+      <source id="playerSource" src="" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+
+
+
   <div class="modal-body">
     <iframe id="videoIframe" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
   </div>

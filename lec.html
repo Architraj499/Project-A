@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Asprients — Lectures (Modal Player)</title>
+
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <style>
+    :root{ --bg:#f6f8fb; --card:#fff; --muted:#374151; --accent:#6b21a8; --glass:rgba(255,255,255,0.6); --success:#10b981;}
+    [data-theme='dark']{ --bg:#0b1020; --card:#0f1724; --muted:#cbd5e1; --glass:rgba(255,255,255,0.03); }
+    body{margin:0;font-family:Inter,system-ui,Roboto,Arial;background:var(--bg);color:var(--muted);padding:14px;}
+    .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand h1{margin:0;color:var(--accent);font-size:20px}
+    .controls{display:flex;gap:8px;align-items:center}
+    .btn{background:var(--accent);color:white;padding:8px 10px;border-radius:8px;border:none;cursor:pointer}
+    .btn.outline{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+    .card{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 8px 18px rgba(2,6,23,0.06)}
+    .lecture-title{font-weight:700}
+    .muted{color:var(--muted);opacity:0.9;font-size:13px}
+    .small{font-size:13px}
+    .pill{padding:6px 8px;border-radius:999px;border:1px solid rgba(0,0,0,0.06);font-size:13px}
+    /* modal player */
+    .modal{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;z-index:9999}
+    .modal.show{display:flex}
+    .player-card{width:95%;max-width:1100px;background:var(--card);border-radius:12px;padding:12px;display:grid;grid-template-columns:1fr 320px;gap:12px;align-items:start}
+    .player-header{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    #player{width:100%;height:100%;max-height:520px;background:black;border-radius:8px;overflow:hidden}
+    .sidebar{display:flex;flex-direction:column;gap:8px}
+    .lecture-list-mini{max-height:300px;overflow:auto;display:flex;flex-direction:column;gap:6px;padding:6px}
+    .mini-item{padding:8px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+    .mini-item.active{background:linear-gradient(90deg,var(--accent),#8b5cf6);color:white}
+    .modal-close{background:transparent;border:0;color:var(--muted);cursor:pointer;font-weight:700}
+    @media (max-width:980px){ .player-card{grid-template-columns:1fr} .sidebar{order:2} }
+  </style>
+</head>
+<body data-theme="light">
+
+  <div class="top">
+    <div class="brand">
+      <div style="width:44px;height:44px;border-radius:8px;background:linear-gradient(90deg,var(--accent),#8b5cf6)"></div>
+      <h1>Asprients</h1>
+      <div class="muted small">Lecture Library</div>
+    </div>
+    <div class="controls">
+      <label class="muted small">Dark</label>
+      <input id="darkToggle" type="checkbox" />
+      <button id="historyBtn" class="btn outline">Watch History</button>
+    </div>
+  </div>
+
+  <div id="lecturesGrid" class="grid"></div>
+
+  <!-- PLAYER MODAL -->
+  <div id="playerModal" class="modal" role="dialog" aria-modal="true">
+    <div class="player-card card">
+      <div>
+        <div class="player-header">
+          <div>
+            <div id="modalTitle" class="lecture-title">Title</div>
+            <div id="modalSub" class="muted small">Subject</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button id="prevBtn" class="btn outline">Prev</button>
+            <button id="nextBtn" class="btn">Next</button>
+            <button id="closeModal" class="modal-close">✕</button>
+          </div>
+        </div>
+
+        <div id="playerContainer" style="margin-top:10px">
+          <video id="player" playsinline controls crossorigin="anonymous"></video>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+          <div class="muted small" id="progressLabel">0:00 / 0:00 • Not signed in</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <select id="speed" class="pill small">
+              <option>0.5</option><option>0.75</option><option selected>1</option><option>1.25</option><option>1.5</option><option>2</option>
+            </select>
+            <button id="downloadBtn" class="btn outline">Download</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-weight:700">Up Next</div>
+            <div class="muted small">Autoplay <input id="autoNext" type="checkbox" style="margin-left:6px"></div>
+          </div>
+          <div id="miniList" class="lecture-list-mini"></div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-weight:700">Notes</div>
+            <div id="completeBadge" class="muted small">Incomplete</div>
+          </div>
+          <div id="notesArea" class="muted small" style="margin-top:6px">No notes.</div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-weight:700">Settings</div>
+            <div class="muted small">Auto-save</div>
+          </div>
+          <label class="small"><input id="autoSave" type="checkbox" checked /> Auto-save progress</label>
+          <label class="small"><input id="anonSignIn" type="checkbox" checked /> Sign-in anonymously if not signed</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Modal (simple) -->
+  <div id="historyModal" class="modal">
+    <div class="card" style="width:95%;max-width:720px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:700">Watch History</div>
+        <button id="closeHistory" class="btn outline">Close</button>
+      </div>
+      <div id="historyList" style="margin-top:10px"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    // ---------- Firebase config ----------
+const firebaseConfig = {
+    apiKey: "AIzaSyDHRDRRm2KBmCuUf3qvTIRI5hO0aXFFx3w",
+    authDomain: "asprients-95c1f.firebaseapp.com",
+    projectId: "asprients-95c1f",
+    storageBucket: "asprients-95c1f.appspot.com",
+    messagingSenderId: "453218332819",
+    appId: "1:453218332819:web:5740173fa4d8156dae9d66"
+};
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // ---------- Sample lectures (replace with Firestore fetch as needed) ----------
+    // Each lecture: id (stable), title, subject, videoURL (public / signed), notes, order
+    const LECTURES = [
+      { id: 'acc_ch1_1', title:'Partnership — Intro', subject:'Accountancy', videoURL:'https://storage.googleapis.com/example-bucket/lecture1.mp4', notes:'Features of Partnership', order:1 },
+      { id: 'acc_ch1_2', title:'Partnership — Goodwill', subject:'Accountancy', videoURL:'https://storage.googleapis.com/example-bucket/lecture2.mp4', notes:'Goodwill valuation', order:2 },
+      { id: 'econ_ch1_1', title:'Macro — Intro', subject:'Economics', videoURL:'https://storage.googleapis.com/example-bucket/econ1.mp4', notes:'National income basics', order:3 }
+    ];
+
+    // ---------- DOM ----------
+    const lecturesGrid = document.getElementById('lecturesGrid');
+    const playerModal = document.getElementById('playerModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSub = document.getElementById('modalSub');
+    const miniList = document.getElementById('miniList');
+    const notesArea = document.getElementById('notesArea');
+    const completeBadge = document.getElementById('completeBadge');
+    const progressLabel = document.getElementById('progressLabel');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const historyBtn = document.getElementById('historyBtn');
+    const historyModal = document.getElementById('historyModal');
+    const historyList = document.getElementById('historyList');
+    const closeHistory = document.getElementById('closeHistory');
+
+    const darkToggle = document.getElementById('darkToggle');
+    const autoNext = document.getElementById('autoNext');
+    const autoSave = document.getElementById('autoSave');
+    const anonSignIn = document.getElementById('anonSignIn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const closeModal = document.getElementById('closeModal');
+    const speedSelect = document.getElementById('speed');
+
+    // Plyr
+    const playerEl = document.getElementById('player');
+    const plyr = new Plyr(playerEl, { controls:['play','progress','current-time','mute','volume','settings','fullscreen'] });
+
+    // state
+    let user = null;
+    let currentIndex = -1;
+    let saveInterval = null;
+
+    // ---------- render lecture grid ----------
+    function renderGrid(){
+      lecturesGrid.innerHTML = '';
+      LECTURES.sort((a,b)=>a.order-b.order).forEach((l, idx)=>{
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="lecture-title">${l.title}</div>
+            <div class="muted small">${l.subject}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+            <div class="pill small">Lecture</div>
+            <button class="btn" data-idx="${idx}">Play</button>
+          </div>
+        </div>`;
+        lecturesGrid.appendChild(card);
+        card.querySelector('button').addEventListener('click', ()=> openModal(idx));
+      });
+    }
+
+    // ---------- open modal & load lecture ----------
+    async function openModal(idx){
+      if(idx<0 || idx>=LECTURES.length) return;
+      currentIndex = idx;
+      const L = LECTURES[idx];
+      modalTitle.textContent = L.title;
+      modalSub.textContent = `${L.subject} • Lecture`;
+      notesArea.textContent = L.notes || 'No notes.';
+      downloadBtn.onclick = ()=> window.open(L.videoURL, '_blank');
+
+      // set source
+      plyr.source = { type: 'video', title: L.title, sources: [{ src: L.videoURL, type: 'video/mp4' }] };
+
+      // render mini list
+      renderMiniList();
+
+      // when metadata loaded, try resume
+      plyr.once('loadedmetadata', async ()=>{
+        const p = await loadProgress(L.id);
+        if(p && p.time){
+          // resume if not completed
+          if((p.time / (p.duration || plyr.duration)) < 0.95){
+            plyr.currentTime = p.time;
+          }
+          markCompleteUI(p.completed || false);
+        } else {
+          markCompleteUI(false);
+        }
+      });
+
+      // update UI labels on timeupdate
+      plyr.on('timeupdate', ()=>{
+        const t = Math.floor(plyr.currentTime||0);
+        const d = Math.floor(plyr.duration||0);
+        progressLabel.textContent = `${formatTime(t)} / ${formatTime(d)} • ${user? (user.isAnonymous? 'Signed in (anon)':'Signed in') : 'Not signed in'}`;
+        // auto-mark
+        if(d>0 && (plyr.currentTime/d)>=0.95) markCompleteUI(true);
+      });
+
+      // on ended
+      plyr.on('ended', async ()=>{
+        await saveProgress(L.id);
+        markCompleteUI(true);
+        if(autoNext.checked) openModal((currentIndex+1) % LECTURES.length);
+      });
+
+      // pause => save
+      plyr.on('pause', ()=>{ if(autoSave.checked) saveProgress(L.id); });
+
+      // show modal
+      playerModal.classList.add('show');
+
+      // start auto-save interval
+      startAutoSave();
+    }
+
+    function closePlayer(){
+      stopAutoSave();
+      plyr.stop();
+      playerModal.classList.remove('show');
+      // cleanup listeners (Plyr handlers attached above use plyr.on; removing all is safer)
+      plyr.off('timeupdate'); plyr.off('ended'); plyr.off('pause'); plyr.off('loadedmetadata');
+    }
+
+    // ---------- mini list (up next) ----------
+    function renderMiniList(){
+      miniList.innerHTML = '';
+      LECTURES.forEach((l, i)=>{
+        const div = document.createElement('div');
+        div.className = 'mini-item' + (i===currentIndex? ' active':'');
+        div.innerHTML = `<div style="display:flex;flex-direction:column"><div style="font-weight:600">${l.title}</div><div class="muted small">${l.subject}</div></div><div class="small muted">#${i+1}</div>`;
+        div.onclick = ()=> openModal(i);
+        miniList.appendChild(div);
+      });
+    }
+
+    // ---------- progress save/load ----------
+    async function saveProgress(lectureId){
+      if(!user) return;
+      const time = plyr.currentTime || 0;
+      const duration = plyr.duration || 0;
+      const completed = duration>0 && (time/duration)>=0.95;
+      const pDoc = doc(db, 'users', user.uid, 'progress', lectureId);
+      try{
+        await setDoc(pDoc, { time, duration, completed, lastUpdated: new Date().toISOString() }, { merge:true });
+      }catch(e){ console.warn('save progress err', e); }
+    }
+
+    async function loadProgress(lectureId){
+      if(!user) return null;
+      try{
+        const snapshot = await getDoc(doc(db, 'users', user.uid, 'progress', lectureId));
+        if(snapshot.exists()) return snapshot.data();
+      }catch(e){ console.warn('load progress err', e); }
+      return null;
+    }
+
+    function markCompleteUI(completed){
+      completeBadge.textContent = completed? 'Completed' : 'Incomplete';
+      completeBadge.style.color = completed? 'var(--success)' : 'var(--muted)';
+    }
+
+    function formatTime(s){
+      if(!s) return '0:00';
+      s = Math.floor(s);
+      const h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
+      if(h>0) return `${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+      return `${m}:${String(sec).padStart(2,'0')}`;
+    }
+
+    // ---------- auto-save interval ----------
+    function startAutoSave(){
+      stopAutoSave();
+      saveInterval = setInterval(()=>{
+        if(!autoSave.checked) return;
+        const L = LECTURES[currentIndex];
+        if(L && user) saveProgress(L.id);
+      }, 5000);
+    }
+    function stopAutoSave(){ if(saveInterval) clearInterval(saveInterval); saveInterval = null; }
+
+    // ---------- auth handling ----------
+    onAuthStateChanged(auth, async (u)=>{
+      user = u;
+      // optionally sign in anon
+      if(!user && anonSignIn.checked){
+        signInAnonymously(auth).catch(e=>console.warn('anon err', e));
+      }
+    });
+
+    // ---------- history modal ----------
+    historyBtn.addEventListener('click', async ()=>{
+      if(!user){ alert('Please sign in (anonymous allowed) to view history'); return; }
+      historyModal.classList.add('show'); historyList.innerHTML = 'Loading...';
+      try{
+        const snaps = await getDocs(collection(db, 'users', user.uid, 'progress'));
+        historyList.innerHTML = '';
+        snaps.forEach(s=>{
+          const d = s.data();
+          const meta = LECTURES.find(x=>x.id===s.id) || {title:s.id};
+          const item = document.createElement('div');
+          item.style.padding='8px 0'; item.style.display='flex'; item.style.justifyContent='space-between'; item.style.alignItems='center';
+          item.innerHTML = `<div><div style="font-weight:600">${meta.title}</div><div class="muted small">${formatTime(Math.floor(d.time||0))} • ${d.completed? 'Completed':'In progress'}</div></div><div><button class="btn outline" data-id="${s.id}">Open</button></div>`;
+          item.querySelector('button').onclick = ()=>{
+            const idx = LECTURES.findIndex(x=>x.id===s.id);
+            if(idx>=0) openModal(idx);
+            historyModal.classList.remove('show');
+          };
+          historyList.appendChild(item);
+        });
+      }catch(e){ historyList.textContent = 'Failed to load history'; console.warn(e); }
+    });
+    closeHistory.addEventListener('click', ()=> historyModal.classList.remove('show'));
+
+    // ---------- UI events ----------
+    closeModal.addEventListener('click', ()=> closePlayer());
+    document.getElementById('closeModal').addEventListener('click', ()=> closePlayer());
+    prevBtn.addEventListener('click', ()=> openModal(Math.max(0, currentIndex-1)));
+    nextBtn.addEventListener('click', ()=> openModal(Math.min(LECTURES.length-1, currentIndex+1)));
+    speedSelect.addEventListener('change', ()=> { plyr.speed = parseFloat(speedSelect.value || 1); });
+    darkToggle.addEventListener('change', ()=> document.body.setAttribute('data-theme', darkToggle.checked? 'dark' : 'light') );
+
+    // keyboard
+    window.addEventListener('keydown', (e)=>{
+      if(!playerModal.classList.contains('show')) return;
+      if(['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+      if(e.code==='Space'){ e.preventDefault(); plyr.togglePlay(); }
+      if(e.code==='ArrowRight'){ plyr.forward(10); }
+      if(e.code==='ArrowLeft'){ plyr.rewind(10); }
+    });
+
+    // beforeunload try sending a save (best effort)
+    window.addEventListener('beforeunload', ()=> {
+      const L = LECTURES[currentIndex];
+      if(L && user){
+        navigator.sendBeacon && navigator.sendBeacon('/saveProgress', JSON.stringify({ id:L.id, time: plyr.currentTime || 0 }));
+      }
+    });
+
+    // ---------- init ----------
+    renderGrid();
+
+    // sign in anonymously if toggled
+    if(anonSignIn.checked){
+      signInAnonymously(auth).catch(e=>console.warn('anon sign-in failed', e));
+    }
+
+    // load first lecture metadata if you want prefetch (optional)
+    // openModal(0); // don't auto-open
+
+  </script>
+</body>
+</html>
