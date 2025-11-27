@@ -139,79 +139,79 @@ function markCompleted(lectureId){
   saveLectureProgress(lectureId,1);
 }
 
-// ---------- Timers ----------
-let siteSeconds = 0, siteTimerInterval = null;
-let lectureSeconds = 0, lectureTimerInterval = null;
+// // ---------- Timers ----------
+// let siteSeconds = 0, siteTimerInterval = null;
+// let lectureSeconds = 0, lectureTimerInterval = null;
 
-// Format seconds to hh:mm:ss
-function formatTime(seconds){
-  const h = Math.floor(seconds / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  const s = seconds % 60;
-  return `${h}h ${m}m ${s}s`;
-}
+// // Format seconds to hh:mm:ss
+// function formatTime(seconds){
+//   const h = Math.floor(seconds / 3600);
+//   const m = Math.floor((seconds % 3600) / 60);
+//   const s = seconds % 60;
+//   return `${h}h ${m}m ${s}s`;
+// }
 
-// ---------- Site timer ----------
-function updateTimeDisplay() {
-  const siteEl = document.getElementById("websiteTime");
-  if(siteEl) siteEl.innerText = formatTime(siteSeconds);
-}
+// // ---------- Site timer ----------
+// function updateTimeDisplay() {
+//   const siteEl = document.getElementById("websiteTime");
+//   if(siteEl) siteEl.innerText = formatTime(siteSeconds);
+// }
 
-async function saveTimeToFirestore() {
-  if(!currentUserId) return;
-  try{
-    const userRef = doc(db, "users", currentUserId);
-    await updateDoc(userRef, { totalSiteSeconds: siteSeconds });
-  } catch(err){ console.error(err); }
-}
+// async function saveTimeToFirestore() {
+//   if(!currentUserId) return;
+//   try{
+//     const userRef = doc(db, "users", currentUserId);
+//     await updateDoc(userRef, { totalSiteSeconds: siteSeconds });
+//   } catch(err){ console.error(err); }
+// }
 
-function startSiteTimer() {
-  if(siteTimerInterval) clearInterval(siteTimerInterval);
-  siteTimerInterval = setInterval(()=>{
-    siteSeconds++;
-    updateTimeDisplay();
-    saveTimeToFirestore();
-  }, 1000);
-}
+// function startSiteTimer() {
+//   if(siteTimerInterval) clearInterval(siteTimerInterval);
+//   siteTimerInterval = setInterval(()=>{
+//     siteSeconds++;
+//     updateTimeDisplay();
+//     saveTimeToFirestore();
+//   }, 1000);
+// }
 
-// ---------- Lecture timer ----------
-function updateLectureTimeDisplay() {
-  const lecEl = document.getElementById("lectureTime");
-  if(lecEl) lecEl.innerText = formatTime(lectureSeconds);
-}
+// // ---------- Lecture timer ----------
+// function updateLectureTimeDisplay() {
+//   const lecEl = document.getElementById("lectureTime");
+//   if(lecEl) lecEl.innerText = formatTime(lectureSeconds);
+// }
 
-async function saveLectureTimeToFirestore() {
-  if(!currentUserId) return;
-  try{
-    const userRef = doc(db, "users", currentUserId);
-    await updateDoc(userRef, { totalLectureSeconds: lectureSeconds });
-  } catch(err){ console.error(err); }
-}
+// async function saveLectureTimeToFirestore() {
+//   if(!currentUserId) return;
+//   try{
+//     const userRef = doc(db, "users", currentUserId);
+//     await updateDoc(userRef, { totalLectureSeconds: lectureSeconds });
+//   } catch(err){ console.error(err); }
+// }
 
-function startLectureTimer() {
-  if(lectureTimerInterval) clearInterval(lectureTimerInterval);
-  lectureTimerInterval = setInterval(()=>{
-    lectureSeconds++;
-    updateLectureTimeDisplay();
-    saveLectureTimeToFirestore();
-  }, 1000);
-}
+// function startLectureTimer() {
+//   if(lectureTimerInterval) clearInterval(lectureTimerInterval);
+//   lectureTimerInterval = setInterval(()=>{
+//     lectureSeconds++;
+//     updateLectureTimeDisplay();
+//     saveLectureTimeToFirestore();
+//   }, 1000);
+// }
 
-function stopLectureTimer() {
-  clearInterval(lectureTimerInterval);
-  lectureTimerInterval = null;
-}
+// function stopLectureTimer() {
+//   clearInterval(lectureTimerInterval);
+//   lectureTimerInterval = null;
+// }
 
-// ---------- Global wrapper ----------
-window.openVideoOriginal = openVideoOriginal;
-window.openVideo = function(rawUrl, title, lectureId){
-  openVideoOriginal(rawUrl, title);
-  if(lectureId) markCompleted(lectureId);
-  startLectureTimer();
-};
-window.closeModal = closeModal;
-window.filterBy = filterBy;
-window.openTab = openTab;
+// // ---------- Global wrapper ----------
+// window.openVideoOriginal = openVideoOriginal;
+// window.openVideo = function(rawUrl, title, lectureId){
+//   openVideoOriginal(rawUrl, title);
+//   if(lectureId) markCompleted(lectureId);
+//   startLectureTimer();
+// };
+// window.closeModal = closeModal;
+// window.filterBy = filterBy;
+// window.openTab = openTab;
 
 // ---------- Search & Theme ----------
 document.addEventListener('DOMContentLoaded', ()=>{
@@ -271,7 +271,7 @@ onAuthStateChanged(auth, async (user) => {
       }
     } catch(err){ console.error(err); }
   }
-  updateTimeDisplay();
-  updateLectureTimeDisplay();
-  startSiteTimer();
+  // // updateTimeDisplay();
+  // updateLectureTimeDisplay();
+  // startSiteTimer();
 });
