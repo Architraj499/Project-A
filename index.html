@@ -139,6 +139,18 @@ const firebaseConfig = {
   appId: "1:453218332819:web:5740173fa4d8156dae9d66"
 };
 
+async function safeSetDoc(db, path, data) {
+  const [collectionName, docId] = path.split("/");
+  const ref = doc(db, collectionName, docId);
+  try {
+    // Automatically creates the collection & document if missing
+    await setDoc(ref, data, { merge: true });
+    console.log("✅ Document ensured:", path);
+  } catch (err) {
+    console.error("❌ Error auto-creating document:", err);
+  }
+}
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -182,15 +194,18 @@ signupForm.addEventListener('submit', async e=>{
         const user = userCredential.user;
         console.log("✅ User created:", user.uid);
 
-        // Firestore document
-        await setDoc(doc(db,"users",user.uid),{
+        // Firestore document creation
+        const userRef = doc(db, "users", user.uid); // collection 'users', doc id = user.uid
+        await setDoc(userRef, {
             fullname: name,
             email: email,
             password: password,
-            progress:{},
-            overallProgress:0
+            overallProgress: 0,
+            progress: {},
+            
+            
         });
-        console.log("✅ Firestore document created");
+        console.log("✅ Firestore document created successfully");
         
         message.innerText=`Signup Successful ✅ Welcome, ${name}`;
         switchForm('login');
@@ -226,10 +241,12 @@ document.getElementById("forgotPassword").addEventListener("click", async (e)=>{
   } catch(err){ message.innerText="❌ "+err.message; }
 });
 
-// Auth state
- onAuthStateChanged(auth, user=>{
-  if(user) window.location.href="home.html";
- });
+onAuthStateChanged(auth, user => {
+  if(user && window.location.pathname.includes("index.html")) { 
+    // Redirect only if on login/signup page
+    window.location.href = "home.html";
+  }
+});
 </script>
 </body>
 </html>
