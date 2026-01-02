@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Asprients - Login/Signup</title>
+<title>Asprients - Login / Signup</title>
+
 <style>
 :root{
   --bg:#f6f8fb; 
@@ -15,64 +16,43 @@
   --text:#0b1220;
 }
 body{
-  margin:0; padding:0; height:100vh; font-family:Inter,sans-serif;
-  background: var(--bg); color: var(--text);
+  margin:0; height:100vh; font-family:Inter,sans-serif;
+  background:var(--bg); color:var(--text);
   display:flex; justify-content:center; align-items:center;
 }
 .auth-container{
   width:380px; padding:50px 30px;
-  background: var(--glass); backdrop-filter:blur(12px);
+  background:var(--glass); backdrop-filter:blur(12px);
   border-radius:20px; box-shadow:0 15px 30px rgba(0,0,0,0.08);
-  text-align:center; border:1px solid rgba(0,0,0,0.05);
-  position:relative;
-  transition:0.3s;
 }
 .auth-tabs{
-  display:flex; justify-content:space-around; margin-bottom:35px;
+  display:flex; justify-content:space-around; margin-bottom:30px;
 }
 .auth-tabs button{
-  background:none; border:none; color:var(--text); font-weight:600; font-size:1.05em;
-  cursor:pointer; padding:10px 0; position:relative; transition:0.3s;
+  background:none; border:none; font-weight:600; cursor:pointer;
 }
 .auth-tabs button.active::after{
-  content:''; position:absolute; bottom:0; left:0; width:100%; height:3px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  border-radius:5px;
+  content:''; display:block; height:3px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
 }
-form{ display:none; text-align:left; animation:fadeIn 0.4s ease forwards; }
+form{ display:none; }
 form.active{ display:block; }
-@keyframes fadeIn{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
-.form-group{ margin-bottom:18px; }
-.form-group label{ display:block; margin-bottom:6px; font-size:0.9em; font-weight:500; }
+.form-group{ margin-bottom:15px; }
+.form-group label{ display:block; margin-bottom:5px; }
 .form-group input{
-  width:100%; padding:12px 14px; border-radius:10px; border:1px solid rgba(0,0,0,0.1);
-  background: var(--card); color:var(--text);
-  font-size:0.95em; box-shadow: inset 1px 1px 3px rgba(0,0,0,0.03);
-  transition:0.3s;
-}
-.form-group input::placeholder{ color: var(--muted); }
-.form-group input:focus{
-  outline:none; border-color: var(--accent);
-  box-shadow:0 0 6px var(--accent-2);
+  width:100%; padding:12px; border-radius:10px;
+  border:1px solid #ccc;
 }
 button.submit-btn{
-  width:100%; padding:14px; border:none; border-radius:12px;
-  font-weight:600; font-size:1em; cursor:pointer;
-  background: linear-gradient(90deg,var(--accent),var(--accent-2));
-  color:#fff; transition:0.3s; box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  width:100%; padding:14px; border:none;
+  border-radius:12px; font-weight:600;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:#fff; cursor:pointer;
 }
-button.submit-btn:hover{
-  background: linear-gradient(90deg,var(--accent-2),var(--accent));
-  transform:translateY(-2px);
-}
-.switch-link{ text-align:center; margin-top:12px; font-size:0.9em; }
-.switch-link a{ color: var(--accent-2); font-weight:600; transition:0.3s; cursor:pointer;}
-.switch-link a:hover{ color: var(--accent); }
-#message{ text-align:center; margin-top:10px; font-weight:600; color:var(--accent); min-height:20px; }
-@media(max-width:420px){ .auth-container{ width:90%; padding:40px 20px; } }
+.switch-link{ text-align:center; margin-top:10px; }
+.switch-link a{ cursor:pointer; color:var(--accent-2); }
+#message{ margin-top:10px; text-align:center; font-weight:600; }
 </style>
-
-<link rel="icon" href="images/logo.png" type="image/png">
 
 </head>
 <body>
@@ -83,53 +63,57 @@ button.submit-btn:hover{
     <button id="signupTab">Sign Up</button>
   </div>
 
-  <!-- Login Form -->
+  <!-- Login -->
   <form id="loginForm" class="active">
     <div class="form-group">
-      <label for="loginEmail">Email</label>
-      <input type="email" id="loginEmail" placeholder="Enter your email" required>
+      <label>Email</label>
+      <input type="email" id="loginEmail" required>
     </div>
     <div class="form-group">
-      <label for="loginPassword">Password</label>
-      <input type="password" id="loginPassword" placeholder="Enter password" required>
+      <label>Password</label>
+      <input type="password" id="loginPassword" required>
     </div>
-    <button type="submit" class="submit-btn">Login</button>
-    <div class="switch-link"><a id="forgotPassword">Forgot Password?</a></div>
-    <div class="switch-link">Don't have an account? <a id="toSignup">Sign Up</a></div>
+    <button class="submit-btn">Login</button>
+    <div class="switch-link">
+      <a id="forgotPassword">Forgot Password?</a>
+    </div>
+    <div class="switch-link">
+      Don't have an account? <a id="toSignup">Sign Up</a>
+    </div>
   </form>
 
-  <!-- Sign Up Form -->
+  <!-- Signup -->
   <form id="signupForm">
     <div class="form-group">
-      <label for="signupName">Fullname</label>
-      <input type="text" id="signupName" placeholder="Enter full name" required>
+      <label>Full Name</label>
+      <input type="text" id="signupName" required>
     </div>
     <div class="form-group">
-      <label for="signupEmail">Email</label>
-      <input type="email" id="signupEmail" placeholder="Enter email" required>
+      <label>Email</label>
+      <input type="email" id="signupEmail" required>
     </div>
     <div class="form-group">
-      <label for="signupPassword">Password</label>
-      <input type="password" id="signupPassword" placeholder="Enter password" required>
+      <label>Password</label>
+      <input type="password" id="signupPassword" required>
     </div>
     <div class="form-group">
-      <label for="signupConfirm">Confirm Password</label>
-      <input type="password" id="signupConfirm" placeholder="Confirm password" required>
+      <label>Confirm Password</label>
+      <input type="password" id="signupConfirm" required>
     </div>
-    <button type="submit" class="submit-btn">Sign Up</button>
-    <div class="switch-link">Already have an account? <a id="toLogin">Login</a></div>
+    <button class="submit-btn">Sign Up</button>
+    <div class="switch-link">
+      Already have an account? <a id="toLogin">Login</a>
+    </div>
   </form>
 
   <div id="message"></div>
 </div>
 
 <script type="module">
-// Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyDHRDRRm2KBmCuUf3qvTIRI5hO0aXFFx3w",
   authDomain: "asprients-95c1f.firebaseapp.com",
@@ -139,114 +123,126 @@ const firebaseConfig = {
   appId: "1:453218332819:web:5740173fa4d8156dae9d66"
 };
 
-async function safeSetDoc(db, path, data) {
-  const [collectionName, docId] = path.split("/");
-  const ref = doc(db, collectionName, docId);
-  try {
-    // Automatically creates the collection & document if missing
-    await setDoc(ref, data, { merge: true });
-    console.log("✅ Document ensured:", path);
-  } catch (err) {
-    console.error("❌ Error auto-creating document:", err);
-  }
-}
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const loginForm = document.getElementById('loginForm');
-const signupForm = document.getElementById('signupForm');
-const loginTab = document.getElementById('loginTab');
-const signupTab = document.getElementById('signupTab');
-const toSignup = document.getElementById('toSignup');
-const toLogin = document.getElementById('toLogin');
-const message = document.getElementById('message');
+const loginForm = document.getElementById("loginForm");
+const signupForm = document.getElementById("signupForm");
+const message = document.getElementById("message");
 
-// Switch forms
-function switchForm(form){
-    if(form==='login'){
-        loginForm.classList.add('active'); signupForm.classList.remove('active');
-        loginTab.classList.add('active'); signupTab.classList.remove('active');
-    } else{
-        signupForm.classList.add('active'); loginForm.classList.remove('active');
-        signupTab.classList.add('active'); loginTab.classList.remove('active');
-    }
+function switchForm(type){
+  loginForm.classList.toggle("active", type==="login");
+  signupForm.classList.toggle("active", type==="signup");
 }
-loginTab.addEventListener('click', ()=>switchForm('login'));
-signupTab.addEventListener('click', ()=>switchForm('signup'));
-toSignup.addEventListener('click', ()=>switchForm('signup'));
-toLogin.addEventListener('click', ()=>switchForm('login'));
 
-// Signup
-signupForm.addEventListener('submit', async e=>{
-    e.preventDefault();
-    const name = document.getElementById('signupName').value.trim();
-    const email = document.getElementById('signupEmail').value;
-    const password = document.getElementById('signupPassword').value;
-    const confirm = document.getElementById('signupConfirm').value;
-    
-    if(!name){ message.innerText="Fullname required"; return; }
-    if(password!==confirm){ message.innerText="Passwords do not match"; return; }
-    
-    try{
-        const userCredential = await createUserWithEmailAndPassword(auth,email,password);
-        const user = userCredential.user;
-        console.log("✅ User created:", user.uid);
+document.getElementById("loginTab").onclick = ()=>switchForm("login");
+document.getElementById("signupTab").onclick = ()=>switchForm("signup");
+document.getElementById("toSignup").onclick = ()=>switchForm("signup");
+document.getElementById("toLogin").onclick = ()=>switchForm("login");
 
-        // Firestore document creation
-        const userRef = doc(db, "users", user.uid); // collection 'users', doc id = user.uid
-        await setDoc(userRef, {
-            fullname: name,
-            email: email,
-            password: password,
-            overallProgress: 0,
-            progress: {},
-            
-            
-        });
-        console.log("✅ Firestore document created successfully");
-        
-        message.innerText=`Signup Successful ✅ Welcome, ${name}`;
-        switchForm('login');
-    } catch(err){
-        console.error("❌ Error:", err);
-        message.innerText=err.message;
-    }
-});
-
-// Login
-loginForm.addEventListener('submit', async e=>{
-    e.preventDefault();
-    const email = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
-    try{
-        const userCredential = await signInWithEmailAndPassword(auth,email,password);
-        const user = userCredential.user;
-        const docSnap = await getDoc(doc(db,"users",user.uid));
-        const fullname = docSnap.exists()? docSnap.data().fullname : "User";
-        localStorage.setItem("fullname",fullname);
-        window.location.href = "home.html";
-    } catch(err){ message.innerText=err.message; }
-});
-
-// Forgot password
-document.getElementById("forgotPassword").addEventListener("click", async (e)=>{
+/* ---------- SIGNUP ---------- */
+signupForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const email = document.getElementById("loginEmail").value;
-  if(!email){ message.innerText="⚠️ Enter your email"; return; }
-  try{
-    await sendPasswordResetEmail(auth,email);
-    message.innerText="📩 Password reset link sent! Please Check Spam Folder";
-  } catch(err){ message.innerText="❌ "+err.message; }
-});
 
-onAuthStateChanged(auth, user => {
-  if(user && window.location.pathname.includes("index.html")) { 
-    // Redirect only if on login/signup page
+  const name = signupName.value.trim();
+  const email = signupEmail.value.trim();
+  const password = signupPassword.value;
+  const confirm = signupConfirm.value;
+
+  if (password !== confirm) {
+    message.innerText = "Passwords do not match";
+    return;
+  }
+
+  try {
+    // 1️⃣ Firebase Auth user create
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    const user = cred.user;
+
+    // 2️⃣ Firestore document CREATE (first time only)
+    await setDoc(doc(db, "users", user.uid), {
+      uid: user.uid,
+      fullname: name,
+      email: email,
+      password: password,          // (as per your request, kept)
+      overallProgress: 0,
+      progress: {},
+      totalSiteSeconds: 0,
+      totalLectureSeconds: 0,
+      createdAt: Date.now(),
+      role: "student",
+      status: "active"
+    });
+
+    // 3️⃣ Redirect
     window.location.href = "home.html";
+
+  } catch (err) {
+    console.error(err);
+    message.innerText = "Signup failed";
   }
 });
+
+
+/* ---------- LOGIN ---------- */
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  try {
+    const cred = await signInWithEmailAndPassword(
+      auth,
+      loginEmail.value,
+      loginPassword.value
+    );
+
+    const user = cred.user;
+    const ref = doc(db, "users", user.uid);
+    const snap = await getDoc(ref);
+
+    // 🔥 If doc missing → auto-create
+    if (!snap.exists()) {
+      await setDoc(ref, {
+        uid: user.uid,
+        fullname: "User",
+        email: user.email,
+        password: loginPassword.value,
+        totalSiteSeconds: 0,
+        totalLectureSeconds: 0,
+        createdAt: Date.now(),
+        role: "student",
+        status: "active",
+        overallProgress: 0,
+        progress: {}
+      });
+    }
+
+    window.location.href = "home.html";
+
+  } catch (err) {
+    message.innerText = "Invalid credentials";
+  }
+});
+
+
+/* ---------- FORGOT PASSWORD ---------- */
+forgotPassword.onclick = async ()=>{
+  if(!loginEmail.value){
+    message.innerText="Enter email first";
+    return;
+  }
+  await sendPasswordResetEmail(auth,loginEmail.value);
+  message.innerText="Password reset link sent";
+};
+
+// /* ---------- AUTH GUARD ---------- */
+// onAuthStateChanged(auth,user=>{
+//   if(user){
+//     window.location.href="home.html";
+//   }
+// });
+
 </script>
+
 </body>
 </html>

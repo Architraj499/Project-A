@@ -1,3 +1,9 @@
+const localName = localStorage.getItem("fullname");
+if (localName) {
+  const el = document.getElementById("fullname");
+  if (el) el.innerText = localName;
+}
+
 // universal.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
@@ -114,11 +120,17 @@ function openTab(e){
 }
 
 function filterBy(mode, event){ 
-  // 1️⃣ Active tab switch
-  document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
-  if(event && event.target) event.target.classList.add('active');
+  // 🔥 Remove active from all filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn =>
+    btn.classList.remove('active')
+  );
 
-  // 2️⃣ Filter logic
+  // 🔥 Always use currentTarget (the button itself)
+  if(event && event.currentTarget){
+    event.currentTarget.classList.add('active');
+  }
+
+  // 🔥 Filter cards
   document.querySelectorAll('#cardsGrid .card').forEach((card, idx) => {
     const prog = LECTURES[idx].progress || 0;
     if(mode === 'completed') card.style.display = prog >= 0.99 ? '' : 'none';
@@ -126,6 +138,7 @@ function filterBy(mode, event){
     else card.style.display = '';
   });
 }
+
 
 // ---------- Lecture progress ----------
 async function saveLectureProgress(lectureId, value){
@@ -144,79 +157,79 @@ function markCompleted(lectureId){
   saveLectureProgress(lectureId,1);
 }
 
-// // ---------- Timers ----------
-// let siteSeconds = 0, siteTimerInterval = null;
-// let lectureSeconds = 0, lectureTimerInterval = null;
+// ---------- Timers ----------
+let siteSeconds = 0, siteTimerInterval = null;
+let lectureSeconds = 0, lectureTimerInterval = null;
 
-// // Format seconds to hh:mm:ss
-// function formatTime(seconds){
-//   const h = Math.floor(seconds / 3600);
-//   const m = Math.floor((seconds % 3600) / 60);
-//   const s = seconds % 60;
-//   return `${h}h ${m}m ${s}s`;
-// }
+// Format seconds to hh:mm:ss
+function formatTime(seconds){
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  return `${h}h ${m}m ${s}s`;
+}
 
-// // ---------- Site timer ----------
-// function updateTimeDisplay() {
-//   const siteEl = document.getElementById("websiteTime");
-//   if(siteEl) siteEl.innerText = formatTime(siteSeconds);
-// }
+// ---------- Site timer ----------
+function updateTimeDisplay() {
+  const siteEl = document.getElementById("websiteTime");
+  if(siteEl) siteEl.innerText = formatTime(siteSeconds);
+}
 
-// async function saveTimeToFirestore() {
-//   if(!currentUserId) return;
-//   try{
-//     const userRef = doc(db, "users", currentUserId);
-//     await updateDoc(userRef, { totalSiteSeconds: siteSeconds });
-//   } catch(err){ console.error(err); }
-// }
+async function saveTimeToFirestore() {
+  if(!currentUserId) return;
+  try{
+    const userRef = doc(db, "users", currentUserId);
+    await updateDoc(userRef, { totalSiteSeconds: siteSeconds });
+  } catch(err){ console.error(err); }
+}
 
-// function startSiteTimer() {
-//   if(siteTimerInterval) clearInterval(siteTimerInterval);
-//   siteTimerInterval = setInterval(()=>{
-//     siteSeconds++;
-//     updateTimeDisplay();
-//     saveTimeToFirestore();
-//   }, 1000);
-// }
+function startSiteTimer() {
+  if(siteTimerInterval) clearInterval(siteTimerInterval);
+  siteTimerInterval = setInterval(()=>{
+    siteSeconds++;
+    updateTimeDisplay();
+    saveTimeToFirestore();
+  }, 1000);
+}
 
-// // ---------- Lecture timer ----------
-// function updateLectureTimeDisplay() {
-//   const lecEl = document.getElementById("lectureTime");
-//   if(lecEl) lecEl.innerText = formatTime(lectureSeconds);
-// }
+// ---------- Lecture timer ----------
+function updateLectureTimeDisplay() {
+  const lecEl = document.getElementById("lectureTime");
+  if(lecEl) lecEl.innerText = formatTime(lectureSeconds);
+}
 
-// async function saveLectureTimeToFirestore() {
-//   if(!currentUserId) return;
-//   try{
-//     const userRef = doc(db, "users", currentUserId);
-//     await updateDoc(userRef, { totalLectureSeconds: lectureSeconds });
-//   } catch(err){ console.error(err); }
-// }
+async function saveLectureTimeToFirestore() {
+  if(!currentUserId) return;
+  try{
+    const userRef = doc(db, "users", currentUserId);
+    await updateDoc(userRef, { totalLectureSeconds: lectureSeconds });
+  } catch(err){ console.error(err); }
+}
 
-// function startLectureTimer() {
-//   if(lectureTimerInterval) clearInterval(lectureTimerInterval);
-//   lectureTimerInterval = setInterval(()=>{
-//     lectureSeconds++;
-//     updateLectureTimeDisplay();
-//     saveLectureTimeToFirestore();
-//   }, 1000);
-// }
+function startLectureTimer() {
+  if(lectureTimerInterval) clearInterval(lectureTimerInterval);
+  lectureTimerInterval = setInterval(()=>{
+    lectureSeconds++;
+    updateLectureTimeDisplay();
+    saveLectureTimeToFirestore();
+  }, 1000);
+}
 
-// function stopLectureTimer() {
-//   clearInterval(lectureTimerInterval);
-//   lectureTimerInterval = null;
-// }
+function stopLectureTimer() {
+  clearInterval(lectureTimerInterval);
+  lectureTimerInterval = null;
+}
 
-// // ---------- Global wrapper ----------
-// window.openVideoOriginal = openVideoOriginal;
-// window.openVideo = function(rawUrl, title, lectureId){
-//   openVideoOriginal(rawUrl, title);
-//   if(lectureId) markCompleted(lectureId);
-//   startLectureTimer();
-// };
-// window.closeModal = closeModal;
-// window.filterBy = filterBy;
-// window.openTab = openTab;
+// ---------- Global wrapper ----------
+window.openVideoOriginal = openVideoOriginal;
+window.openVideo = function(rawUrl, title, lectureId){
+  openVideoOriginal(rawUrl, title);
+  if(lectureId) markCompleted(lectureId);
+  startLectureTimer();
+};
+window.closeModal = closeModal;
+window.filterBy = filterBy;
+window.openTab = openTab;
 
 // ---------- Search & Theme ----------
 document.addEventListener('DOMContentLoaded', ()=>{
