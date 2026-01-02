@@ -272,27 +272,36 @@ document.addEventListener('DOMContentLoaded', ()=>{
   });
 });
 
-// ---------- Auth listener ----------
 onAuthStateChanged(auth, async (user) => {
-  if(user){
-    currentUserId = user.uid;
-    try{
-      const snap = await getDoc(doc(db, "users", currentUserId));
-      if(snap.exists()){
-        const data = snap.data();
-        siteSeconds = data.totalSiteSeconds || 0;
-        lectureSeconds = data.totalLectureSeconds || 0;
-        if(data.fullname){
-          const nameEl = document.getElementById('usernameDisplay');
-          if(nameEl) nameEl.innerText = data.fullname;
-        }
+  // ❌ no user = no timer
+  if (!user) return;
+
+  currentUserId = user.uid;
+
+  try {
+    const snap = await getDoc(doc(db, "users", currentUserId));
+
+    if (snap.exists()) {
+      const data = snap.data();
+
+      // load previous values
+      siteSeconds = data.totalSiteSeconds || 0;
+      lectureSeconds = data.totalLectureSeconds || 0;
+
+      // optional: name display (safe)
+      if (data.fullname) {
+        const nameEl = document.getElementById("usernameDisplay");
+        if (nameEl) nameEl.innerText = data.fullname;
       }
-    } catch(err){ console.error(err); }
+
+      // ✅ START BACKEND TIMER HERE
+      startSiteTimer();
+    }
+  } catch (err) {
+    console.error("Auth timer init failed:", err);
   }
-  // updateTimeDisplay();
-  updateLectureTimeDisplay();
-  startSiteTimer();
 });
+
 
 // ---------- Asprients Custom Video Player (Global) ----------
 
