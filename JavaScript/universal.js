@@ -289,9 +289,9 @@ onAuthStateChanged(auth, async (user) => {
       }
     } catch(err){ console.error(err); }
   }
-  // // updateTimeDisplay();
-  // updateLectureTimeDisplay();
-  // startSiteTimer();
+  // updateTimeDisplay();
+  updateLectureTimeDisplay();
+  startSiteTimer();
 });
 
 // ---------- Asprients Custom Video Player (Global) ----------
