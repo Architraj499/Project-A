@@ -117,3 +117,90 @@ footer p {
     max-width: 90%;
   }
 }
+
+
+
+
+
+
+
+/* ===============================
+   Sticky Form Updates – Polished
+   =============================== */
+
+.form-updates {
+  position: sticky;
+  top: 70px;
+  z-index: 1200;
+
+  background: var(--card);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+
+  padding: 10px 0;
+}
+
+.updates-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  font-size: 14px;
+  color: var(--text);
+}
+
+/* LIVE badge */
+.live-badge {
+  background: linear-gradient(135deg, #ff3b3b, #c62828);
+  color: #fff;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  animation: livePulse 2s infinite;
+}
+
+/* Update link */
+.form-updates a {
+  color: var(--accent-2);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.form-updates a:hover {
+  opacity: 0.85;
+}
+
+/* Subtle pulse */
+@keyframes livePulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 59, 59, 0.5); }
+  70% { box-shadow: 0 0 0 8px rgba(255, 59, 59, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 59, 59, 0); }
+}
+
+/* Mobile handling */
+@media (max-width: 600px) {
+  .updates-inner {
+    flex-wrap: wrap;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .form-updates a {
+    font-size: 13px;
+  }
+}
