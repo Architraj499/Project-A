@@ -273,7 +273,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
 });
 
 onAuthStateChanged(auth, async (user) => {
-  // ❌ no user = no timer
   if (!user) return;
 
   currentUserId = user.uid;
@@ -284,18 +283,27 @@ onAuthStateChanged(auth, async (user) => {
     if (snap.exists()) {
       const data = snap.data();
 
+      // ===== LOAD LECTURE PROGRESS INTO LECTURES =====
+      if (data.progress) {
+        LECTURES.forEach(lec => {
+          if (data.progress[lec.id] !== undefined) {
+            lec.progress = data.progress[lec.id];
+          }
+        });
+      }
+
       // load previous values
       siteSeconds = data.totalSiteSeconds || 0;
       lectureSeconds = data.totalLectureSeconds || 0;
 
-      // optional: name display (safe)
+      // optional: name display
       if (data.fullname) {
         const nameEl = document.getElementById("usernameDisplay");
         if (nameEl) nameEl.innerText = data.fullname;
       }
 
-      // ✅ START BACKEND TIMER HERE
-      startSiteTimer();
+      renderAll();        // 🔥 THIS WAS MISSING
+      startSiteTimer();   // timer after UI sync
     }
   } catch (err) {
     console.error("Auth timer init failed:", err);
