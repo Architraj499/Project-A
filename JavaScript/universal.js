@@ -5,7 +5,8 @@ if (localName) {
 }
 
 // universal.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { initializeApp,getApps,
+  getApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
@@ -19,9 +20,15 @@ const firebaseConfig = {
     appId: "1:453218332819:web:5740173fa4d8156dae9d66"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = getApps().length === 0
+  ? initializeApp(firebaseConfig)
+  : getApp();
+
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+// 🔥 EXPORT EVERYTHING YOU NEED
+export { app, auth, db };
 
 let currentUserId = null;
 const LECTURES = window.LECTURES || [];
@@ -65,20 +72,20 @@ function renderAll(){
       </div>
       <div class="actions">
         <button class="small play" onclick="openVideo('${escapeHtml(l.video)}','${escapeHtml(l.title)}','${l.id}')">Play</button>
-        <a class="small view" href="${l.notes}" target="_blank">Notes</a>
-        <a class="small view" href="${l.pyq}" target="_blank">PYQ</a>
-      </div>`;
+             </div>`;
     grid.appendChild(div);
 
     if(notesGrid){
       const n=document.createElement('div'); n.className='card';
-      n.innerHTML=`<div class="badge">Notes</div><div class="chapter-title">${l.title}</div><div class="muted">Format: PDF / Doc</div><div class="actions"><a class="small view" href="${l.notes}" target="_blank">Open</a></div>`;
+      n.innerHTML=`<div class="badge">Notes</div><div class="chapter-title">${l.title}</div><div class="muted">Revision Notes</div><div class="actions"><a class="small view" href="${l.notes}" target="_blank">Open</a><a class="small download" href="${l.notes}" download>Download </a></div>`
+      ;
       notesGrid.appendChild(n);
     }
 
     if(pyqGrid){
       const p=document.createElement('div'); p.className='card';
-      p.innerHTML=`<div class="badge">PYQ</div><div class="chapter-title">${l.title}</div><div class="muted">Yearwise PYQs</div><div class="actions"><a class="small view" href="${l.pyq}" target="_blank">Open</a></div>`;
+      p.innerHTML=`<div class="badge">PYQ</div><div class="chapter-title">${l.title}</div><div class="muted">Topicwise PYQs</div><div class="actions"><a class="small view" href="${l.pyq}" target="_blank">Open</a><a class="small download" href="${l.pyq}" download>Download </a></div>
+      `;
       pyqGrid.appendChild(p);
     }
   });
