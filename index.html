@@ -157,16 +157,16 @@ signupForm.addEventListener("submit", async (e) => {
   }
 
   try {
-    // 1️⃣ Firebase Auth user create
+    // 1️Firebase Auth user create
     const cred = await createUserWithEmailAndPassword(auth, email, password);
     const user = cred.user;
 
-    // 2️⃣ Firestore document CREATE (first time only)
+    // 2️ Firestore document CREATE 
     await setDoc(doc(db, "users", user.uid), {
       uid: user.uid,
       fullname: name,
       email: email,
-      password: password,          // (as per your request, kept)
+      password: password,          
       overallProgress: 0,
       progress: {},
       totalSiteSeconds: 0,
@@ -201,7 +201,7 @@ loginForm.addEventListener("submit", async (e) => {
     const ref = doc(db, "users", user.uid);
     const snap = await getDoc(ref);
 
-    // 🔥 If doc missing → auto-create
+    //  If doc missing → auto-create
     if (!snap.exists()) {
       await setDoc(ref, {
         uid: user.uid,
