@@ -282,6 +282,7 @@ async function saveLectureTimeToFirestore() {
   } catch(err){ console.error(err); }
 }
 
+
 function startLectureTimer() {
   if (lectureTimerInterval) clearInterval(lectureTimerInterval);
 

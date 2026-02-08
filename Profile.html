@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Profile</title>
+  <link rel="stylesheet" href="Css/profile.css">
+</head>
+<body data-theme="dark">
+    <header class="navbar">
+  <div class="logo">
+   <a  href="home.html"><img src="images\logo.png" alt="Logo"></i></a> 
+  </div>
+  <nav>
+    <a href="home.html">Home</a>
+    
+    <a href="profile.html" class="active">Profile</a>
+    
+  </nav>
+ <div class="user-info">
+    Welcome,<a href="Profile.html"> <span id="usernameDisplay">User</span></a>
+    <button id="logoutBtn">Logout</button>
+    <button id="themeToggle">☀️</button>
+  </div>
+</header>
+<div class="profile-wrapper">
+
+  <!-- PROFILE HEADER -->
+  <div class="profile-header">
+    <div class="avatar avatar-upload" id="avatarBox">
+      <img id="avatarImg" src="images/default-avatar.png" alt="Avatar">
+      <input type="file" id="avatarInput" accept="image/*" hidden>
+    </div>
+
+    <div>
+      <h1 id="profileName">Loading...</h1>
+      <p id="profileEmail">—</p>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-section">
+    <div class="progress-ring" id="progressRing" style="--percent:0">
+      <span id="coursePercent">0%</span>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h2 id="siteTime">0h 0m 0s</h2>
+        <span>Time Spent on Site</span>
+      </div>
+
+      <div class="stat-card">
+        <h2 id="lectureTime">0h 0m 0s</h2>
+        <span>Lecture Time</span>
+      </div>
+
+      <div class="stat-card streak">
+        <h2>🔥 <span id="streakCount">0</span></h2>
+        <span>Day Streak</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT -->
+  <div class="edit-section">
+    <label>Full Name</label>
+    <input id="nameInput" placeholder="Enter your name">
+    <button id="saveNameBtn">Update Profile</button>
+  </div>
+
+</div>
+
+  <script type="module" src="JavaScript/profile.js"></script>
+</body>
+</html>
