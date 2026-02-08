@@ -1,52 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Personal - Asprient</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- Favicon -->
-<link rel="icon" href="images/logo1.png" type="image/png">
-              
- <!-- Apple Touch Icon -->
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-                                          
-<!-- Android / Chrome Icons -->
-<link rel="icon" type="image/png" sizes="210x210" href="android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
-                                                                                                    
- <!-- Safari Pinned Tab (vector) -->
-<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
-                                                                                                                                                              
-<!-- Optional: Theme color for mobile address bar -->
-<meta name="theme-color" content="#1f4068">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asprients </title>
 
-  <header class="navbar">
-     <div class="logo"> <img src="images\logo.png" alt=" Logo"></div>
-    <nav>
-      <a href="home.html">Home</a>
-      <a href="Boards.html">Boards</a>
-      <a href="cuet.html">CUET</a>
-      <a href="cafoundation.html">CA Foundation</a>
-      
-    </nav>
-    <div class="user-info">
+
+<link rel="icon" href="images/logo1.png" type="image/png">
+
+
+<link rel="stylesheet" href="CSS\home.css">
+</head>
+<body data-theme="dark">
+
+
+<header class="navbar">
+  <div class="logo">
+   <a  href="home.html"><img src="images\logo.png" alt="Logo"></i></a> 
+  </div>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="Boards.html">Boards</a>
+    <a href="cuet.html">CUET</a>
+    <a href="cafoundation.html">CA Foundation</a>
+  </nav>
+  <!-- <div class="time-tracker">
+  <p>Time Spent: <span id="websiteTime">0h 0m</span></p>
+  <p>Lecture Time: <span id="lectureTime">0h 0m</span></p>
+</div> -->
+
+
+
+  <div class="user-info">
     Welcome, <span id="usernameDisplay">User</span>
     <button id="logoutBtn">Logout</button>
+    <button id="themeToggle">☀️</button>
   </div>
-  </header>
+</header>
+
+
+<!-- STICKY FORM UPDATES -->
+<div class="form-updates">
+  <div class="updates-inner">
+    <span class="live-badge">LIVE</span>
+
+    <a href="https://examinationservices.nic.in/ExamSysCUETUG26/root/Home.aspx?enc=Ei4cajBkK1gZSfgr53ImFYsjZOdyj8DuPcxGBqAK2DwPXgGzSvy8OkvXqQJ0Bni9#/" target="_blank">
+      CUET UG 2026 Registration - <b style="color:red"><Strong>Closed </Strong></b>
+    </a>
+    <span class="dot">•</span>
+
+    <a href="https://biharboardonline.com/files/Inter2026%20Routine.pdf#/" target="_blank">
+      Class 12th Date Sheet Released 2025-26
+    </a>
+  </div>
+</div>
+
 
   <section class="hero">
+    <div class="hero-content">
     <h1>Personal Dashboard</h1>
     <p>Track your study plans & daily progress 📅</p>
+    <div class="hero-image">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" alt="Study Illustration">
+    </div>
+  </div>
+  
   </section>
 
-  <section class="quick-links">
+  <section class="container">
     <h2>My Tools</h2>
-    <div class="cards">
+    <div class="grid">
       <div class="card"><h3>📅 Syllabus</h3><a href="https://docs.google.com/spreadsheets/d/1fs5OPH4j2n0AIiYGLEHIYykk6WDpGt9aWmcO3jVhxwk/edit?gid=0#gid=0"> Syllabus Tracker</a></div>
       <div class="card"><h3>✅ To-Do List</h3><p>Tasks for Today</p></div>
       <div class="card"><h3>📊 Progress Tracker</h3><a href="Progress.html">Progress</a></div>
@@ -57,6 +80,6 @@
  <footer>
     <p>© 2025 Asprient| Built by Archit</p>
   </footer>
-<script type="module" src="script.js"></script>
+<script type="module" src="JavaScript/universal.js"></script>
 </body>
 </html>
