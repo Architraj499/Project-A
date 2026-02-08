@@ -1,3 +1,10 @@
+  window.ytPlayer = null;
+  window.currentLectureId = null;
+  window.watchedSeconds = 0;
+window.minutesToSeconds = minutesToSeconds;
+
+
+
 const localName = localStorage.getItem("fullname");
 if (localName) {
   const el = document.getElementById("fullname");
@@ -35,6 +42,14 @@ const LECTURES = window.LECTURES || [];
 
 // ---------- UI Helpers ----------
 function escapeHtml(s){ return (s||'').replace(/"/g,'&quot;').replace(/'/g,"&apos;"); }
+function minutesToSeconds(min) {
+  if (!min || min === 'TBA') return 0;
+
+  const n = parseInt(min, 10); // handles "71min"
+  return isNaN(n) ? 0 : n * 60;
+}
+
+
 
 function updateOverall(){ 
   const avg = Math.round((LECTURES.reduce((s,l)=>s+(l.progress||0),0)/LECTURES.length)*100);
@@ -65,6 +80,14 @@ function renderAll(){
         <div class="muted">${l.teacher}</div>
       </div>
       <div class="chapter-title">${l.title}</div>
+      <div class="muted">
+  ${
+    l.progress >= 1
+      ? '<span style="color:#22c55e;font-weight:600">✔ Completed</span>'
+      : '<span style="color:#f97316">⏳ Pending</span>'
+  }
+</div>
+
       <div class="muted">Lecture: 1 • Duration — ${l.min}</div>
       <div style="display:flex; gap:12px; align-items:center">
         <div class="ring">${Math.round((l.progress||0)*100)}%</div>
@@ -93,31 +116,77 @@ function renderAll(){
   updateOverall();
 }
 
-// ---------- Video modal ----------
-function openVideoOriginal(rawUrl,title){
-  if(!rawUrl){ alert('Video will be uploaded soon.'); return; }
-  const iframe=document.getElementById('videoIframe');
-  const modal=document.getElementById('videoModal');
-  if(document.getElementById('modalTitle')) document.getElementById('modalTitle').innerText = title||'Lecture';
-  let embed=rawUrl;
-  if(!embed.includes('embed')){
-    const m=rawUrl.match(/[?&]v=([A-Za-z0-9_-]+)/)||rawUrl.match(/youtu\.be\/([A-Za-z0-9_-]+)/);
-    if(m&&m[1]) embed='https://www.youtube-nocookie.com/embed/'+m[1];
+function openVideoOriginal(rawUrl, title, lectureId){
+  console.log("OPEN VIDEO:", lectureId);
+  if(!rawUrl){
+    alert('Video will be uploaded soon.');
+    return;
   }
-  const sep=embed.includes('?')?'&':'?';
-  if(iframe) iframe.src=embed+sep+'autoplay=1&rel=0&modestbranding=1';
-  if(modal){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+
+  currentLectureId = lectureId;
+
+  const iframe = document.getElementById('videoIframe');
+  const modal  = document.getElementById('videoModal');
+
+  if(document.getElementById('modalTitle')){
+    document.getElementById('modalTitle').innerText = title || 'Lecture';
+  }
+
+  let embed = rawUrl;
+  if(!embed.includes('embed')){
+    const m =
+      rawUrl.match(/[?&]v=([A-Za-z0-9_-]+)/) ||
+      rawUrl.match(/youtu\.be\/([A-Za-z0-9_-]+)/);
+
+    if(m && m[1]){
+      embed = 'https://www.youtube-nocookie.com/embed/' + m[1];
+    }
+  }
+
+  // 🔥 RESUME TIME
+  const resumeTime =
+    Number(localStorage.getItem(`yt_${lectureId}`)) || 0;
+
+  const sep = embed.includes('?') ? '&' : '?';
+
+  iframe.src =
+  embed +
+  sep +
+  `enablejsapi=1&origin=${location.origin}&start=${Math.floor(resumeTime)}&autoplay=1&mute=1&rel=0&modestbranding=1`;
+
+    ytPlayer = iframe;
+
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+
+  startLectureTimer();
+}
+function closeModal(){
+  const iframe = document.getElementById('videoIframe');
+  const modal  = document.getElementById('videoModal');
+
+
+  if (ytPlayer && ytPlayer.contentWindow) {
+  ytPlayer.contentWindow.postMessage(
+    '{"event":"command","func":"getCurrentTime","args":""}',
+    '*'
+  );
 }
 
-// ---------- Close modal ----------
-function closeModal(){ 
-  const iframe=document.getElementById('videoIframe'); 
-  const modal=document.getElementById('videoModal');
-  if(iframe) iframe.src=''; 
-  if(modal){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
-  document.body.style.overflow='';
-  stopLectureTimer(); // stop lecture timer
+
+
+  if(iframe) iframe.src = '';
+
+  if(modal){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+  }
+
+  document.body.style.overflow = '';
+  stopLectureTimer();
 }
+
 
 // ---------- Tabs & filters ----------
 function openTab(e){ 
@@ -214,13 +283,30 @@ async function saveLectureTimeToFirestore() {
 }
 
 function startLectureTimer() {
-  if(lectureTimerInterval) clearInterval(lectureTimerInterval);
-  lectureTimerInterval = setInterval(()=>{
+  if (lectureTimerInterval) clearInterval(lectureTimerInterval);
+
+  watchedSeconds = 0;
+
+  lectureTimerInterval = setInterval(() => {
     lectureSeconds++;
+    watchedSeconds++;
+
     updateLectureTimeDisplay();
     saveLectureTimeToFirestore();
+
+    const lec = LECTURES.find(l => l.id === currentLectureId);
+    if (!lec || lec.progress >= 1) return;
+
+    const totalSeconds = minutesToSeconds(lec.min);
+    if (!totalSeconds) return;
+
+    // ✅ COMPLETE AT 80%
+    if (watchedSeconds / totalSeconds >= 0.8) {
+      markCompleted(currentLectureId);
+    }
   }, 1000);
 }
+
 
 function stopLectureTimer() {
   clearInterval(lectureTimerInterval);
@@ -230,9 +316,8 @@ function stopLectureTimer() {
 // ---------- Global wrapper ----------
 window.openVideoOriginal = openVideoOriginal;
 window.openVideo = function(rawUrl, title, lectureId){
-  openVideoOriginal(rawUrl, title);
-  if(lectureId) markCompleted(lectureId);
-  startLectureTimer();
+  openVideoOriginal(rawUrl, title, lectureId);
+
 };
 window.closeModal = closeModal;
 window.filterBy = filterBy;
@@ -340,3 +425,7 @@ window.closePlayer = function () {
   playerModal.classList.add('hidden');
   document.body.style.overflow = 'auto';
 };
+
+
+
+
