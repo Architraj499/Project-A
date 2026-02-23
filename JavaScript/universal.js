@@ -66,11 +66,13 @@ function renderAll(){
   const grid=document.getElementById('cardsGrid');
   const notesGrid=document.getElementById('notesGrid');
   const pyqGrid=document.getElementById('pyqGrid');
+  const ncertGrid=document.getElementById('ncertGrid');
   if(!grid) return;
 
   grid.innerHTML=''; 
   if(notesGrid) notesGrid.innerHTML=''; 
   if(pyqGrid) pyqGrid.innerHTML='';
+  if(ncertGrid) ncertGrid.innerHTML='';
 
   LECTURES.forEach(l=>{
     const div=document.createElement('div'); div.className='card';
@@ -111,6 +113,19 @@ function renderAll(){
       `;
       pyqGrid.appendChild(p);
     }
+    if(ncertGrid && l.ncert && l.ncert !== '#'){
+  const n=document.createElement('div');
+  n.className='card';
+  n.innerHTML=`
+    <div class="badge">NCERT</div>
+    <div class="chapter-title">${l.title}</div>
+    <div class="muted">NCERT Book</div>
+    <div class="actions">
+      <a class="small view" href="${l.ncert}" target="_blank">Open</a>
+      <a class="small download" href="${l.ncert}" download>Download</a>
+    </div>`;
+  ncertGrid.appendChild(n);
+}
   });
 
   updateOverall();
