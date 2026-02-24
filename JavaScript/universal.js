@@ -63,69 +63,132 @@ function updateOverall(){
 
 // ---------- Render cards ----------
 function renderAll(){
-  const grid=document.getElementById('cardsGrid');
-  const notesGrid=document.getElementById('notesGrid');
-  const pyqGrid=document.getElementById('pyqGrid');
-  const ncertGrid=document.getElementById('ncertGrid');
+  const grid = document.getElementById('cardsGrid');
+  const notesGrid = document.getElementById('notesGrid');
+  const pyqGrid = document.getElementById('pyqGrid');
+  const ncertGrid = document.getElementById('ncertGrid');
+
   if(!grid) return;
 
-  grid.innerHTML=''; 
-  if(notesGrid) notesGrid.innerHTML=''; 
-  if(pyqGrid) pyqGrid.innerHTML='';
-  if(ncertGrid) ncertGrid.innerHTML='';
+  grid.innerHTML = '';
+  if(notesGrid) notesGrid.innerHTML = '';
+  if(pyqGrid) pyqGrid.innerHTML = '';
+  if(ncertGrid) ncertGrid.innerHTML = '';
 
-  LECTURES.forEach(l=>{
-    const div=document.createElement('div'); div.className='card';
-    div.innerHTML=`
-      <div class="row">
-        <div class="badge">CH • ${l.id}</div>
-        <div class="muted">${l.teacher}</div>
-      </div>
-      <div class="chapter-title">${l.title}</div>
-      <div class="muted">
-  ${
-    l.progress >= 1
-      ? '<span style="color:#22c55e;font-weight:600">✔ Completed</span>'
-      : '<span style="color:#f97316">⏳ Pending</span>'
-  }
-</div>
+  // 🔥 Get unique sections
+  const sections = [...new Set(LECTURES.map(l => l.section || 'General'))];
 
-      <div class="muted">Lecture: 1 • Duration — ${l.min}</div>
-      <div style="display:flex; gap:12px; align-items:center">
-        <div class="ring">${Math.round((l.progress||0)*100)}%</div>
-        <div style="flex:1"><div class="progress"><i style="width:${(l.progress||0)*100}%"></i></div></div>
-      </div>
-      <div class="actions">
-        <button class="small play" onclick="openVideo('${escapeHtml(l.video)}','${escapeHtml(l.title)}','${l.id}')">Play</button>
-             </div>`;
-    grid.appendChild(div);
+  sections.forEach(section => {
+// Create section container
+const sectionContainer = document.createElement('div');
+sectionContainer.className = 'section-container';
 
-    if(notesGrid){
-      const n=document.createElement('div'); n.className='card';
-      n.innerHTML=`<div class="badge">Notes</div><div class="chapter-title">${l.title}</div><div class="muted">Revision Notes</div><div class="actions"><a class="small view" href="${l.notes}" target="_blank">Open</a><a class="small download" href="${l.notes}" download>Download </a></div>`
-      ;
-      notesGrid.appendChild(n);
-    }
+// Section Heading
+const heading = document.createElement('h2');
+heading.className = 'section-heading';
+heading.innerText = section;
 
-    if(pyqGrid){
-      const p=document.createElement('div'); p.className='card';
-      p.innerHTML=`<div class="badge">PYQ</div><div class="chapter-title">${l.title}</div><div class="muted">Topicwise PYQs</div><div class="actions"><a class="small view" href="${l.pyq}" target="_blank">Open</a><a class="small download" href="${l.pyq}" download>Download </a></div>
+// Section Grid Wrapper
+const sectionWrapper = document.createElement('div');
+sectionWrapper.className = 'section-grid';
+
+// Assemble
+sectionContainer.appendChild(heading);
+sectionContainer.appendChild(sectionWrapper);
+
+// Add to main grid
+grid.appendChild(sectionContainer);
+
+    const sectionLectures = LECTURES.filter(l => (l.section || 'General') === section);
+
+    sectionLectures.forEach(l => {
+
+      const div = document.createElement('div');
+      div.className = 'card';
+
+      div.innerHTML = `
+        <div class="row">
+          <div class="badge">CH • ${l.id}</div>
+          <div class="muted">${l.teacher}</div>
+        </div>
+
+        <div class="chapter-title">${l.title}</div>
+
+        <div class="muted">
+          ${l.progress >= 1
+            ? '<span style="color:#22c55e;font-weight:600">✔ Completed</span>'
+            : '<span style="color:#f97316">⏳ Pending</span>'
+          }
+        </div>
+
+        <div class="muted">Lecture: 1 • Duration — ${l.min}</div>
+
+        <div style="display:flex; gap:12px; align-items:center">
+          <div class="ring">${Math.round((l.progress||0)*100)}%</div>
+          <div style="flex:1">
+            <div class="progress">
+              <i style="width:${(l.progress||0)*100}%"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="small play"
+            onclick="openVideo('${escapeHtml(l.video)}','${escapeHtml(l.title)}','${l.id}')">
+            Play
+          </button>
+        </div>
       `;
-      pyqGrid.appendChild(p);
-    }
-    if(ncertGrid && l.ncert && l.ncert !== '#'){
-  const n=document.createElement('div');
-  n.className='card';
-  n.innerHTML=`
-    <div class="badge">NCERT</div>
-    <div class="chapter-title">${l.title}</div>
-    <div class="muted">NCERT Book</div>
-    <div class="actions">
-      <a class="small view" href="${l.ncert}" target="_blank">Open</a>
-      <a class="small download" href="${l.ncert}" download>Download</a>
-    </div>`;
-  ncertGrid.appendChild(n);
-}
+
+      sectionWrapper.appendChild(div);
+
+      // Notes
+      if(notesGrid){
+        const n=document.createElement('div');
+        n.className='card';
+        n.innerHTML=`
+          <div class="badge">Notes</div>
+          <div class="chapter-title">${l.title}</div>
+          <div class="muted">Revision Notes</div>
+          <div class="actions">
+            <a class="small view" href="${l.notes}" target="_blank">Open</a>
+            <a class="small download" href="${l.notes}" download>Download</a>
+          </div>`;
+        notesGrid.appendChild(n);
+      }
+
+      // PYQ
+      if(pyqGrid){
+        const p=document.createElement('div');
+        p.className='card';
+        p.innerHTML=`
+          <div class="badge">PYQ</div>
+          <div class="chapter-title">${l.title}</div>
+          <div class="muted">Topicwise PYQs</div>
+          <div class="actions">
+            <a class="small view" href="${l.pyq}" target="_blank">Open</a>
+            <a class="small download" href="${l.pyq}" download>Download</a>
+          </div>`;
+        pyqGrid.appendChild(p);
+      }
+
+      // NCERT
+      if(ncertGrid && l.ncert && l.ncert !== '#'){
+        const n=document.createElement('div');
+        n.className='card';
+        n.innerHTML=`
+          <div class="badge">NCERT</div>
+          <div class="chapter-title">${l.title}</div>
+          <div class="muted">NCERT Book</div>
+          <div class="actions">
+            <a class="small view" href="${l.ncert}" target="_blank">Open</a>
+            <a class="small download" href="${l.ncert}" download>Download</a>
+          </div>`;
+        ncertGrid.appendChild(n);
+      }
+
+    });
+
   });
 
   updateOverall();

@@ -380,7 +380,7 @@ const firebaseConfig = {
     window.addEventListener('beforeunload', ()=> {
       const L = LECTURES[currentIndex];
       if(L && user){
-        navigator.sendBeacon && navigator.sendBeacon('/saveProgress', JSON.stringify({ id:L.id, time: plyr.currentTime || 0 }));
+        naviGeneral Aptitude Testor.sendBeacon && naviGeneral Aptitude Testor.sendBeacon('/saveProgress', JSON.stringify({ id:L.id, time: plyr.currentTime || 0 }));
       }
     });
 

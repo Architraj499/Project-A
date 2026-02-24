@@ -34,6 +34,7 @@
       <a href="bst.html">Business Studies</a>
       <a href="eco.html">Economics</a>
       <a href="eng.html">English</a>
+       <a href="General Aptitude Test.html">General Aptitude Test</a>
     </div>
     </div>
    <div class="actions">
@@ -45,16 +46,15 @@
   <section class="subject-hero">
     <div class="subject-card">
       <h1>Accountancy</h1>
-      <div class="subject-meta">Class 12 | CUET 2026 | CA Foundation</div>
+      <div class="subject-meta">Class 12 | CUET 2026 |<a href="Pdfs/accountancy.pdf" target="_blank">  Syllabus</a> </div>
       <div class="subject-actions">
-  <div class="filters">
-  <button class="tab active" onclick="filterBy('all', event)">All</button>
-  <button class="tab" onclick="filterBy('pending', event)">Pending</button>
-  <button class="tab" onclick="filterBy('completed', event)">Completed</button>
+  <button class="filter-btn active" onclick="filterBy('all', event)">All</button>
+<button class="filter-btn" onclick="filterBy('pending', event)">Pending</button>
+<button class="filter-btn" onclick="filterBy('completed', event)">Completed</button>
 </div>
 
-</div>
-    </div>
+
+
     <div style="min-width:260px">
       <div style="padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));">
         <div style="display:flex; justify-content:space-between; gap:12px; align-items:center">
@@ -138,19 +138,19 @@
 
 
 <script>window.LECTURES = [
-  { id: 'A1', min:'TBA', title: 'Partnership Fundamentals', video: 'https://www.youtube.com/embed/YdjBn8vO-ww', notes:'', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac101.pdf', pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
-  { id: 'A2', min:'TBA', title: 'Goodwiil', video: 'https://www.youtube.com/embed/BRCuiFl_gr8', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac102.pdf', pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
-  { id: 'A3', min:'TBA', title: 'Change In PSR', video: 'https://www.youtube.com/embed/okiA0Tak3Kg', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac102.pdf', pyq:'#', progress:0,teacher:'Sunil Panda Sir' },
-  { id: 'A4', min:'TBA', title: 'Admission of Partner', video: 'https://www.youtube.com/embed/ZkgoC7Jzv58', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac102.pdf', pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
-  { id: 'A5', min:'TBA', title: 'Retirement of Partner', video: 'https://www.youtube.com/embed/RspJSsgLwCk', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac103.pdf ', pyq:'# ', progress:0,teacher:'Sunil Panda Sir' },
-  { id: 'A6', min:'TBA', title: 'Death of Partner', video: 'https://www.youtube.com/embed/VulE7hmqSL4 ', notes:'# ', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac103.pdf', pyq:'# ', progress:0, teacher:'Sunil Panda Sir' },
-  { id: 'A7', min:'TBA ', title: 'Dissolution of Partnership ', video: '', notes:'', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac104.pdf', pyq:'', progress:0, teacher:'Sunil Panda Sir' },
-  { id: 'A8', min:'TBA', title: 'Issue of Share', video: 'https://www.youtube.com/embed/Vb3_AyD54DU', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac2dd/leac101.pdf', pyq:'#', progress:0,teacher:'Sunil Panda Sir' },
-  { id: 'A9', min:'TBA', title: 'Issue of Debentures', video: 'https://www.youtube.com/embed/CF05bA75mBc', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac2dd/leac102.pdf', pyq:'#', progress:0,teacher:'Sunil Panda Sir' },
-  { id: 'A10', min:'TBA', title: 'Financial Statements of Companies', video: 'https://www.youtube.com/embed/c3rVL-HRDFM', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac2dd/leac103.pdf', pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
-  { id: 'A11', min:'TBA', title: 'Financial Statement Analysis', video: 'https://www.youtube.com/embed/oMOrI1nYt3g', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac2dd/leac104.pdf', pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
-  { id: 'A12', min:'TBA', title: 'Accounting Ratios', video: 'https://www.youtube.com/embed/NjlskPO1Hw4', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac2dd/leac105.pdf', pyq:'#', progress:0,teacher:'Sunil Panda Sir' },
-  { id: 'A13', min:'TBA ', title: 'Cash Flow Statement ', video: '', notes:'', ncert:'CUET Materials/NCERT/Accountancy/leac2dd/leac106.pdf', pyq:'', progress:0, teacher:'Sunil Panda Sir' },
+  {section:'Partnership', id: 'A1', min:'TBA', title: 'Partnership Fundamentals', video: 'https://www.youtube.com/embed/YdjBn8vO-ww', notes:'', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac101.pdf', pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
+  { section:'Partnership', id: 'A2', min:'TBA', title: 'Goodwiil', video: 'https://www.youtube.com/embed/BRCuiFl_gr8', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac102.pdf', pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
+  { section:'Partnership', id: 'A3', min:'TBA', title: 'Change In PSR', video: 'https://www.youtube.com/embed/okiA0Tak3Kg', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac102.pdf', pyq:'#', progress:0,teacher:'Sunil Panda Sir' },
+  { section:'Partnership', id: 'A4', min:'TBA', title: 'Admission of Partner', video: 'https://www.youtube.com/embed/ZkgoC7Jzv58', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac102.pdf', pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
+  { section:'Partnership' ,id: 'A5' ,min:'TBA' ,title:'Retirement of Partner' ,video:'',notes:'#' ,ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac103.pdf ', pyq:'# ', progress:0,teacher:'Sunil Panda Sir' },
+  { section:'Partnership' ,id: 'A6' ,min:'TBA' ,title:'Death of Partner' ,video:'',notes:'#' ,ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac103.pdf ', pyq:'# ', progress:0, teacher:'Sunil Panda Sir' },
+  { section:'Partnership', id: 'A7', min:'TBA ', title: 'Dissolution of Partnership ', video: '', notes:'', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac104.pdf', pyq:'', progress:0, teacher:'Sunil Panda Sir' },
+  { section:'Shares and Debentures', id: 'A8', min:'TBA', title: 'Issue of Share', video: 'https://www.youtube.com/embed/Vb3_AyD54DU', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac2dd/leac101.pdf', pyq:'#', progress:0,teacher:'Sunil Panda Sir' },
+  { section:'Shares and Debentures', id: 'A9', min:'TBA', title: 'Issue of Debentures', video: 'https://www.youtube.com/embed/CF05bA75mBc', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac2dd/leac102.pdf', pyq:'#', progress:0,teacher:'Sunil Panda Sir' },
+  { section:'Financial Statements of Companies and Analysis ', id: 'A10', min:'TBA', title: 'Financial Statements of Companies', video: 'https://www.youtube.com/embed/c3rVL-HRDFM', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac2dd/leac103.pdf', pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
+  { section:'Financial Statements of Companies and Analysis ', id: 'A11', min:'TBA', title: 'Financial Statement Analysis', video: 'https://www.youtube.com/embed/oMOrI1nYt3g', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac2dd/leac104.pdf', pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
+  { section:'Financial Statements of Companies and Analysis ', id: 'A12', min:'TBA', title: 'Accounting Ratios', video: 'https://www.youtube.com/embed/NjlskPO1Hw4', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac2dd/leac105.pdf', pyq:'#', progress:0,teacher:'Sunil Panda Sir' },
+  { section:'Financial Statements of Companies and Analysis ', id: 'A13', min:'TBA ', title: 'Cash Flow Statement ', video: '', notes:'', ncert:'CUET Materials/NCERT/Accountancy/leac2dd/leac106.pdf' ,pyq:'', progress : 0.0, teacher :'Sunil Panda Sir' },
 
 ];</script> 
 <script type="module" src="JavaScript/universal.js"></script>
