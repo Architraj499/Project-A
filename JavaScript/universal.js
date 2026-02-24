@@ -202,31 +202,44 @@ function closeModal(){
   stopLectureTimer();
 }
 
+function openTab(e){
+  const tab = e.currentTarget.dataset.tab;
 
-// ---------- Tabs & filters ----------
-function openTab(e){ 
-  const tab=e.currentTarget.dataset.tab; 
-  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab)); 
-  document.querySelectorAll('.tabpanel').forEach(p=>p.style.display=p.id===tab?'':'none'); 
+  document.querySelectorAll('.tab').forEach(btn=>{
+    btn.classList.remove('active');
+  });
+
+  e.currentTarget.classList.add('active');
+
+  document.querySelectorAll('.tabpanel').forEach(panel=>{
+    panel.style.display = panel.id === tab ? '' : 'none';
+  });
 }
+// ---------- Tabs & filters ----------
+function filterBy(mode, event){
 
-function filterBy(mode, event){ 
-  // 🔥 Remove active from all filter buttons
   document.querySelectorAll('.filter-btn').forEach(btn =>
     btn.classList.remove('active')
   );
 
-  // 🔥 Always use currentTarget (the button itself)
   if(event && event.currentTarget){
     event.currentTarget.classList.add('active');
   }
 
-  // 🔥 Filter cards
-  document.querySelectorAll('#cardsGrid .card').forEach((card, idx) => {
-    const prog = LECTURES[idx].progress || 0;
-    if(mode === 'completed') card.style.display = prog >= 0.99 ? '' : 'none';
-    else if(mode === 'pending') card.style.display = prog < 0.99 ? '' : 'none';
-    else card.style.display = '';
+  const cards = document.querySelectorAll('#cardsGrid .card');
+
+  cards.forEach((card, idx) => {
+    const prog = window.LECTURES[idx]?.progress || 0;
+
+    if(mode === 'completed'){
+      card.style.display = prog >= 0.99 ? '' : 'none';
+    }
+    else if(mode === 'pending'){
+      card.style.display = prog < 0.99 ? '' : 'none';
+    }
+    else{
+      card.style.display = '';
+    }
   });
 }
 

@@ -123,9 +123,19 @@ a{
 .subject-card h1{margin:0; font-size:1.6rem}
 .subject-meta{color:var(--muted); margin-top:6px}
 .subject-actions{display:flex; gap:10px; margin-top:12px}
-.tabs{display:flex; gap:10px; align-items:flex-end; margin:18px 0}
+
+.filter-btn{display:flex; gap:10px; align-items:flex-end; margin:18px 0}
 .tab{padding:12px 14px; border-radius:10px; cursor:pointer; color:var(--muted); background:transparent; font-weight:600}
 .tab.active{background:linear-gradient(90deg,var(--accent),var(--accent-2)); box-shadow:0 8px 30px rgba(126,91,255,0.12); color:white}
+
+
+.filter-btn{display:flex; gap:10px; align-items:flex-end; margin:18px 0}
+.filter-btn{padding:12px 14px; border-radius:10px; cursor:pointer; color:var(--muted); background:transparent; font-weight:600}
+.filter-btn.active{background:linear-gradient(90deg,var(--accent),var(--accent-2)); box-shadow:0 8px 30px rgba(126,91,255,0.12); color:white}
+
+
+
+
 /* Grid background matches body */
 .grid {
     background: var(--bg); /* Same as body background */
