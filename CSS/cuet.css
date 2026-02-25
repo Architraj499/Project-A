@@ -63,7 +63,7 @@ a { text-decoration: none; color: inherit; }
 
 
 
-/* 
+
 .quick-links { padding:40px 20px; }
 .quick-links h2 { text-align:center; margin-bottom:20px; font-size:2rem; }
 .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
@@ -79,7 +79,7 @@ a { text-decoration: none; color: inherit; }
     transition: 0.3s;
 }.card:hover { transform: translateY(-6px); background: linear-gradient(90deg,var(--accent),var(--accent-2)); color:#fff; }
 .card a { font-weight:700; font-size:1.1rem; display:block; margin-bottom:8px; }
-.card p { font-size:1.1rem; opacity:0.8; } */
+.card p { font-size:1.1rem; opacity:0.8; }
 
 footer {
   background:var(--card); border-top:1px solid rgba(255,255,255,0.05);
