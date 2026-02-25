@@ -155,8 +155,8 @@ a{
 .play{background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#fff; border:none}
 .view{background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--text)}
 .ring{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03)}
-.progress{height:6px;background:rgba(255,255,255,0.06); border-radius:999px; overflow:hidden}
-.progress > i{display:block;height:6px;background:linear-gradient(90deg,var(--accent),var(--accent-2)); width:0%}
+.progress{height:10px;background:rgba(188, 181, 181, 0.459); border-radius:999px; overflow:hidden; margin:20px}
+.progress > i{display:block;height:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2)); width:2%}
 .modal{position:fixed; inset:0; display:none; background:rgba(2,6,23,0.75); z-index:9999; align-items:center; justify-content:center; padding:20px}
 .modal.open{display:flex}
 .modal-box{width:min(980px,95%); background:var(--card-2); border-radius:12px; overflow:hidden}
