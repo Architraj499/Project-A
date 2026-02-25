@@ -65,23 +65,28 @@
           <div class="ring" id="ringPercent">0%</div>
         </div>
         <div style="margin-top:10px" class="progress"><i id="overallBar"></i></div>
-      </div>
-    </div>
-  </section>
-  </div>
+      
+    
+ 
    <nav class="tabs">
     <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
    <button class="tab" data-tab="ncert" onclick="openTab(event)">NCERT</button>
     <button class="tab" data-tab="notes" onclick="openTab(event)">Notes</button>
     <button class="tab" data-tab="pyqs" onclick="openTab(event)">PYQs</button>
   </nav>
- <section id="lectures" class="tabpanel">
+    </div>
+    </div>
+
+
+
+  <!-- TAB CONTENTS -->
+  <section id="lectures" class="tabpanel">
     <div class="grid" id="cardsGrid"></div>
   </section>
 
-<section id="ncert" class="tabpanel" style="display:none">
-  <div class="grid" id="ncertGrid"></div>
-</section>
+  <section id="ncert" class="tabpanel" style="display:none">
+    <div class="grid" id="ncertGrid"></div>
+  </section>
 
   <section id="notes" class="tabpanel" style="display:none">
     <div class="grid" id="notesGrid"></div>
@@ -90,18 +95,27 @@
   <section id="pyqs" class="tabpanel" style="display:none">
     <div class="grid" id="pyqGrid"></div>
   </section>
-</div> 
-<div id="videoModal" class="modal"><div class="modal-box">
-  <div class="modal-header">
-    <div id="modalTitle">Playing</div>
-    <div style="display:flex; gap:8px; align-items:center">
-      <button class="btn ghost" onclick="closeModal()">Close</button>
+
+</div>
+<!-- ================= CONTAINER END ================= -->
+
+
+<!-- VIDEO MODAL -->
+<div id="videoModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div id="modalTitle">Playing</div>
+      <button onclick="closeModal()">Close</button>
+    </div>
+    <div class="modal-body">
+      <iframe id="videoIframe" allowfullscreen></iframe>
     </div>
   </div>
-  <div class="modal-body">
-    <iframe id="videoIframe" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-  </div>
-</div></div>
+</div>
+
+
+
+
 <div class="footer-wrapper">
 <footer class="footer">
   <div class="footer-content">

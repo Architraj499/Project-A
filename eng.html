@@ -56,7 +56,7 @@
 
 
 
-    <div style="min-width:260px">
+ <div style="min-width:260px">
       <div style="padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));">
         <div style="display:flex; justify-content:space-between; gap:12px; align-items:center">
         </div>
@@ -66,16 +66,19 @@
           <div class="ring" id="ringPercent">0%</div>
         </div>
         <div style="margin-top:10px" class="progress"><i id="overallBar"></i></div>
-      </div>
-    </div>
-  </section>
-  </div>
-  
+      
+    
+ 
    <nav class="tabs">
     <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
+   <button class="tab" data-tab="ncert" onclick="openTab(event)">NCERT</button>
     <button class="tab" data-tab="notes" onclick="openTab(event)">Notes</button>
     <button class="tab" data-tab="pyqs" onclick="openTab(event)">PYQs</button>
   </nav>
+    </div>
+    </div>
+
+
  <section id="lectures" class="tabpanel">
     <div class="grid" id="cardsGrid"></div>
   </section>
