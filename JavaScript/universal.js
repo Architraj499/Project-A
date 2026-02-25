@@ -61,7 +61,6 @@ function updateOverall(){
   if(overallBarEl) overallBarEl.style.width = avg+'%';
 }
 
-// ---------- Render cards ----------
 function renderAll(){
   const grid = document.getElementById('cardsGrid');
   const notesGrid = document.getElementById('notesGrid');
@@ -79,27 +78,12 @@ function renderAll(){
   const sections = [...new Set(LECTURES.map(l => l.section || 'General'))];
 
   sections.forEach(section => {
-// Create section container
-const sectionContainer = document.createElement('div');
-sectionContainer.className = 'section-container';
-
-// Section Heading
-const heading = document.createElement('h2');
-heading.className = 'section-heading';
-heading.innerText = section;
-
-// Section Grid Wrapper
-const sectionWrapper = document.createElement('div');
-sectionWrapper.className = 'section-grid';
-
-// Assemble
-sectionContainer.appendChild(heading);
-sectionContainer.appendChild(sectionWrapper);
-
-// Add to main grid
-grid.appendChild(sectionContainer);
 
     const sectionLectures = LECTURES.filter(l => (l.section || 'General') === section);
+
+    // ---------- LECTURES ----------
+    const lectureContainer = createSectionContainer(section);
+    grid.appendChild(lectureContainer.container);
 
     sectionLectures.forEach(l => {
 
@@ -140,10 +124,15 @@ grid.appendChild(sectionContainer);
         </div>
       `;
 
-      sectionWrapper.appendChild(div);
+      lectureContainer.wrapper.appendChild(div);
+    });
 
-      // Notes
-      if(notesGrid){
+    // ---------- NOTES ----------
+    if(notesGrid){
+      const notesContainer = createSectionContainer(section);
+      notesGrid.appendChild(notesContainer.container);
+
+      sectionLectures.forEach(l => {
         const n=document.createElement('div');
         n.className='card';
         n.innerHTML=`
@@ -154,11 +143,16 @@ grid.appendChild(sectionContainer);
             <a class="small view" href="${l.notes}" target="_blank">Open</a>
             <a class="small download" href="${l.notes}" download>Download</a>
           </div>`;
-        notesGrid.appendChild(n);
-      }
+        notesContainer.wrapper.appendChild(n);
+      });
+    }
 
-      // PYQ
-      if(pyqGrid){
+    // ---------- PYQ ----------
+    if(pyqGrid){
+      const pyqContainer = createSectionContainer(section);
+      pyqGrid.appendChild(pyqContainer.container);
+
+      sectionLectures.forEach(l => {
         const p=document.createElement('div');
         p.className='card';
         p.innerHTML=`
@@ -169,29 +163,54 @@ grid.appendChild(sectionContainer);
             <a class="small view" href="${l.pyq}" target="_blank">Open</a>
             <a class="small download" href="${l.pyq}" download>Download</a>
           </div>`;
-        pyqGrid.appendChild(p);
-      }
+        pyqContainer.wrapper.appendChild(p);
+      });
+    }
 
-      // NCERT
-      if(ncertGrid && l.ncert && l.ncert !== '#'){
-        const n=document.createElement('div');
-        n.className='card';
-        n.innerHTML=`
-          <div class="badge">NCERT</div>
-          <div class="chapter-title">${l.title}</div>
-          <div class="muted">NCERT Book</div>
-          <div class="actions">
-            <a class="small view" href="${l.ncert}" target="_blank">Open</a>
-            <a class="small download" href="${l.ncert}" download>Download</a>
-          </div>`;
-        ncertGrid.appendChild(n);
-      }
+    // ---------- NCERT ----------
+    if(ncertGrid){
+      const ncertContainer = createSectionContainer(section);
+      ncertGrid.appendChild(ncertContainer.container);
 
-    });
+      sectionLectures.forEach(l => {
+        if(l.ncert && l.ncert !== '#'){
+          const n=document.createElement('div');
+          n.className='card';
+          n.innerHTML=`
+            <div class="badge">NCERT</div>
+            <div class="chapter-title">${l.title}</div>
+            <div class="muted">NCERT Book</div>
+            <div class="actions">
+              <a class="small view" href="${l.ncert}" target="_blank">Open</a>
+              <a class="small download" href="${l.ncert}" download>Download</a>
+            </div>`;
+          ncertContainer.wrapper.appendChild(n);
+        }
+      });
+    }
 
   });
 
   updateOverall();
+}
+
+
+// 🔥 Reusable Section Creator
+function createSectionContainer(section){
+  const container = document.createElement('div');
+  container.className = 'section-container';
+
+  const heading = document.createElement('h2');
+  heading.className = 'section-heading';
+  heading.innerText = section;
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'section-grid';
+
+  container.appendChild(heading);
+  container.appendChild(wrapper);
+
+  return { container, wrapper };
 }
 
 function openVideoOriginal(rawUrl, title, lectureId){
