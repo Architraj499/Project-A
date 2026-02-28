@@ -64,9 +64,11 @@
           <div class="ring" id="ringPercent">0%</div>
         </div>
         <div style="margin-top:10px" class="progress"><i id="overallBar"></i></div>
-      
-    
- 
+  
+
+
+
+
    <nav class="tabs">
    <nav class="tabs">
     <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
@@ -84,10 +86,22 @@
     <div class="grid" id="cardsGrid"></div>
   </section>
 
-  <section id="mock" class="tabpanel" style="display:none">
-  <div class="grid" id="mockGrid"></div>
-</section>
+ <section id="mock" class="tabpanel" style="display:none">
 
+  <!-- INTERNAL TEST RUN AREA -->
+  <section id="mockSection" style="display:none;">
+    <div class="mock-header">
+      <h2 id="mockTitle">Internal Mock Test</h2>
+      <div id="timerBox" class="timer-box">30:00</div>
+    </div>
+
+    <div id="testContainer" class="mock-container"></div>
+  </section>
+
+  <!-- CHAPTER CARDS -->
+  <div class="grid" id="mockGrid"></div>
+
+</section>
 <section id="ncert" class="tabpanel" style="display:none">
   <div class="grid" id="ncertGrid"></div>
 </section>
@@ -108,6 +122,8 @@
     </div>
   </div>
 
+
+  
 <!-- ---------- Custom Asprients Video Player ---------- -->
 <div id="playerModal" class="player-modal hidden">
   <div class="player-box">
@@ -175,7 +191,26 @@
   </div>
 </div>
 
+<div id="mockChoiceModal" class="ai-modal" style="display:none;">
+  <div class="ai-modal-box">
+    <h2>Select Mock Type</h2>
+    <p>Chapter: <strong id="selectedMockChapter"></strong></p>
 
+    <div style="display:flex; gap:15px; margin-top:20px;">
+      <button onclick="startAIMockOption()" class="ai-confirm">
+        🤖 AI Mock
+      </button>
+
+      <button onclick="startInternalMockOption()" class="ai-confirm">
+        📘 Internal Mock
+      </button>
+    </div>
+
+    <div style="margin-top:20px;">
+      <button onclick="closeMockChoice()" class="ai-cancel">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <div class="footer-wrapper">
 <footer class="footer">
@@ -208,6 +243,7 @@
 
 ];</script> 
 <script type="module" src="JavaScript/universal.js"></script>
+
 <script>
   window.Course = "CUET";
 </script>
