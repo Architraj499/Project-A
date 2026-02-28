@@ -397,3 +397,14 @@ footer {
   border: none;
   cursor: pointer;
 }
+
+.mock-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--accent-2);
+}
+
+.mock-btn:hover {
+  background: linear-gradient(90deg,var(--accent),var(--accent-2));
+  color: #fff;
+}

@@ -122,6 +122,10 @@ function renderAll(){
             onclick="openVideo('${escapeHtml(l.video)}','${escapeHtml(l.title)}','${l.id}')">
             Play
           </button>
+          <button class="small mock-btn mobile-only"
+  onclick="openAIMock('${escapeHtml(l.title)}')">
+  AI Mock
+</button>
         </div>
       `;
 
