@@ -67,8 +67,7 @@
         <div style="margin-top:10px" class="progress"><i id="overallBar"></i></div>
       
     
- 
-   <nav class="tabs">
+<nav class="tabs">
    <nav class="tabs">
     <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
    <button class="tab" data-tab="ncert" onclick="openTab(event)">NCERT</button>
@@ -81,9 +80,7 @@
     </div>
 
 
-
-  <!-- TAB CONTENTS -->
-  <section id="lectures" class="tabpanel">
+ <section id="lectures" class="tabpanel">
     <div class="grid" id="cardsGrid"></div>
   </section>
 
@@ -91,9 +88,9 @@
   <div class="grid" id="mockGrid"></div>
 </section>
 
-  <section id="ncert" class="tabpanel" style="display:none">
-    <div class="grid" id="ncertGrid"></div>
-  </section>
+<section id="ncert" class="tabpanel" style="display:none">
+  <div class="grid" id="ncertGrid"></div>
+</section>
 
   <section id="notes" class="tabpanel" style="display:none">
     <div class="grid" id="notesGrid"></div>
@@ -102,31 +99,44 @@
   <section id="pyqs" class="tabpanel" style="display:none">
     <div class="grid" id="pyqGrid"></div>
   </section>
-
-</div>
-<!-- ================= CONTAINER END ================= -->
-
-
-<!-- VIDEO MODAL -->
-<div id="videoModal" class="modal">
-  <div class="modal-box">
-    <div class="modal-header">
-      <div id="modalTitle">Playing</div>
-      <button onclick="closeModal()">Close</button>
+</div> 
+<div id="videoModal" class="modal"><div class="modal-box">
+  <div class="modal-header">
+    <div id="modalTitle">Playing</div>
+    <div style="display:flex; gap:8px; align-items:center">
+      <button class="btn ghost" onclick="closeModal()">Close</button>
     </div>
-    <div class="modal-body">
-      <iframe id="videoIframe" allowfullscreen></iframe>
+  </div>
+
+<!-- ---------- Custom Asprients Video Player ---------- -->
+<div id="playerModal" class="player-modal hidden">
+  <div class="player-box">
+    <div class="player-header">
+      <span id="playerTitle">Lecture Title</span>
+      <div class="player-controls">
+        <button onclick="closePlayer()">&times;</button>
+      </div>
     </div>
+
+    <video id="customPlayer" controls preload="metadata" style="width:100%; border-radius:8px;">
+      <source id="playerSource" src="" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </div>
 </div>
 
 
 
-
+  <div class="modal-body">
+    <iframe id="videoIframe" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div></div>
 <div id="aiConfirmModal" class="ai-modal">
   <div class="ai-modal-box">
 
-    <h2> Mock test Generation</h2>
+   <h2> Mock test Generation</h2>
+    <p class="ai-desc">
+      Course: <strong id="aiCourseName"></strong>
 
     <p class="ai-desc">
       Chapter: <strong id="aiChapterName"></strong>
@@ -164,6 +174,7 @@
 
   </div>
 </div>
+
 
 
 
