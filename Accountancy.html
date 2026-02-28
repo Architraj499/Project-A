@@ -68,10 +68,13 @@
     
  
    <nav class="tabs">
+   <nav class="tabs">
     <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
    <button class="tab" data-tab="ncert" onclick="openTab(event)">NCERT</button>
     <button class="tab" data-tab="notes" onclick="openTab(event)">Notes</button>
     <button class="tab" data-tab="pyqs" onclick="openTab(event)">PYQs</button>
+    <button class="tab" data-tab="mock" onclick="openTab(event)">Mock Test</button>
+    </nav>
   </nav>
     </div>
     </div>
@@ -80,6 +83,10 @@
  <section id="lectures" class="tabpanel">
     <div class="grid" id="cardsGrid"></div>
   </section>
+
+  <section id="mock" class="tabpanel" style="display:none">
+  <div class="grid" id="mockGrid"></div>
+</section>
 
 <section id="ncert" class="tabpanel" style="display:none">
   <div class="grid" id="ncertGrid"></div>
@@ -124,6 +131,50 @@
     <iframe id="videoIframe" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
   </div>
 </div></div>
+<div id="aiConfirmModal" class="ai-modal">
+  <div class="ai-modal-box">
+
+    <h2> Mock test Generation</h2>
+
+    <p class="ai-desc">
+      Chapter: <strong id="aiChapterName"></strong>
+    </p>
+
+    <div class="ai-options">
+
+      <label>Difficulty</label>
+      <select id="aiDifficulty">
+        <option value="Easy">Easy</option>
+        <option value="Medium" selected>Medium</option>
+        <option value="Hard">Hard</option>
+      </select>
+
+      <label>Number of Questions</label>
+      <select id="aiCount">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+      </select>
+
+    </div>
+
+    <p class="ai-note">
+      Prompt will be copied and Gemini will open in a new tab.
+      Please paste the prompt there to generate your mock test.
+    </p>
+
+    <div class="ai-actions">
+      <button class="ai-cancel" onclick="closeAIModal()">Cancel</button>
+      <button class="ai-confirm" id="aiConfirmBtn">Generate</button>
+    </div>
+
+  </div>
+</div>
+
+
+
 <div class="footer-wrapper">
 <footer class="footer">
   <div class="footer-content">

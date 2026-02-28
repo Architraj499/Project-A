@@ -69,12 +69,13 @@
     
  
    <nav class="tabs">
+   <nav class="tabs">
     <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
    <button class="tab" data-tab="ncert" onclick="openTab(event)">NCERT</button>
     <button class="tab" data-tab="notes" onclick="openTab(event)">Notes</button>
     <button class="tab" data-tab="pyqs" onclick="openTab(event)">PYQs</button>
     <button class="tab" data-tab="mock" onclick="openTab(event)">Mock Test</button>
-    </nav>
+      </nav>
     </div>
     </div>
 
@@ -82,6 +83,7 @@
  <section id="lectures" class="tabpanel">
     <div class="grid" id="cardsGrid"></div>
   </section>
+
 
   <section id="mock" class="tabpanel" style="display:none">
   <div class="grid" id="mockGrid"></div>
@@ -114,7 +116,7 @@
 <div id="aiConfirmModal" class="ai-modal">
   <div class="ai-modal-box">
 
-    <h2>AI Mock Generator</h2>
+    <h2> Mock test Generation</h2>
 
     <p class="ai-desc">
       Chapter: <strong id="aiChapterName"></strong>
@@ -152,6 +154,7 @@
 
   </div>
 </div>
+
 
 
 
