@@ -66,12 +66,13 @@ function renderAll(){
   const notesGrid = document.getElementById('notesGrid');
   const pyqGrid = document.getElementById('pyqGrid');
   const ncertGrid = document.getElementById('ncertGrid');
-
+  const mockGrid = document.getElementById('mockGrid');
   if(!grid) return;
 
   grid.innerHTML = '';
   if(notesGrid) notesGrid.innerHTML = '';
   if(pyqGrid) pyqGrid.innerHTML = '';
+  if(mockGrid) mockGrid.innerHTML = '';
   if(ncertGrid) ncertGrid.innerHTML = '';
 
   // 🔥 Get unique sections
@@ -166,6 +167,32 @@ function renderAll(){
         pyqContainer.wrapper.appendChild(p);
       });
     }
+
+    // ---------- AI MOCK TEST ----------
+if(mockGrid){
+  const mockContainer = createSectionContainer(section);
+  mockGrid.appendChild(mockContainer.container);
+
+  sectionLectures.forEach(l => {
+    const m = document.createElement('div');
+    m.className = 'card';
+
+    m.innerHTML = `
+      <div class="badge">AI MOCK</div>
+      <div class="chapter-title">${l.title}</div>
+      <div class="muted">Generate Chapter-wise AI Test</div>
+      <div class="actions">
+        <button class="small view" onclick="openAIMock('${l.title}')">Generate</button>
+      </div>`;
+
+    mockContainer.wrapper.appendChild(m);
+  });
+}
+
+
+
+
+
 
     // ---------- NCERT ----------
     if(ncertGrid){
@@ -433,6 +460,70 @@ window.openVideo = function(rawUrl, title, lectureId){
 window.closeModal = closeModal;
 window.filterBy = filterBy;
 window.openTab = openTab;
+
+// ---------- AI MOCK ----------
+let currentChapter = "";
+
+window.openAIMock = function(chapter){
+
+  currentChapter = chapter;
+
+  document.getElementById("aiChapterName").innerText = chapter;
+
+  document.getElementById("aiConfirmModal").style.display = "flex";
+};
+
+window.closeAIModal = function(){
+  document.getElementById("aiConfirmModal").style.display = "none";
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const confirmBtn = document.getElementById("aiConfirmBtn");
+
+  if(confirmBtn){
+    confirmBtn.addEventListener("click", () => {
+
+      const difficulty = document.getElementById("aiDifficulty").value;
+      const count = document.getElementById("aiCount").value;
+
+      const subject =
+        document.querySelector('.subject-card h1')?.innerText ||
+        document.querySelector('h1')?.innerText ||
+        "Subject";
+
+      const prompt = `
+
+Genrate a ${difficulty} live  test for the chapter "${currentChapter}" of ${subject}.
+The test should have ${count} questions covering all important topics of the chapter.
+and aftter that provide a full fleged report card with marks and weakness analysis.
+Subject: ${subject}
+Chapter: ${currentChapter}
+Difficulty: ${difficulty}
+Total Questions: ${count}
+
+Rules:
+- 4 options each
+- Include case-based questions
+- Include assertion-reason type
+- Provide answer key at end only
+`;
+
+      navigator.clipboard.writeText(prompt).then(() => {
+
+        window.open("https://gemini.google.com/", "_blank");
+
+        closeAIModal();
+
+      }).catch(() => {
+        alert("Clipboard permission denied.");
+      });
+
+    });
+  }
+
+});
+
 
 // ---------- Search & Theme ----------
 document.addEventListener('DOMContentLoaded', ()=>{
