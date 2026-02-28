@@ -472,10 +472,14 @@ window.openAIMock = function(chapter){
 
   currentChapter = chapter;
 
+  const courseName = window.Course || "Course";
+
   document.getElementById("aiChapterName").innerText = chapter;
+  document.getElementById("aiCourseName").innerText = courseName;
 
   document.getElementById("aiConfirmModal").style.display = "flex";
 };
+
 
 window.closeAIModal = function(){
   document.getElementById("aiConfirmModal").style.display = "none";
@@ -490,8 +494,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const difficulty = document.getElementById("aiDifficulty").value;
       const count = document.getElementById("aiCount").value;
-
-      const subject =
+      const course = window.Course || "Course";
+            const subject =
         document.querySelector('.subject-card h1')?.innerText ||
         document.querySelector('h1')?.innerText ||
         "Subject";
@@ -501,6 +505,7 @@ document.addEventListener("DOMContentLoaded", () => {
 Genrate a ${difficulty} live  test for the chapter "${currentChapter}" of ${subject}.
 The test should have ${count} questions covering all important topics of the chapter.
 and aftter that provide a full fleged report card with marks and weakness analysis.
+Course: ${course}
 Subject: ${subject}
 Chapter: ${currentChapter}
 Difficulty: ${difficulty}
