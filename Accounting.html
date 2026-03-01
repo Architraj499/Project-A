@@ -37,7 +37,7 @@
     </div>
     </div>
    <div class="actions">
-        <div class="search" role="search" aria-label="Search lectures">
+              <div class="search" role="search" aria-label="Search lectures">
           🔎 <input id="searchInput" placeholder="Search chapters, topics..." />
         </div>
         </section>
@@ -45,14 +45,15 @@
   <section class="subject-hero">
     <div class="subject-card">
       <h1>Accounting</h1>
-      <div class="subject-meta">Class 12 | CA Foundation </div>
+      <div class="subject-meta">CA Foundation | <a href="Pdfs/accountancy.pdf" target="_blank">  Syllabus</a> </div>
       <div class="subject-actions">
   <button class="filter-btn active" onclick="filterBy('all', event)">All</button>
 <button class="filter-btn" onclick="filterBy('pending', event)">Pending</button>
-<button class="filter-btn" onclick="filterBy('completed', event)">Completed</button></div>
-    </div>
-    </div>
-    <div style="min-width:260px">
+<button class="filter-btn" onclick="filterBy('completed', event)">Completed</button>
+</div>
+
+
+ <div style="min-width:260px">
       <div style="padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));">
         <div style="display:flex; justify-content:space-between; gap:12px; align-items:center">
         </div>
@@ -62,15 +63,24 @@
           <div class="ring" id="ringPercent">0%</div>
         </div>
         <div style="margin-top:10px" class="progress"><i id="overallBar"></i></div>
-      </div>
-    </div>
-  </section>
-  </div>
+  
+
+
+
+
+   
    <nav class="tabs">
     <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
+   <button class="tab" data-tab="ncert" onclick="openTab(event)">Modules</button>
     <button class="tab" data-tab="notes" onclick="openTab(event)">Notes</button>
     <button class="tab" data-tab="pyqs" onclick="openTab(event)">PYQs</button>
+    <button class="tab" data-tab="mock" onclick="openTab(event)">Mock Test</button>
+    </nav>
   </nav>
+    </div>
+    </div>
+
+
  <section id="lectures" class="tabpanel">
     <div class="grid" id="cardsGrid"></div>
   </section>
