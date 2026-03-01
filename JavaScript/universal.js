@@ -531,6 +531,7 @@ document.addEventListener("DOMContentLoaded", () => {
 Genrate a ${difficulty} level live  test for the chapter "${currentChapter}" of ${subject} for ${course}.
 The test should have ${count} questions covering all important topics of the chapter.
 and aftter that provide a full fleged report card with marks and weakness analysis.
+Keep Scroring system as cuet like 5 marks for correct and -1 for wrong answers.
 Course: ${course}
 Subject: ${subject}
 Chapter: ${currentChapter}
