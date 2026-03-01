@@ -362,7 +362,9 @@ async function saveLectureProgress(lectureId, value){
   if(!currentUserId) return;
   try{
     const userRef = doc(db, "users", currentUserId);
-    await updateDoc(userRef, { [`progress.${lectureId}`]: value });
+     await updateDoc(userRef, {
+  [`progress.${lectureId}`]: value
+});
   } catch(err){ console.error(err); }
 }
 
@@ -393,11 +395,18 @@ function updateTimeDisplay() {
 }
 
 async function saveTimeToFirestore() {
-  if(!currentUserId) return;
-  try{
+  if (!currentUserId) return;
+
+  try {
     const userRef = doc(db, "users", currentUserId);
-    await updateDoc(userRef, { totalSiteSeconds: siteSeconds });
-  } catch(err){ console.error(err); }
+
+    await updateDoc(userRef, {
+      totalSiteSeconds: siteSeconds
+    });
+
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 function startSiteTimer() {
@@ -410,17 +419,21 @@ function startSiteTimer() {
 }
 
 // ---------- Lecture timer ----------
-function updateLectureTimeDisplay() {
-  const lecEl = document.getElementById("lectureTime");
-  if(lecEl) lecEl.innerText = formatTime(lectureSeconds);
-}
-
 async function saveLectureTimeToFirestore() {
-  if(!currentUserId) return;
-  try{
+  if (!currentUserId) return;
+
+  try {
     const userRef = doc(db, "users", currentUserId);
-    await updateDoc(userRef, { totalLectureSeconds: lectureSeconds });
-  } catch(err){ console.error(err); }
+
+    await updateDoc(userRef, {
+      totalLectureSeconds: lectureSeconds
+    });
+
+    console.log("Lecture time saved:", lectureSeconds);
+
+  } catch (err) {
+    console.error("Lecture time save error:", err);
+  }
 }
 
 
@@ -434,7 +447,6 @@ function startLectureTimer() {
     watchedSeconds++;
 
     updateLectureTimeDisplay();
-    saveLectureTimeToFirestore();
 
     const lec = LECTURES.find(l => l.id === currentLectureId);
     if (!lec || lec.progress >= 1) return;
@@ -442,25 +454,37 @@ function startLectureTimer() {
     const totalSeconds = minutesToSeconds(lec.min);
     if (!totalSeconds) return;
 
-    // ✅ COMPLETE AT 80%
     if (watchedSeconds / totalSeconds >= 0.8) {
       markCompleted(currentLectureId);
     }
+
   }, 1000);
 }
-
 
 function stopLectureTimer() {
   clearInterval(lectureTimerInterval);
   lectureTimerInterval = null;
+
+  // ✅ Save only once when closing
+  saveLectureTimeToFirestore();
 }
+function updateLectureTimeDisplay() {
+  const lecEl = document.getElementById("lectureTime");
+  if (lecEl) lecEl.innerText = formatTime(lectureSeconds);
+}
+
 
 // ---------- Global wrapper ----------
 window.openVideoOriginal = openVideoOriginal;
-window.openVideo = function(rawUrl, title, lectureId){
-  openVideoOriginal(rawUrl, title, lectureId);
 
+window.openVideo = function(rawUrl, title, lectureId){
+
+  markCompleted(lectureId);   // click pe complete
+
+  openVideoOriginal(rawUrl, title, lectureId);
 };
+
+
 window.closeModal = closeModal;
 window.filterBy = filterBy;
 window.openTab = openTab;
