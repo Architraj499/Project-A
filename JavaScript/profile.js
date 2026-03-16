@@ -1,211 +1,349 @@
 import { auth, db } from "./universal.js";
+
 import { onAuthStateChanged } from
-  "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+"https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
 import { doc, getDoc, updateDoc } from
-  "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+"https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+
+/* ---------- TIME FORMAT ---------- */
 
 function formatTime(sec = 0) {
+
   const h = Math.floor(sec / 3600);
   const m = Math.floor((sec % 3600) / 60);
   const s = sec % 60;
+
   return `${h}h ${m}m ${s}s`;
-}
-function todayStr() {
-  return new Date().toISOString().slice(0, 10);
+
 }
 
-function dayDiff(d1, d2) {
+
+/* ---------- DATE HELPERS ---------- */
+
+function todayStr() {
+  return new Date().toISOString().slice(0,10);
+}
+
+function dayDiff(d1,d2){
+
   const a = new Date(d1);
   const b = new Date(d2);
-  return Math.round((a - b) / (1000 * 60 * 60 * 24));
+
+  return Math.round((a-b)/(1000*60*60*24));
+
 }
 
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    location.href = "index.html";
-    return;
+
+/* ---------- COURSE PROGRESS ---------- */
+
+function getCourseProgress(course){
+
+  let subjects = [];
+
+  if(course==="Boards"){
+    subjects = [
+      "Accountancy",
+      "Business Studies",
+      "Economics",
+      "English",
+      "Hindi"
+    ];
   }
 
-  const snap = await getDoc(doc(db, "users", user.uid));
-  if (!snap.exists()) return;
-
-  const d = snap.data();
-  // ===== STREAK LOGIC =====
-const today = todayStr();
-let streak = d.streakCount || 0;
-let last = d.lastActiveDate;
-
-if (!last) {
-  // first time user
-  streak = 1;
-} else {
-  const diff = dayDiff(today, last);
-
-  if (diff === 1) {
-    streak += 1;        // continue
-  } else if (diff > 1) {
-    streak = 1;         // reset
+  if(course==="CUET"){
+    subjects = [
+      "Accountancy",
+      "Business Studies",
+      "Economics",
+      "English",
+      "General Aptitude Test"
+    ];
   }
-  // diff === 0 → same day, do nothing
-}
 
-// SAVE only once per day
-if (last !== today) {
-  await updateDoc(doc(db, "users", user.uid), {
-    streakCount: streak,
-    lastActiveDate: today
+  if(course==="CA Foundation"){
+    subjects = [
+      "Accounting",
+      "Business Economics",
+      "Quantative Aptitude",
+      "Business Law"
+    ];
+  }
+
+  let total=0;
+  let count=0;
+
+  subjects.forEach(sub=>{
+
+    const key="progress_"+course+"_"+sub;
+
+    const value=localStorage.getItem(key);
+
+    if(value!==null){
+
+      total+=Number(value);
+      count++;
+
+    }
+
   });
+
+  if(count===0) return 0;
+
+  return Math.round(total/count);
+
 }
 
-// UI update
-document.getElementById("streakCount").innerText = streak;
 
+/* ---------- SUBJECT PROGRESS ---------- */
 
-  // ===== COURSE COMPLETION =====
-let percent = 0;
+function getSubjectProgress(course,subject){
 
-if (d.progress) {
-  const values = Object.values(d.progress);
-  const total = values.length;
-  const done = values.reduce((s, v) => s + (v || 0), 0);
-  percent = total === 0 ? 0 : Math.round((done / total) * 100);
+  const key="progress_"+course+"_"+subject;
+
+  const value=localStorage.getItem(key);
+
+  return value ? Number(value) : 0;
+
 }
 
-animateProgress(percent);
+
+function renderSubjects(course, subjects, containerId){
+
+  const container = document.getElementById(containerId);
+
+  if(!container) return;
+
+  container.innerHTML = "";
+
+  // ===== COURSE PROGRESS =====
+  const coursePercent = getCourseProgress(course);
+
+  const courseRow = document.createElement("div");
+  courseRow.className = "course-row";
+
+  courseRow.innerHTML = `
+    <div class="course-name">${course}</div>
+
+    <div class="subject-bar">
+      <i style="width:${coursePercent}%"></i>
+    </div>
+
+    <div class="subject-percent">${coursePercent}%</div>
+  `;
+
+  container.appendChild(courseRow);
+
+
+  // ===== SUBJECT PROGRESS =====
+  subjects.forEach(sub => {
+
+    const percent = getSubjectProgress(course, sub);
+
+    const row = document.createElement("div");
+    row.className = "subject-row";
+
+    row.innerHTML = `
+      <div class="subject-name">${sub}</div>
+
+      <div class="subject-bar">
+        <i style="width:${percent}%"></i>
+      </div>
+
+      <div class="subject-percent">${percent}%</div>
+    `;
+
+    container.appendChild(row);
+
+  });
+
+}
+
+
+/* ---------- AUTH LOAD ---------- */
+
+onAuthStateChanged(auth,async(user)=>{
+
+  if(!user){
+
+    location.href="index.html";
+    return;
+
+  }
+
+  const snap=await getDoc(doc(db,"users",user.uid));
+
+  if(!snap.exists()) return;
+
+  const d=snap.data();
 
 
 
+  /* ---------- STREAK ---------- */
 
-  document.getElementById("profileName").innerText =
-    d.fullname || "Student";
+  const today=todayStr();
 
-  document.getElementById("profileEmail").innerText =
-    user.email;
+  let streak=d.streakCount||0;
 
-  document.getElementById("siteTime").innerText =
-    formatTime(d.totalSiteSeconds);
+  let last=d.lastActiveDate;
 
-  document.getElementById("lectureTime").innerText =
-    formatTime(d.totalLectureSeconds);
+  if(!last){
 
-  document.getElementById("nameInput").value =
-    d.fullname || "";
+    streak=1;
+
+  }
+
+  else{
+
+    const diff=dayDiff(today,last);
+
+    if(diff===1) streak+=1;
+
+    else if(diff>1) streak=1;
+
+  }
+
+  if(last!==today){
+
+    await updateDoc(doc(db,"users",user.uid),{
+
+      streakCount:streak,
+      lastActiveDate:today
+
+    });
+
+  }
+
+  document.getElementById("streakCount").innerText=streak;
+
+
+
+  /* ---------- COURSE PROGRESS RING ---------- */
+
+  const boardsProgress=getCourseProgress("Boards");
+
+  animateProgress(boardsProgress);
+
+
+
+  /* ---------- SUBJECT BARS ---------- */
+
+  renderSubjects(
+    "Boards",
+    ["Accountancy","Business Studies","Economics","English","Hindi","Enterprenaurship"],
+    "boardsSubjects"
+  );
+
+  renderSubjects(
+    "CUET",
+    ["Accountancy","Business Studies","Economics","English","General Aptitude Test"],
+    "cuetSubjects"
+  );
+
+  renderSubjects(
+    "CA Foundation",
+    ["Accounting","Business Economics","Quantative Aptitude","Business Law"],
+    "caSubjects"
+  );
+
+
+
+  /* ---------- USER INFO ---------- */
+
+  document.getElementById("profileName").innerText=d.fullname||"Student";
+
+  document.getElementById("profileEmail").innerText=user.email;
+
+  document.getElementById("siteTime").innerText=formatTime(d.totalSiteSeconds);
+
+  document.getElementById("lectureTime").innerText=formatTime(d.totalLectureSeconds);
+
+  document.getElementById("nameInput").value=d.fullname||"";
+
 });
 
-document.getElementById("saveNameBtn").onclick = async () => {
-  const name = document.getElementById("nameInput").value.trim();
-  if (name.length < 2) return alert("Name too short");
 
-  const user = auth.currentUser;
-  await updateDoc(doc(db, "users", user.uid), {
-    fullname: name
+
+/* ---------- PROFILE UPDATE ---------- */
+
+document.getElementById("saveNameBtn").onclick=async()=>{
+
+  const name=document.getElementById("nameInput").value.trim();
+
+  if(name.length<2){
+
+    alert("Name too short");
+    return;
+
+  }
+
+  const user=auth.currentUser;
+
+  await updateDoc(doc(db,"users",user.uid),{
+
+    fullname:name
+
   });
 
-  document.getElementById("profileName").innerText = name;
-  localStorage.setItem("fullname", name);
+  document.getElementById("profileName").innerText=name;
+
+  localStorage.setItem("fullname",name);
 
   alert("Profile updated");
+
 };
 
 
 
+/* ---------- PROGRESS RING ---------- */
 
+let currentPercent=0;
 
+function animateProgress(target,duration=900){
 
+  const ring=document.getElementById("progressRing");
 
+  const text=document.getElementById("coursePercent");
 
+  if(!ring||!text) return;
 
+  const start=currentPercent;
 
+  const diff=target-start;
 
+  const startTime=performance.now();
 
-document.addEventListener('DOMContentLoaded', ()=>{
-  renderAll();
+  function easeOut(t){
 
-  document.getElementById('searchInput')?.addEventListener('input',(ev)=>{
-    const q = ev.target.value.trim().toLowerCase();
-    document.querySelectorAll('#cardsGrid .card').forEach(card=>{
-      const title = card.querySelector('.chapter-title').innerText.toLowerCase();
-      card.style.display = title.includes(q) ? '' : 'none';
-    });
-  });
+    return 1-Math.pow(1-t,3);
 
-  const themeToggleEl = document.getElementById('themeToggle');
-  if(themeToggleEl){
-    if(localStorage.getItem('theme')){
-      document.body.setAttribute('data-theme', localStorage.getItem('theme'));
-      themeToggleEl.textContent = localStorage.getItem('theme') === 'dark' ? '🌙' : '☀️';
-    }
-    themeToggleEl.addEventListener('click', ()=>{
-      let currentTheme = document.body.getAttribute('data-theme');
-      if(currentTheme === 'dark'){
-        document.body.setAttribute('data-theme', 'light');
-        themeToggleEl.textContent = '🌙';
-        localStorage.setItem('theme','light');
-      } else {
-        document.body.setAttribute('data-theme', 'dark');
-        themeToggleEl.textContent = '☀️';
-        localStorage.setItem('theme','dark');
-      }
-    });
   }
 
-  document.getElementById('videoModal')?.addEventListener('click',(e)=>{ if(e.target===e.currentTarget) closeModal(); });
-  document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeModal(); });
+  function update(now){
 
-  document.getElementById("logoutBtn")?.addEventListener("click", async ()=>{
-    try{ await signOut(auth); }catch(err){ console.error(err); }
-    window.location.href = "index.html";
-  });
-});
+    const t=Math.min((now-startTime)/duration,1);
 
+    const value=Math.round(start+diff*easeOut(t));
 
-let currentPercent = 0;
+    ring.style.setProperty("--percent",value);
 
-function animateProgress(target, duration = 900) {
-  const ring = document.getElementById("progressRing");
-  const text = document.getElementById("coursePercent");
-  if (!ring || !text) return;
+    text.textContent=value+"%";
 
-  const start = currentPercent;
-  const diff = target - start;
-  const startTime = performance.now();
+    if(t<1) requestAnimationFrame(update);
 
-  function easeOut(t) {
-    return 1 - Math.pow(1 - t, 3);
-  }
+    else currentPercent=target;
 
-  function update(now) {
-    const t = Math.min((now - startTime) / duration, 1);
-    const value = Math.round(start + diff * easeOut(t));
-
-    ring.style.setProperty("--percent", value);
-    text.textContent = value + "%";
-
-    if (t < 1) requestAnimationFrame(update);
-    else currentPercent = target;
   }
 
   requestAnimationFrame(update);
+
 }
+document.getElementById("boardsBar").style.width =
+getCourseProgress("Boards") + "%";
 
+document.getElementById("cuetBar").style.width =
+getCourseProgress("CUET") + "%";
 
-const avatarBox = document.getElementById("avatarBox");
-const avatarInput = document.getElementById("avatarInput");
-const avatarImg = document.getElementById("avatarImg");
-
-avatarBox?.addEventListener("click", () => avatarInput.click());
-
-avatarInput?.addEventListener("change", () => {
-  const file = avatarInput.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = () => {
-    avatarImg.src = reader.result;
-    localStorage.setItem("avatar", reader.result);
-  };
-  reader.readAsDataURL(file);
-});
-
-const savedAvatar = localStorage.getItem("avatar");
-if (savedAvatar) avatarImg.src = savedAvatar;
+document.getElementById("caBar").style.width =
+getCourseProgress("CA Foundation") + "%";

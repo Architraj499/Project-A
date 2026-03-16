@@ -49,18 +49,31 @@ function minutesToSeconds(min) {
   return isNaN(n) ? 0 : n * 60;
 }
 
-
+function saveSubjectProgress(course, subject, percent) {
+  const key = "progress_" + course + "_" + subject;
+  localStorage.setItem(key, percent);
+}
 
 function updateOverall(){ 
-  const avg = Math.round((LECTURES.reduce((s,l)=>s+(l.progress||0),0)/LECTURES.length)*100);
+
+  const avg = Math.round(
+    (LECTURES.reduce((s,l)=>s+(l.progress||0),0) / LECTURES.length) * 100
+  );
+
   const overallPercentEl = document.getElementById('overallPercent');
   const ringPercentEl = document.getElementById('ringPercent');
   const overallBarEl = document.getElementById('overallBar');
+
   if(overallPercentEl) overallPercentEl.innerText = avg+'%';
   if(ringPercentEl) ringPercentEl.innerText = avg+'%';
   if(overallBarEl) overallBarEl.style.width = avg+'%';
-}
 
+  // ⭐ NEW PART
+  const course = window.Course || "Unknown";
+  const subject = document.querySelector(".subject-card h1")?.innerText || "Subject";
+
+  saveSubjectProgress(course, subject, avg);
+}
 function renderAll(){
   const grid = document.getElementById('cardsGrid');
   const notesGrid = document.getElementById('notesGrid');
@@ -663,7 +676,6 @@ window.closePlayer = function () {
   playerModal.classList.add('hidden');
   document.body.style.overflow = 'auto';
 };
-
 
 
 
