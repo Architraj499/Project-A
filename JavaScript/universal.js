@@ -10,7 +10,26 @@ if (localName) {
   const el = document.getElementById("fullname");
   if (el) el.innerText = localName;
 }
+import { collection, addDoc, serverTimestamp } 
+from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
+async function saveActivity(type, title) {
+  if (!currentUserId) return;
+
+  const today = new Date().toISOString().split("T")[0];
+
+  try {
+    await addDoc(collection(db, "users", currentUserId, "activity"), {
+      type: type,            // "lecture" or "mock"
+      title: title,
+      date: today,
+      time: serverTimestamp()
+    });
+
+  } catch (err) {
+    console.error("Activity save error:", err);
+  }
+}
 // universal.js
 import { initializeApp,getApps,
   getApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
@@ -491,6 +510,7 @@ function updateLectureTimeDisplay() {
 window.openVideoOriginal = openVideoOriginal;
 
 window.openVideo = function(rawUrl, title, lectureId){
+  saveActivity("lecture", title);
 
   markCompleted(lectureId);   // click pe complete
 
@@ -506,6 +526,7 @@ window.openTab = openTab;
 let currentChapter = "";
 
 window.openAIMock = function(chapter){
+  saveActivity("mock", chapter);
 
   currentChapter = chapter;
 

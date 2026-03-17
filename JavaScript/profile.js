@@ -6,7 +6,42 @@ import { onAuthStateChanged } from
 import { doc, getDoc, updateDoc } from
 "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
+import { collection, getDocs, query, orderBy } 
+from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
+async function loadActivity() {
+  if (!currentUserId) return;
+
+  const q = query(
+    collection(db, "users", currentUserId, "activity"),
+    orderBy("time", "desc")
+  );
+
+  const snap = await getDocs(q);
+
+  const container = document.getElementById("activityList");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  snap.forEach(doc => {
+    const d = doc.data();
+
+    const div = document.createElement("div");
+    div.style.marginBottom = "10px";
+
+    const time = d.time?.toDate().toLocaleTimeString() || "";
+
+    div.innerHTML = `
+      <b>${d.type === "lecture" ? "📺 Lecture" : "🧠 Mock"}</b><br>
+      ${d.title}<br>
+      <small>${d.date} • ${time}</small>
+      <hr>
+    `;
+
+    container.appendChild(div);
+  });
+}
 /* ---------- TIME FORMAT ---------- */
 
 function formatTime(sec = 0) {
@@ -37,7 +72,6 @@ function dayDiff(d1,d2){
 
 
 /* ---------- COURSE PROGRESS ---------- */
-
 function getCourseProgress(course){
 
   let subjects = [];
@@ -71,27 +105,20 @@ function getCourseProgress(course){
     ];
   }
 
-  let total=0;
-  let count=0;
+  let totalPercent = 0;
 
   subjects.forEach(sub=>{
 
     const key="progress_"+course+"_"+sub;
-
     const value=localStorage.getItem(key);
 
-    if(value!==null){
-
-      total+=Number(value);
-      count++;
-
-    }
+    // ❗ agar value nahi hai → usse 0 maan
+    totalPercent += value ? Number(value) : 0;
 
   });
 
-  if(count===0) return 0;
-
-  return Math.round(total/count);
+  // ❗ total subjects se divide hoga (count se nahi)
+  return Math.round(totalPercent / subjects.length);
 
 }
 

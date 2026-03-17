@@ -272,7 +272,7 @@ box-shadow:
 .course-progress{
 margin-top:40px;
 display:flex;
-flex-direction:column;
+flex-direction:row;
 align-items:center;
 gap:30px;
 max-width:1100px;
@@ -474,6 +474,7 @@ margin-bottom:12px;
 /* COURSE BAR */
 
 .course-bar{
+display:none;
 height:12px;
 background:rgba(255,255,255,0.08);
 border-radius:999px;
