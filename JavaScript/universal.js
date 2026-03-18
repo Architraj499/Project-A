@@ -22,8 +22,11 @@ async function saveActivity(type, title) {
     await addDoc(collection(db, "users", currentUserId, "activity"), {
       type: type,            // "lecture" or "mock"
       title: title,
+      lectureId: currentLectureId || null,
       date: today,
-      time: serverTimestamp()
+      time: serverTimestamp(),
+      subject: document.querySelector(".subject-card h1")?.innerText || "Subject",
+      Course: window.Course || "Course"
     });
 
   } catch (err) {
