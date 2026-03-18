@@ -22,7 +22,7 @@ async function saveActivity(type, title) {
     await addDoc(collection(db, "users", currentUserId, "activity"), {
       type: type,            // "lecture" or "mock"
       title: title,
-      lectureId: currentLectureId || null,
+      lectureId: lectureId,
       date: today,
       time: serverTimestamp(),
       subject: document.querySelector(".subject-card h1")?.innerText || "Subject",
