@@ -580,6 +580,7 @@ Total Questions: ${count}
 
 Rules:
 - 4 options each
+- Include arranging steps and matching type questions
 - Include case-based questions
 - Include assertion-reason type
 - Provide answer key at end only
