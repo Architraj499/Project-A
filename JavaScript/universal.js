@@ -569,6 +569,9 @@ Genrate a ${difficulty} level live  test for the chapter "${currentChapter}" of 
 The test should have ${count} questions covering all important topics of the chapter.
 and aftter that provide a full fleged report card with marks and weakness analysis.
 Keep Scroring system as cuet like 5 marks for correct and -1 for wrong answers.
+Don't show answers rigth after clicking on options, show the final result at the end of the test.
+Include Journa Entry and Ledger type questions if applicable.
+Also take refrence from previous year question papers to include some PYQ styled questions.
 Course: ${course}
 Subject: ${subject}
 Chapter: ${currentChapter}
@@ -580,6 +583,7 @@ Rules:
 - Include case-based questions
 - Include assertion-reason type
 - Provide answer key at end only
+
 `;
 
       navigator.clipboard.writeText(prompt).then(() => {
