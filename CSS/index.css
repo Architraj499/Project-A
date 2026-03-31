@@ -1,0 +1,258 @@
+/* index.css */
+:root{
+  --accent:#7e5bff;
+  --accent-2:#00d4ff;
+  --text:#e6eef8;
+  --muted:#94a3b8;
+}
+
+/* GLOBAL SMOOTHNESS */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  transition: all 0.25s ease;
+}
+
+/* BACKGROUND */
+body{
+  height:100vh;
+  font-family: Inter, sans-serif;
+  background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #020617);
+  background-size: 400% 400%;
+  animation: bgMove 12s ease infinite, fadeIn 0.6s ease;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:var(--text);
+}
+
+@keyframes bgMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1;}
+}
+
+/* CARD */
+.auth-container{
+  width:380px;
+  padding:45px 30px;
+  border-radius:22px;
+  backdrop-filter: blur(25px);
+  background: rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 80px rgba(0,0,0,0.7);
+  position:relative;
+  overflow:hidden;
+}
+
+/* GLOW BORDER */
+.auth-container::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  filter:blur(20px);
+  opacity:0.4;
+  z-index:-1;
+}
+
+/* CARD HOVER */
+.auth-container:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 30px 120px rgba(0,0,0,0.9);
+}
+
+/* TITLE */
+.auth-title{
+  text-align:center;
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:5px;
+}
+
+.subtitle{
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:20px;
+}
+
+/* TABS */
+.auth-tabs{
+  display:flex;
+  background:rgba(255,255,255,0.04);
+  border-radius:10px;
+  padding:4px;
+  margin-bottom:25px;
+}
+
+.auth-tabs button{
+  flex:1;
+  padding:10px;
+  border:none;
+  background:none;
+  color:var(--muted);
+  cursor:pointer;
+  border-radius:8px;
+}
+
+.auth-tabs button.active{
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:#fff;
+  transform: scale(1.05);
+}
+
+/* FORM ANIMATION */
+form{
+  opacity:0;
+  transform: translateY(10px);
+  position:absolute;
+  width:100%;
+}
+
+form.active{
+  opacity:1;
+  transform: translateY(0);
+  position:relative;
+}
+
+/* INPUT */
+.form-group{
+  position:relative;
+  margin-bottom:20px;
+}
+
+.form-group input{
+  width:100%;
+  padding:14px 12px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.05);
+  color:#fff;
+  outline:none;
+}
+
+/* INPUT FOCUS */
+.form-group input:focus{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(126,91,255,0.25);
+  transform: scale(1.01);
+}
+
+/* FLOAT LABEL */
+.form-group label{
+  position:absolute;
+  left:12px;
+  top:14px;
+  font-size:13px;
+  color:var(--muted);
+  pointer-events:none;
+}
+
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label{
+  top:-8px;
+  left:8px;
+  font-size:11px;
+ 
+  padding:0 6px;
+  color:var(--accent-2);
+}
+
+/* BUTTON */
+.submit-btn{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  font-weight:600;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:#fff;
+  cursor:pointer;
+}
+
+.submit-btn:hover{
+  transform: translateY(-2px) scale(1.03);
+  box-shadow:0 15px 40px rgba(126,91,255,0.4);
+}
+
+.submit-btn:active{
+  transform: scale(0.96);
+}
+
+/* LOADING */
+.submit-btn.loading{
+  pointer-events:none;
+  opacity:0.7;
+}
+
+.submit-btn.loading::after{
+  content:"...";
+  position:absolute;
+  right:20px;
+}
+
+/* LINKS */
+.switch-link{
+  text-align:center;
+  margin-top:12px;
+  font-size:14px;
+}
+
+.switch-link a{
+  color:var(--accent-2);
+  cursor:pointer;
+}
+
+/* MESSAGE ANIMATION */
+#message{
+  margin-top:12px;
+  text-align:center;
+  font-weight:600;
+  opacity:1;
+  transform: translateY(5px);
+}
+
+#message.show{
+  opacity:1;
+  transform: translateY(0);
+}
+.brand{
+  text-align:center;
+  font-size:28px;
+  font-weight:800;
+  background: linear-gradient(90deg,var(--accent),var(--accent-2));
+-webkit-background-clip: text;
+  color: transparent;
+  margin-bottom:5px;
+}
+
+.tagline{
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:20px;
+}
+.context{
+  text-align:center;
+  font-size:12px;
+  color:#7dd3fc;
+  margin-bottom:20px;
+}
+.logo{
+    border-radius: 50%;
+  width:50px;
+  display:block;
+  margin:0 auto 10px;
+}
+#message {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}

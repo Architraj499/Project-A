@@ -1,3 +1,4 @@
+<!-- Index.html -->
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -5,60 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Asprients - Login</title>
 <link rel="icon" href="images/logo1.png" type="image/png">
-
-<style>
-:root{
-  --bg:#f6f8fb; 
-  --card:#ffffff;
-  --muted:#6b7280;
-  --accent:#6b21a8; 
-  --accent-2:#0ea5b7;
-  --glass: rgba(0,0,0,0.03); 
-  --text:#0b1220;
-}
-body{
-  margin:0; height:100vh; font-family:Inter,sans-serif;
-  background:var(--bg); color:var(--text);
-  display:flex; justify-content:center; align-items:center;
-}
-.auth-container{
-  width:380px; padding:50px 30px;
-  background:var(--glass); backdrop-filter:blur(12px);
-  border-radius:20px; box-shadow:0 15px 30px rgba(0,0,0,0.08);
-}
-.auth-tabs{
-  display:flex; justify-content:space-around; margin-bottom:30px;
-}
-.auth-tabs button{
-  background:none; border:none; font-weight:600; cursor:pointer;
-}
-.auth-tabs button.active::after{
-  content:''; display:block; height:3px;
-  background:linear-gradient(90deg,var(--accent),var(--accent-2));
-}
-form{ display:none; }
-form.active{ display:block; }
-.form-group{ margin-bottom:15px; }
-.form-group label{ display:block; margin-bottom:5px; }
-.form-group input{
-  width:100%; padding:12px; border-radius:10px;
-  border:1px solid #ccc;
-}
-button.submit-btn{
-  width:100%; padding:14px; border:none;
-  border-radius:12px; font-weight:600;
-  background:linear-gradient(90deg,var(--accent),var(--accent-2));
-  color:#fff; cursor:pointer;
-}
-.switch-link{ text-align:center; margin-top:10px; }
-.switch-link a{ cursor:pointer; color:var(--accent-2); }
-#message{ margin-top:10px; text-align:center; font-weight:600; }
-</style>
+<link rel="stylesheet" href="CSS/index.css">
 
 </head>
 <body>
 
 <div class="auth-container">
+  <img src="images/logo.png" class="logo">
+  <h1 class="brand">Asprients</h1>
+<p class="tagline">Your Personal Study System</p>
   <div class="auth-tabs">
     <button id="loginTab" class="active">Login</button>
     <button id="signupTab">Sign Up</button>
@@ -66,15 +22,18 @@ button.submit-btn{
 
   <!-- Login -->
   <form id="loginForm" class="active">
+    
     <div class="form-group">
-      <label>Email</label>
-      <input type="email" id="loginEmail" required>
-    </div>
+  <input type="email" id="loginEmail" required placeholder=" ">
+<label>Email</label>
+</div>
+    
     <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="loginPassword" required>
-    </div>
-    <button class="submit-btn">Login</button>
+  <input type="password" id="loginPassword" required placeholder=" ">
+  <label>Password</label>
+</div>
+
+    <button class="submit-btn">Ready To Dominate</button>
     <div class="switch-link">
       <a id="forgotPassword">Forgot Password?</a>
     </div>
@@ -85,166 +44,36 @@ button.submit-btn{
 
   <!-- Signup -->
   <form id="signupForm">
-    <div class="form-group">
-      <label>Full Name</label>
-      <input type="text" id="signupName" required>
-    </div>
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" id="signupEmail" required>
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="signupPassword" required>
-    </div>
-    <div class="form-group">
-      <label>Confirm Password</label>
-      <input type="password" id="signupConfirm" required>
-    </div>
+     <div class="form-group">
+  <input type="text" id="signupName" required placeholder=" ">
+  <label>Full Name</label>
+</div>
+
+     <div class="form-group">
+  <input type="email" id="signupEmail" required placeholder=" ">
+  <label>Email</label>
+</div>
+
+     <div class="form-group">
+  <input type="password" id="signupPassword" required placeholder=" ">
+  <label>Password</label>
+</div>
+    
+ <div class="form-group">
+  <input type="password" id="signupConfirm" required placeholder=" ">
+  <label>Confirm Password</label>
+</div>
     <button class="submit-btn">Sign Up</button>
     <div class="switch-link">
       Already have an account? <a id="toLogin">Login</a>
     </div>
   </form>
 
-  <div id="message"></div>
-</div>
+  <div id="message" style="color:red; font-weight:bold;"></div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDHRDRRm2KBmCuUf3qvTIRI5hO0aXFFx3w",
-  authDomain: "asprients-95c1f.firebaseapp.com",
-  projectId: "asprients-95c1f",
-  storageBucket: "asprients-95c1f.firebasestorage.app",
-  messagingSenderId: "453218332819",
-  appId: "1:453218332819:web:5740173fa4d8156dae9d66"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-const loginForm = document.getElementById("loginForm");
-const signupForm = document.getElementById("signupForm");
-const message = document.getElementById("message");
-
-function switchForm(type){
-  loginForm.classList.toggle("active", type==="login");
-  signupForm.classList.toggle("active", type==="signup");
-}
-
-document.getElementById("loginTab").onclick = ()=>switchForm("login");
-document.getElementById("signupTab").onclick = ()=>switchForm("signup");
-document.getElementById("toSignup").onclick = ()=>switchForm("signup");
-document.getElementById("toLogin").onclick = ()=>switchForm("login");
-
-/* ---------- SIGNUP ---------- */
-signupForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const name = signupName.value.trim();
-  const email = signupEmail.value.trim();
-  const password = signupPassword.value;
-  const confirm = signupConfirm.value;
-
-  if (password !== confirm) {
-    message.innerText = "Passwords do not match";
-    return;
-  }
-
-  try {
-    // 1️Firebase Auth user create
-    const cred = await createUserWithEmailAndPassword(auth, email, password);
-    const user = cred.user;
-
-    // 2️ Firestore document CREATE 
-    await setDoc(doc(db, "users", user.uid), {
-      uid: user.uid,
-      fullname: name,
-      email: email,
-      password: password,          
-      overallProgress: 0,
-      progress: {},
-      totalSiteSeconds: 0,
-      totalLectureSeconds: 0,
-      createdAt: Date.now(),
-      role: "student",
-      status: "active"
-    });
-
-    // 3️⃣ Redirect
-    window.location.href = "home.html";
-
-  } catch (err) {
-    console.error(err);
-    message.innerText = "Signup failed";
-  }
-});
-
-
-/* ---------- LOGIN ---------- */
-loginForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  try {
-    const cred = await signInWithEmailAndPassword(
-      auth,
-      loginEmail.value,
-      loginPassword.value
-    );
-
-    const user = cred.user;
-    const ref = doc(db, "users", user.uid);
-    const snap = await getDoc(ref);
-
-    //  If doc missing → auto-create
-    if (!snap.exists()) {
-      await setDoc(ref, {
-        uid: user.uid,
-        fullname: "User",
-        email: user.email,
-        password: loginPassword.value,
-        totalSiteSeconds: 0,
-        totalLectureSeconds: 0,
-        createdAt: Date.now(),
-        role: "student",
-        status: "active",
-        overallProgress: 0,
-        progress: {}
-      });
-    }
-
-    window.location.href = "home.html";
-
-  } catch (err) {
-    message.innerText = "Invalid credentials";
-  }
-});
-
-
-/* ---------- FORGOT PASSWORD ---------- */
-forgotPassword.onclick = async ()=>{
-  if(!loginEmail.value){
-    message.innerText="Enter email first";
-    return;
-  }
-  await sendPasswordResetEmail(auth,loginEmail.value);
-  message.innerText="Password reset link sent";
-};
-
-// /* ---------- AUTH GUARD ---------- */
-// onAuthStateChanged(auth,user=>{
-//   if(user){
-//     window.location.href="home.html";
-//   }
-// });
-
-</script>
+<script type="module" src="JavaScript/index.js"></script>
 <script type="module" src="JavaScript/auth-guard.js"></script>
+
 
 </body>
 </html>
