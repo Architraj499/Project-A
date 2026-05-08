@@ -34,7 +34,23 @@ ul {padding-left:20px;}
 .accordion-body.open {padding-bottom:15px;}
 .accordion-icon {transition: var(--transition);}
 .accordion-item.active .accordion-icon {transform:rotate(45deg);}
-.a{}
+a { text-decoration: none; color: inherit; }
+
+footer {
+  background:var(--card); border-top:1px solid rgba(255,255,255,0.05);
+  margin-top:40px; padding:24px 20px; color:var(--muted); text-align:center;
+}
+footer p {
+  text-align:center; margin:8px 0;
+}
+.footer-links {
+  margin-top:8px; display:flex; justify-content:center; gap:16px; flex-wrap:wrap;
+}
+.footer-links a {
+  color:var(--muted); font-weight:600; transition:0.3s;
+}
+.footer-links a:hover { color:var(--accent-2); }
+
 @media(max-width:768px){.container{padding:20px;}}
 </style>
 
@@ -45,7 +61,7 @@ ul {padding-left:20px;}
 <div class="container">
 <a class="a" href="home.html"><i class="fa-solid fa-xmark"></i></a>
 <h1>Terms of Use</h1>
-<p><strong>Effective Date:</strong> October 5, 2025</p>
+<p><strong>Effective Date:</strong> May 8, 2026</p>
 
 
 <div class="accordion">
@@ -53,84 +69,246 @@ ul {padding-left:20px;}
 
 <!-- Section 1 -->
 <div class="accordion-item">
-  <div class="accordion-header"><i class="fa-solid fa-user-check"></i> Acceptance of Terms <span class="accordion-icon">+</span></div>
+  <div class="accordion-header">
+    <i class="fa-solid fa-user-check"></i>
+    Acceptance of Terms
+    <span class="accordion-icon">+</span>
+  </div>
+
   <div class="accordion-body">
-    <p>By accessing or using Asprients Study Hub, you agree to comply with these Terms of Use. If you do not agree, please do not use the website.</p>
+    <p>
+      By accessing, browsing, registering, or using Asprients Study Hub, you acknowledge that you have read, understood, and agreed to be legally bound by these Terms of Use, our Privacy Policy, and any future policies or updates published on the platform.
+    </p>
+
+    <p>
+      These Terms apply to all visitors, students, users, contributors, and anyone accessing the services provided by Asprients. If you do not agree with any part of these Terms, you should discontinue using the website immediately.
+    </p>
+
+    <p>
+      Continued use of the platform after updates or modifications to these Terms constitutes acceptance of those changes.
+    </p>
   </div>
 </div>
 
 <!-- Section 2 -->
 <div class="accordion-item">
-  <div class="accordion-header"><i class="fa-solid fa-users"></i> Eligibility <span class="accordion-icon">+</span></div>
+  <div class="accordion-header">
+    <i class="fa-solid fa-users"></i>
+    Eligibility
+    <span class="accordion-icon">+</span>
+  </div>
+
   <div class="accordion-body">
-    <p>Users must be at least 13 years old (or the age required by law in your jurisdiction) to use the website.</p>
+    <p>
+      Users must be at least 13 years old, or meet the minimum legal age requirement applicable in their country or region, to access or use Asprients Study Hub.
+    </p>
+
+    <p>
+      By using this platform, you confirm that the information provided during registration is accurate, complete, and up to date.
+    </p>
+
+    <p>
+      Parents or guardians are responsible for supervising minors using the platform and ensuring safe and appropriate use of the services.
+    </p>
   </div>
 </div>
 
 <!-- Section 3 -->
 <div class="accordion-item">
-  <div class="accordion-header"><i class="fa-solid fa-shield-halved"></i> User Responsibilities <span class="accordion-icon">+</span></div>
+  <div class="accordion-header">
+    <i class="fa-solid fa-shield-halved"></i>
+    User Responsibilities
+    <span class="accordion-icon">+</span>
+  </div>
+
   <div class="accordion-body">
     <ul>
-      <li>Provide accurate information when creating accounts.</li>
-      <li>Maintain the confidentiality of login credentials.</li>
-      <li>Use the website responsibly and legally; do not abuse resources or content.</li>
+      <li>Provide accurate and authentic information while creating accounts.</li>
+      <li>Maintain the confidentiality and security of account credentials.</li>
+      <li>Use the platform responsibly, ethically, and legally.</li>
+      <li>Avoid sharing false, harmful, abusive, or misleading content.</li>
+      <li>Respect the rights, privacy, and learning experience of other users.</li>
+      <li>Report unauthorized activity or security concerns immediately.</li>
     </ul>
+
+    <p>
+      Users are solely responsible for activities conducted through their accounts.
+    </p>
   </div>
 </div>
 
 <!-- Section 4 -->
 <div class="accordion-item">
-  <div class="accordion-header"><i class="fa-solid fa-copyright"></i> Intellectual Property <span class="accordion-icon">+</span></div>
+  <div class="accordion-header">
+    <i class="fa-solid fa-copyright"></i>
+    Intellectual Property Rights
+    <span class="accordion-icon">+</span>
+  </div>
+
   <div class="accordion-body">
-    <p>All content, lectures, notes, quizzes, and materials on Asprients are the property of Asprients Study Hub. You may use them for personal, non-commercial purposes only.</p>
+    <p>
+      All study materials, lectures, mock tests, notes, branding elements, graphics, logos, software, designs, and educational content available on Asprients are protected by applicable copyright, trademark, and intellectual property laws.
+    </p>
+
+    <p>
+      Users may access and use the content strictly for personal educational purposes only. Reproduction, resale, redistribution, public sharing, screen recording, or commercial exploitation of any content without prior written permission is strictly prohibited.
+    </p>
+
+    <p>
+      Unauthorized copying or misuse may result in account suspension and legal action where applicable.
+    </p>
   </div>
 </div>
 
 <!-- Section 5 -->
 <div class="accordion-item">
-  <div class="accordion-header"><i class="fa-solid fa-ban"></i> Restrictions <span class="accordion-icon">+</span></div>
+  <div class="accordion-header">
+    <i class="fa-solid fa-ban"></i>
+    Prohibited Activities
+    <span class="accordion-icon">+</span>
+  </div>
+
   <div class="accordion-body">
     <ul>
-      <li>Do not copy, distribute, or modify content without permission.</li>
-      <li>Do not attempt to hack, scrape, or misuse the website.</li>
-      <li>Do not post illegal, harmful, or offensive content.</li>
+      <li>Attempting to hack, reverse engineer, exploit, scrape, or damage the platform.</li>
+      <li>Sharing copyrighted resources without authorization.</li>
+      <li>Uploading harmful code, malware, spam, or malicious content.</li>
+      <li>Creating fake accounts or impersonating other individuals.</li>
+      <li>Using bots, automated scripts, or unfair methods to manipulate analytics or systems.</li>
+      <li>Posting content that is illegal, abusive, hateful, threatening, or misleading.</li>
     </ul>
+
+    <p>
+      Violation of these rules may result in warnings, restrictions, suspension, or permanent termination of access.
+    </p>
   </div>
 </div>
 
 <!-- Section 6 -->
 <div class="accordion-item">
-  <div class="accordion-header"><i class="fa-solid fa-exclamation-triangle"></i> Disclaimers <span class="accordion-icon">+</span></div>
+  <div class="accordion-header">
+    <i class="fa-solid fa-robot"></i>
+    AI & Educational Assistance Disclaimer
+    <span class="accordion-icon">+</span>
+  </div>
+
   <div class="accordion-body">
-    <p>All study materials are provided “as-is”. Asprients Study Hub does not guarantee specific results or outcomes from using the website.</p>
+    <p>
+      Certain features available on Asprients, including mock tests, analytics, study recommendations, and automated tools, may utilize artificial intelligence systems.
+    </p>
+
+    <p>
+      While efforts are made to provide accurate and useful educational support, AI-generated content may occasionally contain inaccuracies, incomplete information, or outdated responses.
+    </p>
+
+    <p>
+      Users are advised to verify important academic, examination, and official information independently through trusted educational sources and official institutions.
+    </p>
   </div>
 </div>
 
 <!-- Section 7 -->
 <div class="accordion-item">
-  <div class="accordion-header"><i class="fa-solid fa-scale-balanced"></i> Limitation of Liability <span class="accordion-icon">+</span></div>
+  <div class="accordion-header">
+    <i class="fa-solid fa-exclamation-triangle"></i>
+    Disclaimers
+    <span class="accordion-icon">+</span>
+  </div>
+
   <div class="accordion-body">
-    <p>Asprients Study Hub shall not be liable for any indirect, incidental, or consequential damages arising from use of the website or reliance on its content.</p>
+    <p>
+      All services, study resources, educational tools, and materials are provided on an “as-is” and “as-available” basis without warranties of any kind.
+    </p>
+
+    <p>
+      Asprients does not guarantee uninterrupted availability, complete accuracy, examination success, ranks, admissions, marks, placements, or specific academic outcomes.
+    </p>
+
+    <p>
+      Educational performance depends on multiple personal and external factors including consistency, preparation strategy, examination conditions, and individual effort.
+    </p>
   </div>
 </div>
 
 <!-- Section 8 -->
 <div class="accordion-item">
-  <div class="accordion-header"><i class="fa-solid fa-gavel"></i> Governing Law <span class="accordion-icon">+</span></div>
+  <div class="accordion-header">
+    <i class="fa-solid fa-scale-balanced"></i>
+    Limitation of Liability
+    <span class="accordion-icon">+</span>
+  </div>
+
   <div class="accordion-body">
-    <p>These Terms of Use are governed by the laws of India. Any disputes will be subject to the exclusive jurisdiction of courts in India.</p>
+    <p>
+      Asprients Study Hub and its developers shall not be held liable for any indirect, incidental, consequential, academic, technical, financial, or data-related damages arising from use of the platform or reliance on its services.
+    </p>
+
+    <p>
+      Users access and use the website entirely at their own discretion and risk.
+    </p>
   </div>
 </div>
 
 <!-- Section 9 -->
 <div class="accordion-item">
-  <div class="accordion-header"><i class="fa-solid fa-file-pen"></i> Changes to Terms <span class="accordion-icon">+</span></div>
+  <div class="accordion-header">
+    <i class="fa-solid fa-user-lock"></i>
+    Account Suspension & Termination
+    <span class="accordion-icon">+</span>
+  </div>
+
   <div class="accordion-body">
-    <p>We may update these Terms from time to time. Check this page periodically for updates. Continued use of the website constitutes acceptance of the updated terms.</p>
+    <p>
+      Asprients reserves the right to suspend, restrict, or permanently terminate accounts found violating these Terms, engaging in misuse, unauthorized sharing, suspicious activity, or abusive behavior.
+    </p>
+
+    <p>
+      We may also remove content, restrict access, or disable services temporarily for maintenance, security, or operational reasons without prior notice.
+    </p>
   </div>
 </div>
 
+<!-- Section 10 -->
+<div class="accordion-item">
+  <div class="accordion-header">
+    <i class="fa-solid fa-gavel"></i>
+    Governing Law
+    <span class="accordion-icon">+</span>
+  </div>
+
+  <div class="accordion-body">
+    <p>
+      These Terms of Use shall be governed and interpreted in accordance with the laws of India.
+    </p>
+
+    <p>
+      Any disputes, legal proceedings, or claims arising from the use of this platform shall fall under the exclusive jurisdiction of competent courts located in India.
+    </p>
+  </div>
+</div>
+
+<!-- Section 11 -->
+<div class="accordion-item">
+  <div class="accordion-header">
+    <i class="fa-solid fa-file-pen"></i>
+    Changes to Terms
+    <span class="accordion-icon">+</span>
+  </div>
+
+  <div class="accordion-body">
+    <p>
+      Asprients reserves the right to update, revise, or modify these Terms at any time without prior notice.
+    </p>
+
+    <p>
+      Updated Terms will become effective immediately upon publication on this page. Users are encouraged to review this page periodically to stay informed about changes.
+    </p>
+
+    <p>
+      Continued use of the platform after updates constitutes acceptance of the revised Terms.
+    </p>
+  </div>
+</div>
 </div>
 </div>
 
@@ -152,6 +330,18 @@ items.forEach(item => {
 });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-
+<div class="footer-wrapper">
+<footer class="footer">
+  <div class="footer-content">
+    <p><b>© 2026 Asprients </b>All rights reserved. | Devloped By <b><a href="https://www.linkedin.com/in/architraj499" target="_blank">Archit</a></b></p> 
+    <div class="footer-links">
+      <a href="Privacy.html">Privacy Policy</a>
+      <a href="tou.html">Terms of Use</a>
+      <a href="contactus.html">Contact Us</a>
+      <a href="acd.html">Account Deletion</a>
+       <a href="personal.html">Personal Dashboard</a>
+    </div>
+  </div>
+</footer>
 </body>
 </html>
