@@ -824,7 +824,7 @@ function startCountdown(elementId, targetDate) {
   setInterval(updateCountdown, 1000);
 }
 
-startCountdown("boardsCountdown", "2026-02-01T09:00:00");
+startCountdown("boardsCountdown", "2027-02-01T09:00:00");
 startCountdown("cuetCountdown", "2026-05-11T09:00:00");
 startCountdown("caSepCountdown", "2026-09-16T09:00:00");
-startCountdown("caMayCountdown", "2026-05-14T09:00:00");
+startCountdown("caMayCountdown", "2026-05-02T09:00:00");
