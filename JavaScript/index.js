@@ -81,7 +81,10 @@ signupForm.addEventListener("submit", async (e) => {
       totalLectureSeconds: 0,
       createdAt: Date.now(),
       role: "student",
-      status: "active"
+      status: "active",
+      // PREMIUM SYSTEM
+  plan: "free",
+  planExpiry: null
     });
 
     message.innerText = "Signup successful! Redirecting...";
@@ -147,7 +150,10 @@ loginForm.addEventListener("submit", async (e) => {
         role: "student",
         status: "active",
         overallProgress: 0,
-        progress: {}
+        progress: {},
+        // PREMIUM SYSTEM
+  plan: "free",
+  planExpiry: null
       });
     }
 
