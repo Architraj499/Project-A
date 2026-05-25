@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CUET - Accountancy</title>
+    <link rel="stylesheet" href="CSS/premium.css">
     <link rel="stylesheet" href="CSS\sub.css">
     <link rel="icon" href="images/logo1.png" type="image/png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -223,10 +224,91 @@
   </div>
 </footer>
 </div>
+<div id="premiumModal" class="premium-modal">
 
+  <div class="premium-box">
+
+    <button class="close-premium" onclick="closePremiumModal()">
+      ✖
+    </button>
+
+    <h1>👑 Asprients Premium</h1>
+
+    <p class="premium-subtitle">
+      Unlock premium notes, downloads,
+      AI mocks and more.
+    </p>
+
+    <div class="premium-features">
+
+      <div class="feature">
+        ✅ Premium Notes
+      </div>
+
+      <div class="feature">
+        ✅ Downloads
+      </div>
+
+      <div class="feature">
+        ✅ AI Mock Tests
+      </div>
+
+      <div class="feature">
+        ✅ Early Access
+      </div>
+
+    </div>
+
+    <div class="pricing-grid">
+
+      <div class="price-card">
+
+        <h3>1 Month</h3>
+
+        <h2>₹99</h2>
+
+        <button class="buy-btn">
+          Buy Now
+        </button>
+
+      </div>
+
+      <div class="price-card popular">
+
+        <div class="popular-tag">
+          Most Popular
+        </div>
+
+        <h3>6 Months</h3>
+
+        <h2>₹399</h2>
+
+        <button class="buy-btn">
+          Buy Now
+        </button>
+
+      </div>
+
+      <div class="price-card">
+
+        <h3>12 Months</h3>
+
+        <h2>₹699</h2>
+
+        <button class="buy-btn">
+          Buy Now
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
 <script>window.LECTURES = [
-  {section:'Partnership', id: 'A1', min:'TBA', title: 'Partnership Fundamentals', video: 'https://www.youtube.com/embed/YdjBn8vO-ww', notes:'', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac101.pdf', pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
+  {section:'Partnership', id: 'A1', min:'TBA', title: 'Partnership Fundamentals', video: 'https://www.youtube.com/embed/YdjBn8vO-ww', notes:'', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac101.pdf', pyq:'#', progress:0, teacher:'Sunil Panda Sir',premium:true },
   { section:'Partnership', id: 'A2', min:'56min', title: 'Goodwiil', video: 'https://www.youtube.com/embed/BRCuiFl_gr8', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac102.pdf', pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
   { section:'Partnership', id: 'A3', min:'TBA', title: 'Change In PSR', video: 'https://www.youtube.com/embed/okiA0Tak3Kg', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac102.pdf', pyq:'#', progress:0,teacher:'Sunil Panda Sir' },
   { section:'Partnership', id: 'A4', min:'TBA', title: 'Admission of Partner', video: 'https://www.youtube.com/embed/ZkgoC7Jzv58', notes:'#', ncert:'CUET Materials/NCERT/Accountancy/leac1dd/leac102.pdf', pyq:'#', progress:0, teacher:'Sunil Panda Sir' },

@@ -244,20 +244,72 @@ function renderAll() {
           <div class="chapter-title">${l.title}</div>
           <div class="muted">Revision Notes</div>
           <div class="actions">
-            <a class="small view notes-open" href="${l.notes || '#'}" target="_blank">Open</a>
-            <a class="small download notes-download" href="${l.notes || '#'}" download>Download</a>
-          </div>`;
+
+  <button class="small view notes-open">
+    ${l.premium ? "🔒 Premium Notes" : "Open"}
+  </button>
+
+  <button class="small download notes-download">
+    ${l.premium ? "👑 Premium Download" : "Download"}
+  </button>
+
+</div>`;
 
         notesContainer.wrapper.appendChild(n);
 
-        n.querySelector(".notes-open")?.addEventListener("click", () => {
-          saveActivity("notes_open", l.title, l.id, {
-            action: "open",
-            fileType: "notes"
-          });
-        });
+       n.querySelector(".notes-open")?.addEventListener("click", async () => {
 
-        n.querySelector(".notes-download")?.addEventListener("click", () => {
+  // CHECK PREMIUM ACCESS
+  if (l.premium === true) {
+
+    const userRef = doc(db, "users", currentUserId);
+
+    const snap = await getDoc(userRef);
+
+    if (snap.exists()) {
+
+      const data = snap.data();
+
+      if (data.plan !== "premium") {
+
+       openPremiumModal();
+
+        return;
+      }
+    }
+  }
+
+  // OPEN NOTES
+  window.open(l.notes || "#", "_blank");
+
+  saveActivity("notes_open", l.title, l.id, {
+    action: "open",
+    fileType: "notes"
+  });
+
+});
+
+        n.querySelector(".notes-download")?.addEventListener("click", async () => {
+          // CHECK PREMIUM ACCESS
+          if (l.premium === true) {
+
+            const userRef = doc(db, "users", currentUserId);
+
+            const snap = await getDoc(userRef);
+
+            if (snap.exists()) {
+
+              const data = snap.data();
+
+              if (data.plan !== "premium") {
+
+                openPremiumModal();
+
+                return;
+              }
+            }
+          }
+
           saveActivity("notes_download", l.title, l.id, {
             action: "download",
             fileType: "notes"
@@ -727,13 +779,31 @@ onAuthStateChanged(auth, async (user) => {
     if (snap.exists()) {
       const data = snap.data();
 
-      if (data.progress) {
-        LECTURES.forEach(lec => {
-          if (data.progress[lec.id] !== undefined) {
-            lec.progress = data.progress[lec.id];
-          }
-        });
-      }
+      if (data.fullname) {
+
+  const nameEl = document.getElementById("usernameDisplay");
+
+  if (nameEl) {
+    nameEl.innerText = data.fullname;
+  }
+
+  // PREMIUM BADGE
+  const premiumBadge = document.getElementById("premiumBadge");
+
+  if (premiumBadge) {
+
+    if (data.plan === "premium") {
+
+      premiumBadge.innerHTML = "👑 Premium";
+
+    } else {
+
+      premiumBadge.innerHTML = "";
+
+    }
+
+  }
+}
 
       siteSeconds = data.totalSiteSeconds || 0;
       lectureSeconds = data.totalLectureSeconds || 0;
@@ -838,3 +908,21 @@ startCountdown("boardsCountdown", "2027-02-01T09:00:00");
 startCountdown("cuetCountdown", "2026-05-11T09:00:00");
 startCountdown("caSepCountdown", "2026-09-02T09:00:00");
 startCountdown("caMayCountdown", "2026-05-14T09:00:00");
+
+window.openPremiumModal = function(){
+
+  const modal = document.getElementById("premiumModal");
+
+  if(modal){
+    modal.style.display = "flex";
+  }
+}
+
+window.closePremiumModal = function(){
+
+  const modal = document.getElementById("premiumModal");
+
+  if(modal){
+    modal.style.display = "none";
+  }
+}
