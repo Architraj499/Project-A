@@ -91,33 +91,6 @@ document.getElementById("studyHours");
 const streakEl =
 document.getElementById("streakCount");
 
- /* ---------- STREAK ---------- */
-    const today = todayStr();
-    let streak = d.streakCount || 0;
-    let last = d.lastActiveDate;
-
-    if (!last) streak = 1;
-    else {
-      const diff = dayDiff(today, last);
-      if (diff === 1) streak += 1;
-      else if (diff > 1) streak = 1;
-    }
-
-    if (last !== today) {
-      await updateDoc(userRef, {
-        streakCount: streak,
-        lastActiveDate: today
-      });
-    }
-
-   const streakEl =
-document.getElementById("streakCount");
-
-if(streakEl){
-
-  streakEl.innerText = streak;
-
-}
 // AUTH
 
 onAuthStateChanged(auth, async(user)=>{
@@ -152,104 +125,190 @@ onAuthStateChanged(auth, async(user)=>{
 
     if(snap.exists()){
 
-      const data = snap.data();
-
-      console.log("USER DATA:", data);
-
-
-      // NAME
-
-      const fullname =
-      data.fullname || "User";
-
-      if(usernameDisplay){
-
-        usernameDisplay.textContent =
-        fullname;
-
-      }
-
-      if(avatar){
-
-        avatar.textContent =
-        fullname.charAt(0).toUpperCase();
-
-      }
+      
+  const data = snap.data();
 
 
-      // STREAK
 
-      const streak =
-      data.streakcount || 0;
+  // PREMIUM BADGE
 
-      if(streakEl){
+  const premiumBadge =
+  document.getElementById("premiumBadge");
 
-        streakEl.innerText = streak;
+  if(premiumBadge){
 
-      }
+    if(data.plan === "premium"){
+
+      premiumBadge.innerHTML =
+      "👑 Premium User";
+
+    }else{
+
+      premiumBadge.innerHTML =
+      "🆓 Free User";
+
+    }
+
+  }
+
+  // NAME
+
+  const fullname =
+  data.fullname || "User";
+
+  if(usernameDisplay){
+
+    usernameDisplay.textContent =
+    fullname;
+
+  }
+
+  if(avatar){
+
+    avatar.textContent =
+    fullname.charAt(0).toUpperCase();
+
+  }
+
+  // STREAK
+
+  const streak =
+  data.streakCount || 0;
+
+  if(streakEl){
+
+    streakEl.innerText = streak;
+
+  }
 
 
-      // SUBJECT PROGRESS
+// SUBJECT PROGRESS
 
-      const progress =
-      data.subjectProgress || {};
+// ---------- COURSE PROGRESS ----------
 
-
-      function calculateAverage(course){
-
-        const subjects =
-        progress[course] || {};
-
-        const values =
-        Object.values(subjects);
-
-        if(values.length === 0){
-
-          return 0;
-
-        }
-
-        const total =
-        values.reduce((a,b)=>a+b,0);
-
-        return Math.round(total / values.length);
-
-      }
+const progress =
+data.subjectProgress || {};
 
 
-      const boardsAvg =
-      calculateAverage("Boards");
 
-      const cuetAvg =
-      calculateAverage("CUET");
+// SUBJECT LIST
 
-      const caAvg =
-      calculateAverage("CA Foundation");
+function getSubjectsByCourse(course){
+
+  if(course === "Boards"){
+
+    return [
+      "Accountancy",
+      "Business Studies",
+      "Economics",
+      "English",
+      "Hindi",
+      "Entrepreneurship"
+    ];
+
+  }
+
+  if(course === "CUET"){
+
+    return [
+      "Accountancy",
+      "Business Studies",
+      "Economics",
+      "English",
+      "General Aptitude Test"
+    ];
+
+  }
+
+  if(course === "CA Foundation"){
+
+    return [
+      "Accounting",
+      "Business Economics",
+      "Quantative Aptitude",
+      "Business Law"
+    ];
+
+  }
+
+  return [];
+
+}
 
 
-      // UPDATE UI
+// CALCULATE COURSE %
 
-      if(boardsEl){
+function getCourseProgress(course){
 
-        boardsEl.innerText =
-        boardsAvg + "%";
+  const subjects =
+  getSubjectsByCourse(course);
 
-      }
+  if(!subjects.length) return 0;
 
-      if(cuetEl){
+  let total = 0;
 
-        cuetEl.innerText =
-        cuetAvg + "%";
+  let count = 0;
 
-      }
+  subjects.forEach(subject=>{
 
-      if(caEl){
+    const value =
+    Number(
+      progress?.[course]?.[subject]
+    );
 
-        caEl.innerText =
-        caAvg + "%";
+    if(!isNaN(value)){
 
-      }
+      total += value;
 
+      count++;
+
+    }
+
+  });
+
+  if(count === 0) return 0;
+
+  return Math.round(total / count);
+
+}
+
+
+// FINAL VALUES
+
+const boardsAvg =
+getCourseProgress("Boards");
+
+const cuetAvg =
+getCourseProgress("CUET");
+
+const caAvg =
+getCourseProgress("CA Foundation");
+
+
+
+
+// UPDATE UI
+
+if(boardsEl){
+
+  boardsEl.innerText =
+  boardsAvg + "%";
+
+}
+
+if(cuetEl){
+
+  cuetEl.innerText =
+  cuetAvg + "%";
+
+}
+
+if(caEl){
+
+  caEl.innerText =
+  caAvg + "%";
+
+}
 
       // STUDY HOURS
 
@@ -270,7 +329,7 @@ onAuthStateChanged(auth, async(user)=>{
 
   }catch(err){
 
-    console.log("PROFILE ERROR:", err);
+    
 
   }
 
@@ -296,7 +355,7 @@ if(logoutBtn){
 
     }catch(err){
 
-      console.log(err);
+    
 
       alert("Logout Failed");
 
@@ -357,4 +416,22 @@ if(themeSwitch){
 
   });
 
+}
+
+window.openPremiumModal = function(){
+
+  const modal = document.getElementById("premiumModal");
+
+  if(modal){
+    modal.style.display = "flex";
+  }
+}
+
+window.closePremiumModal = function(){
+
+  const modal = document.getElementById("premiumModal");
+
+  if(modal){
+    modal.style.display = "none";
+  }
 }

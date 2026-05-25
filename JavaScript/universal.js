@@ -91,9 +91,9 @@ async function saveActivity(type, title, lectureId = "", extra = {}) {
       ...extra
     });
 
-    console.log("Activity saved:", type, title);
+    
   } catch (err) {
-    console.error("Activity save error:", err);
+   
   }
 }
 
@@ -114,7 +114,7 @@ async function saveSubjectProgress(course, subject, percent) {
       [`subjectProgress.${course}.${subject}`]: percent
     });
 
-    console.log("Subject progress saved:", course, subject, percent);
+
 
   } catch (err) {
     console.error("Subject progress save error:", err);
@@ -419,7 +419,7 @@ function renderAll() {
 
 // ---------- Video ----------
 function openVideoOriginal(rawUrl, title, lectureId) {
-  console.log("OPEN VIDEO:", lectureId);
+  
 
   if (!rawUrl || rawUrl === '#') {
     alert('Video will be uploaded soon.');
@@ -608,7 +608,7 @@ async function saveLectureTimeToFirestore() {
       totalLectureSeconds: lectureSeconds
     });
 
-    console.log("Lecture time saved:", lectureSeconds);
+
   } catch (err) {
     console.error("Lecture time save error:", err);
   }
