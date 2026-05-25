@@ -696,28 +696,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const themeToggleEl = document.getElementById('themeToggle');
-  if (themeToggleEl) {
-    if (localStorage.getItem('theme')) {
-      document.body.setAttribute('data-theme', localStorage.getItem('theme'));
-      themeToggleEl.textContent = localStorage.getItem('theme') === 'dark' ? '🌙' : '☀️';
-    }
-
-    themeToggleEl.addEventListener('click', () => {
-      let currentTheme = document.body.getAttribute('data-theme');
-
-      if (currentTheme === 'dark') {
-        document.body.setAttribute('data-theme', 'light');
-        themeToggleEl.textContent = '🌙';
-        localStorage.setItem('theme', 'light');
-      } else {
-        document.body.setAttribute('data-theme', 'dark');
-        themeToggleEl.textContent = '☀️';
-        localStorage.setItem('theme', 'dark');
-      }
-    });
-  }
-
+ 
   document.getElementById('videoModal')?.addEventListener('click', (e) => {
     if (e.target === e.currentTarget) closeModal();
   });
@@ -773,30 +752,61 @@ onAuthStateChanged(auth, async (user) => {
     console.error("Auth timer init failed:", err);
   }
 });
+// ---------- GLOBAL THEME SYSTEM ----------
 
-// ---------- Asprients Custom Video Player ----------
-const playerModal = document.getElementById('playerModal');
-const player = document.getElementById('customPlayer');
-const playerSource = document.getElementById('playerSource');
-const playerTitle = document.getElementById('playerTitle');
+function applyTheme(theme){
 
-window.openPlayer = function (src, title) {
-  if (!playerModal || !player || !playerSource) return;
+  document.body.setAttribute("data-theme", theme);
 
-  playerSource.src = src;
-  playerTitle.textContent = title || "Lecture";
-  player.load();
-  playerModal.classList.remove('hidden');
-  document.body.style.overflow = 'hidden';
-};
+  localStorage.setItem("theme", theme);
 
-window.closePlayer = function () {
-  if (!playerModal || !player) return;
+  const themeToggleEl =
+  document.getElementById("themeToggle");
 
-  player.pause();
-  playerModal.classList.add('hidden');
-  document.body.style.overflow = 'auto';
-};
+  if(themeToggleEl){
+
+    themeToggleEl.textContent =
+    theme === "dark"
+    ? "☀️"
+    : "🌙";
+
+  }
+
+}
+
+document.addEventListener("DOMContentLoaded", ()=>{
+
+  // LOAD SAVED THEME
+
+  const savedTheme =
+  localStorage.getItem("theme") || "dark";
+
+  applyTheme(savedTheme);
+
+  // TOGGLE
+
+  const themeToggleEl =
+  document.getElementById("themeToggle");
+
+  if(themeToggleEl){
+
+    themeToggleEl.addEventListener("click", ()=>{
+
+      const currentTheme =
+      document.body.getAttribute("data-theme");
+
+      const newTheme =
+      currentTheme === "dark"
+      ? "light"
+      : "dark";
+
+      applyTheme(newTheme);
+
+    });
+
+  }
+
+});
 
 // ---------- Countdown ----------
 function startCountdown(elementId, targetDate) {

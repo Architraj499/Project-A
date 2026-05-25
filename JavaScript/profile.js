@@ -1,360 +1,97 @@
 // profile.js
 
-import { auth, db } from "./universal.js";
-
-import { onAuthStateChanged } from
-"https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 
 import {
+
+  getAuth,
+  onAuthStateChanged,
+  signOut
+
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+import {
+
+  getFirestore,
   doc,
-  getDoc,
-  updateDoc,
-  collection,
-  getDocs,
-  query,
-  orderBy
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+  getDoc
 
-import { getStorage, ref, uploadBytes, getDownloadURL } 
-from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
-
-const storage = getStorage();
-
-/* =========================================================
-   GLOBALS
-========================================================= */
-let currentUserId = null;
-
-/* =========================================================
-   TIME FORMAT
-========================================================= */
-function formatTime(sec = 0) {
-  sec = Number(sec) || 0;
-  const h = Math.floor(sec / 3600);
-  const m = Math.floor((sec % 3600) / 60);
-  const s = Math.floor(sec % 60);
-  return `${h}h ${m}m ${s}s`;
 }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-/* =========================================================
-   DATE HELPERS
-========================================================= */
-function todayStr() {
-  return new Date().toISOString().slice(0, 10);
-}
-
-function dayDiff(d1, d2) {
-  const a = new Date(d1);
-  const b = new Date(d2);
-  return Math.round((a - b) / (1000 * 60 * 60 * 24));
-}
-
-/* =========================================================
-   SUBJECT LISTS
-========================================================= */
-function getSubjectsByCourse(course) {
-  if (course === "Boards") {
-    return [
-      "Accountancy",
-      "Business Studies",
-      "Economics",
-      "English",
-      "Hindi",
-      "Entrepreneurship"
-    ];
-  }
-
-  if (course === "CUET") {
-    return [
-      "Accountancy",
-      "Business Studies",
-      "Economics",
-      "English",
-      // "General Aptitude Test"
-    ];
-  }
-
-  if (course === "CA Foundation") {
-    return [
-      "Accounting",
-      "Business Economics",
-      "Quantative Aptitude",
-      "Business Law"
-    ];
-  }
-
-  return [];
-}
-
-/* =========================================================
-   COURSE PROGRESS
-========================================================= */
-let firestoreSubjectProgress = {};
-
-function getSubjectProgress(course, subject) {
-  if (
-    firestoreSubjectProgress?.[course] &&
-    firestoreSubjectProgress[course]?.[subject] !== undefined
-  ) {
-    return firestoreSubjectProgress[course][subject];
-  }
-
-  const key = `progress_${course}_${subject}`;
-  const value = localStorage.getItem(key);
-  return value ? Number(value) : 0;
-}
-
-function getCourseProgress(course) {
-  const subjects = getSubjectsByCourse(course);
-  if (!subjects.length) return 0;
-
-  let totalPercent = 0;
-
-  subjects.forEach(sub => {
-    totalPercent += getSubjectProgress(course, sub);
-  });
-
-  return Math.round(totalPercent / subjects.length);
-}
-
-/* =========================================================
-   RENDER SUBJECTS
-========================================================= */
-function renderSubjects(course, subjects, containerId) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-
-  container.innerHTML = "";
-
-  subjects.forEach(sub => {
-    const percent = getSubjectProgress(course, sub);
-
-    const row = document.createElement("div");
-    row.className = "subject-row";
-
-    row.innerHTML = `
-      <div class="subject-name">${sub}</div>
-      <div class="subject-bar">
-        <i style="width:${percent}%"></i>
-      </div>
-      <div class="subject-percent">${percent}%</div>
-    `;
-
-    container.appendChild(row);
-  });
-}
-
-/* =========================================================
-   COURSE BARS
-========================================================= */
-function renderCourseBars() {
-  const boards = getCourseProgress("Boards");
-  const cuet = getCourseProgress("CUET");
-  const ca = getCourseProgress("CA Foundation");
-
-  const boardsBar = document.getElementById("boardsBar");
-  const cuetBar = document.getElementById("cuetBar");
-  const caBar = document.getElementById("caBar");
-
-  const boardsPercent = document.getElementById("boardsPercent");
-  const cuetPercent = document.getElementById("cuetPercent");
-  const caPercent = document.getElementById("caPercent");
-
-  if (boardsBar) boardsBar.style.width = boards + "%";
-  if (cuetBar) cuetBar.style.width = cuet + "%";
-  if (caBar) caBar.style.width = ca + "%";
-
-  if (boardsPercent) boardsPercent.innerText = boards + "%";
-  if (cuetPercent) cuetPercent.innerText = cuet + "%";
-  if (caPercent) caPercent.innerText = ca + "%";
-}
-
-/* =========================================================
-   ACTIVITY HISTORY
-========================================================= */
-async function loadActivity() {
-  if (!currentUserId) return;
-
-  const container = document.getElementById("activityList");
-  if (!container) return;
-
-  container.innerHTML = `<div class="activity-item">Loading activity...</div>`;
-
-  try {
-    const q = query(
-      collection(db, "users", currentUserId, "activity"),
-      orderBy("time", "desc")
-    );
-
-    const snap = await getDocs(q);
-
-    container.innerHTML = "";
-
-    if (snap.empty) {
-      container.innerHTML = `<div class="activity-item">No activity yet.</div>`;
-      return;
-    }
-
-    snap.forEach(docSnap => {
-      const d = docSnap.data();
-
-      const div = document.createElement("div");
-      div.className = "activity-item";
-
-      const time = d.time?.toDate
-        ? d.time.toDate().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit"
-          })
-        : "";
-
-      const icon =
-        d.type === "lecture" ? "📺" :
-        d.type === "mock_generate" ? "🧠" :
-        d.type === "note" ? "📝" :
-        "📌";
-
-      div.innerHTML = `
-        <strong>${icon} ${d.type ? d.type.charAt(0).toUpperCase() + d.type.slice(1) : "Activity"}</strong><br>
-        <span>${d.title || "Untitled Activity"}</span><br>
-        <small>${d.date || ""} ${time ? "• " + time : ""}</small>
-      `;
-
-      container.appendChild(div);
-    });
-
-  } catch (error) {
-    console.error("Error loading activity:", error);
-    container.innerHTML = `<div class="activity-item">Failed to load activity.</div>`;
-  }
-}
-
-/* =========================================================
-   🔥 AVATAR (FIXED)
-========================================================= */
-function setupAvatarUpload(userId) {
-  const avatarBox = document.getElementById("avatarBox");
-  const avatarInput = document.getElementById("avatarInput");
-  const avatarImg = document.getElementById("avatarImg");
-
-  if (!avatarBox || !avatarInput || !avatarImg) return;
-
-  avatarBox.onclick = () => {
-    avatarInput.click();
-  };
-
-  avatarInput.onchange = async () => {
-    const file = avatarInput.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-      alert("Select a valid image");
-      return;
-    }
-
-    if (file.size > 1024 * 1024) {
-      alert("Max 1MB allowed");
-      return;
-    }
-
-    try {
-      const storageRef = ref(storage, `profilePics/${userId}`);
-
-      await uploadBytes(storageRef, file);
-
-      const url = await getDownloadURL(storageRef);
-
-      await updateDoc(doc(db, "users", userId), {
-        profilePic: url
-      });
-
-      avatarImg.src = url;
-
-    } catch (err) {
-      console.error("Avatar upload error:", err);
-      alert("Upload failed");
-    }
-  };
-}
-
-/* =========================================================
-   PROFILE UPDATE
-========================================================= */
-function setupProfileUpdate() {
-  const saveBtn = document.getElementById("saveNameBtn");
-  const nameInput = document.getElementById("nameInput");
-  const profileName = document.getElementById("profileName");
-
-  if (!saveBtn || !nameInput || !profileName) return;
-
-  saveBtn.onclick = async () => {
-    const name = nameInput.value.trim();
-
-    if (name.length < 2) {
-      alert("Name too short");
-      return;
-    }
-
-    const user = auth.currentUser;
-    if (!user) return;
-
-    try {
-      await updateDoc(doc(db, "users", user.uid), {
-        fullname: name
-      });
-
-      profileName.innerText = name;
-      localStorage.setItem("fullname", name);
-
-      const usernameDisplay = document.getElementById("usernameDisplay");
-      if (usernameDisplay) usernameDisplay.innerText = name;
-
-      alert("Profile updated successfully");
-    } catch (error) {
-      console.error("Profile update failed:", error);
-      alert("Failed to update profile");
-    }
-  };
-}
-
-/* =========================================================
-   MAIN AUTH LOAD
-========================================================= */
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    location.href = "index.html";
-    return;
-  }
-
-  currentUserId = user.uid;
-
-  try {
-    const userRef = doc(db, "users", user.uid);
-    const snap = await getDoc(userRef);
-
-    if (!snap.exists()) return;
-
-    const d = snap.data();
-
-    if (d.subjectProgress) {
-      firestoreSubjectProgress = d.subjectProgress;
-    }
-
-    // 🔥 avatar load
-    const avatarImg = document.getElementById("avatarImg");
-    if (d.profilePic && avatarImg) {
-      avatarImg.src = d.profilePic;
-    }
-
-    /* ---------- USER INFO ---------- */
-    document.getElementById("profileName").innerText = d.fullname || "Student";
-    document.getElementById("profileEmail").innerText = user.email || "—";
-    document.getElementById("siteTime").innerText = formatTime(d.totalSiteSeconds);
-    document.getElementById("lectureTime").innerText = formatTime(d.totalLectureSeconds);
-    document.getElementById("nameInput").value = d.fullname || "";
-    document.getElementById("usernameDisplay").innerText = d.fullname || "User";
-
-    /* ---------- STREAK ---------- */
+
+// FIREBASE CONFIG
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyDHRDRRm2KBmCuUf3qvTIRI5hO0aXFFx3w",
+
+  authDomain: "asprients-95c1f.firebaseapp.com",
+
+  projectId: "asprients-95c1f",
+
+  storageBucket: "asprients-95c1f.appspot.com",
+
+  messagingSenderId: "453218332819",
+
+  appId: "1:453218332819:web:5740173fa4d8156dae9d66"
+
+};
+
+
+// INITIALIZE
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+
+// ELEMENTS
+
+const usernameDisplay =
+document.getElementById("usernameDisplay");
+
+const emailDisplay =
+document.getElementById("emailDisplay");
+
+const emailText =
+document.getElementById("emailText");
+
+const uidText =
+document.getElementById("uidText");
+
+const avatar =
+document.getElementById("avatar");
+
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+const themeSwitch =
+document.getElementById("themeSwitch");
+
+
+// STATS ELEMENTS
+
+const boardsEl =
+document.getElementById("boardsProgress");
+
+const cuetEl =
+document.getElementById("cuetProgress");
+
+const caEl =
+document.getElementById("caProgress");
+
+const studyEl =
+document.getElementById("studyHours");
+
+const streakEl =
+document.getElementById("streakCount");
+
+ /* ---------- STREAK ---------- */
     const today = todayStr();
     let streak = d.streakCount || 0;
     let last = d.lastActiveDate;
@@ -373,20 +110,251 @@ onAuthStateChanged(auth, async (user) => {
       });
     }
 
-    document.getElementById("streakCount").innerText = streak;
+   const streakEl =
+document.getElementById("streakCount");
 
-    renderSubjects("Boards", getSubjectsByCourse("Boards"), "boardsSubjects");
-    renderSubjects("CUET", getSubjectsByCourse("CUET"), "cuetSubjects");
-    renderSubjects("CA Foundation", getSubjectsByCourse("CA Foundation"), "caSubjects");
+if(streakEl){
 
-    renderCourseBars();
-    await loadActivity();
+  streakEl.innerText = streak;
 
-    setupAvatarUpload(user.uid);
-    setupProfileUpdate();
+}
+// AUTH
 
-  } catch (error) {
-    console.error("Error loading profile:", error);
-    alert("Failed to load profile.");
+onAuthStateChanged(auth, async(user)=>{
+
+  if(!user){
+
+    window.location.href = "index.html";
+
+    return;
+
   }
+
+  // BASIC INFO
+
+  if(emailDisplay)
+  emailDisplay.textContent = user.email;
+
+  if(emailText)
+  emailText.textContent = user.email;
+
+  if(uidText)
+  uidText.textContent = user.uid;
+
+
+  try{
+
+    const userRef =
+    doc(db,"users",user.uid);
+
+    const snap =
+    await getDoc(userRef);
+
+    if(snap.exists()){
+
+      const data = snap.data();
+
+      console.log("USER DATA:", data);
+
+
+      // NAME
+
+      const fullname =
+      data.fullname || "User";
+
+      if(usernameDisplay){
+
+        usernameDisplay.textContent =
+        fullname;
+
+      }
+
+      if(avatar){
+
+        avatar.textContent =
+        fullname.charAt(0).toUpperCase();
+
+      }
+
+
+      // STREAK
+
+      const streak =
+      data.streakcount || 0;
+
+      if(streakEl){
+
+        streakEl.innerText = streak;
+
+      }
+
+
+      // SUBJECT PROGRESS
+
+      const progress =
+      data.subjectProgress || {};
+
+
+      function calculateAverage(course){
+
+        const subjects =
+        progress[course] || {};
+
+        const values =
+        Object.values(subjects);
+
+        if(values.length === 0){
+
+          return 0;
+
+        }
+
+        const total =
+        values.reduce((a,b)=>a+b,0);
+
+        return Math.round(total / values.length);
+
+      }
+
+
+      const boardsAvg =
+      calculateAverage("Boards");
+
+      const cuetAvg =
+      calculateAverage("CUET");
+
+      const caAvg =
+      calculateAverage("CA Foundation");
+
+
+      // UPDATE UI
+
+      if(boardsEl){
+
+        boardsEl.innerText =
+        boardsAvg + "%";
+
+      }
+
+      if(cuetEl){
+
+        cuetEl.innerText =
+        cuetAvg + "%";
+
+      }
+
+      if(caEl){
+
+        caEl.innerText =
+        caAvg + "%";
+
+      }
+
+
+      // STUDY HOURS
+
+      const lectureSeconds =
+      data.totalLectureSeconds || 0;
+
+      const hours =
+      Math.floor(lectureSeconds / 3600);
+
+      if(studyEl){
+
+        studyEl.innerText =
+        hours + "h";
+
+      }
+
+    }
+
+  }catch(err){
+
+    console.log("PROFILE ERROR:", err);
+
+  }
+
 });
+
+
+// LOGOUT
+
+if(logoutBtn){
+
+  logoutBtn.addEventListener("click", async()=>{
+
+    const confirmLogout =
+    confirm("Are you sure you want to logout?");
+
+    if(!confirmLogout) return;
+
+    try{
+
+      await signOut(auth);
+
+      window.location.href = "index.html";
+
+    }catch(err){
+
+      console.log(err);
+
+      alert("Logout Failed");
+
+    }
+
+  });
+
+}
+
+
+// THEME SYSTEM
+
+function applyTheme(theme){
+
+  document.body.setAttribute(
+    "data-theme",
+    theme
+  );
+
+  localStorage.setItem(
+    "theme",
+    theme
+  );
+
+  if(themeSwitch){
+
+    themeSwitch.checked =
+    theme === "dark";
+
+  }
+
+}
+
+
+// LOAD SAVED THEME
+
+const savedTheme =
+localStorage.getItem("theme") || "dark";
+
+applyTheme(savedTheme);
+
+
+// TOGGLE THEME
+
+if(themeSwitch){
+
+  themeSwitch.addEventListener("change", ()=>{
+
+    if(themeSwitch.checked){
+
+      applyTheme("dark");
+
+    }else{
+
+      applyTheme("light");
+
+    }
+
+  });
+
+}
