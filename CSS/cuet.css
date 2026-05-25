@@ -283,3 +283,12 @@ footer p {
   color: white;
   transform: translateX(4px);
 }
+#premiumBadge{
+  margin-left:8px;
+  background:gold;
+  color:black;
+  padding:2px 8px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:700;
+}

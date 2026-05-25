@@ -494,3 +494,65 @@ footer {
     font-size: 13px;
   }
 }
+
+#premiumBadge{
+  margin-left:8px;
+  background:gold;
+  color:black;
+  padding:2px 8px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:700;
+}
+.premium-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.premium-box{
+  background:#111827;
+  color:white;
+  width:90%;
+  max-width:400px;
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+}
+
+.premium-box h2{
+  margin-bottom:10px;
+}
+
+.premium-box p{
+  color:#d1d5db;
+  margin-bottom:20px;
+}
+
+.premium-actions{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+}
+
+.upgrade-btn{
+  background:gold;
+  color:black;
+  padding:10px 18px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:700;
+}
+
+.cancel-btn{
+  background:#374151;
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  cursor:pointer;
+}
