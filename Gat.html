@@ -66,10 +66,7 @@
 <button class="filter-btn" onclick="filterBy('pending', event)">Pending</button>
 <button class="filter-btn" onclick="filterBy('completed', event)">Completed</button>
 </div>
-
-
-
-     <div style="min-width:260px">
+<div style="min-width:260px">
       <div style="padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));">
         <div style="display:flex; justify-content:space-between; gap:12px; align-items:center">
         </div>
@@ -81,11 +78,10 @@
         <div style="margin-top:10px" class="progress"><i id="overallBar"></i></div>
       
     
- 
- <nav class="tabs">
+<nav class="tabs">
    <nav class="tabs">
     <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
-   <!-- <button class="tab" data-tab="ncert" onclick="openTab(event)">NCERT</button> -->
+   <button class="tab" data-tab="ncert" onclick="openTab(event)">NCERT</button>
     <button class="tab" data-tab="notes" onclick="openTab(event)">Notes</button>
     <button class="tab" data-tab="pyqs" onclick="openTab(event)">PYQs</button>
     <button class="tab" data-tab="mock" onclick="openTab(event)">Mock Test</button>
@@ -124,11 +120,10 @@
   </div>
 
 
+
   <div class="modal-body">
     <iframe id="videoIframe" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
   </div>
-
-  
 </div></div>
 <div id="aiConfirmModal" class="ai-modal">
   <div class="ai-modal-box">
@@ -162,7 +157,7 @@
     </div>
 
     <p class="ai-note">
-      Prompt will be copied and Gemini will open in a new tab.
+      Prompt will be copied and Gemini will opened in a new tab.
       Please paste the prompt there to generate your mock test.
     </p>
 
@@ -191,6 +186,32 @@
 </footer>
 </div>
 
+<div id="premiumModal" class="premium-modal">
+
+  <div class="premium-box">
+
+    <h2>👑 Premium Feature</h2>
+
+    <p>
+      Upgrade to Premium to access Notes, Downloads,
+      AI Mocks and more.
+    </p>
+
+    <div class="premium-actions">
+
+      <a href="premium.html" class="upgrade-btn">
+        Upgrade Now
+      </a>
+
+      <button onclick="closePremiumModal()" class="cancel-btn">
+        Cancel
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 
 <script>
  window.LECTURES = [
@@ -199,37 +220,40 @@
    QUANTITATIVE APTITUDE
    ===================================== */
 
-{ section:'Quantitative Aptitude', id:'GAT1.1', min:'TBA', title:'Number System', video:'https://www.youtube.com/embed/F8WGk-PAxhc', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
-{ section:'Quantitative Aptitude', id:'GAT1.2', min:'TBA', title:'Number System', video:'https://www.youtube.com/embed/VMq_jD5Xih8', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
-{ section:'Quantitative Aptitude', id:'GAT1.3', min:'TBA', title:'Number System', video:'https://www.youtube.com/embed/-VXAqqZ86Wg', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Quantitative Aptitude', id:'GAT1.1', min:'TBA', title:'Number System', video:'https://www.youtube.com/embed/F8WGk-PAxhc', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: false},
+{ section:'Quantitative Aptitude', id:'GAT1.2', min:'TBA', title:'Number System', video:'https://www.youtube.com/embed/VMq_jD5Xih8', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+{ section:'Quantitative Aptitude', id:'GAT1.3', min:'TBA', title:'Number System', video:'https://www.youtube.com/embed/-VXAqqZ86Wg', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
 
-{ section:'Quantitative Aptitude', id:'GAT2.1', min:'TBA', title:'Percentage', video:'https://www.youtube.com/embed/pvTn1-N92rc', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
-{ section:'Quantitative Aptitude', id:'GAT2.2', min:'TBA', title:'Percentage', video:'https://www.youtube.com/embed/icc3ZlegNTY', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Quantitative Aptitude', id:'GAT2.1', min:'TBA', title:'Percentage', video:'https://www.youtube.com/embed/pvTn1-N92rc', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+{ section:'Quantitative Aptitude', id:'GAT2.2', min:'TBA', title:'Percentage', video:'https://www.youtube.com/embed/icc3ZlegNTY', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+{ section:'Quantitative Aptitude', id:'GAT2.3', min:'TBA', title:'Percentage', video:'https://www.youtube.com/embed/9n8sKqjHh7o', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
 
 
-{ section:'Quantitative Aptitude', id:'GAT3.1', min:'TBA', title:'Profit & Loss', video:'https://www.youtube.com/embed/6KH4AfdiZH8', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
-{ section:'Quantitative Aptitude', id:'GAT3.2', min:'TBA', title:'Profit & Loss', video:'https://www.youtube.com/embed/Y60BM4uV7qI', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
-{ section:'Quantitative Aptitude', id:'GAT3.3', min:'TBA', title:'Profit & Loss', video:'https://www.youtube.com/embed/kUgegI7_5OQ', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Quantitative Aptitude', id:'GAT3.1', min:'TBA', title:'Profit & Loss', video:'https://www.youtube.com/embed/6KH4AfdiZH8', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+{ section:'Quantitative Aptitude', id:'GAT3.2', min:'TBA', title:'Profit & Loss', video:'https://www.youtube.com/embed/Y60BM4uV7qI', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+{ section:'Quantitative Aptitude', id:'GAT3.3', min:'TBA', title:'Profit & Loss', video:'https://www.youtube.com/embed/kUgegI7_5OQ', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
 
-{ section:'Quantitative Aptitude', id:'GAT4', min:'TBA', title:'Ratio & Proportion', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Quantitative Aptitude', id:'GAT4', min:'TBA', title:'Ratio & Proportion', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'Quantitative Aptitude', id:'GAT5', min:'TBA', title:'Average', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Quantitative Aptitude', id:'GAT5', min:'TBA', title:'Average', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'Quantitative Aptitude', id:'GAT6', min:'TBA', title:'Algebra (Basic)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
 
-{ section:'Quantitative Aptitude', id:'GAT7', min:'TBA', title:'Simple & Compound Interest', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Quantitative Aptitude', id:'GAT7', min:'TBA', title:'Simple & Compound Interest', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'Quantitative Aptitude', id:'GAT8', min:'TBA', title:'Time & Work', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Quantitative Aptitude', id:'GAT8', min:'TBA', title:'Time & Work', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'Quantitative Aptitude', id:'GAT9', min:'TBA', title:'Time, Speed & Distance', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Quantitative Aptitude', id:'GAT9', min:'TBA', title:'Time, Speed & Distance', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'Quantitative Aptitude', id:'GAT10', min:'TBA', title:'Mensuration', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Quantitative Aptitude', id:'GAT10', min:'TBA', title:'Mensuration', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'Quantitative Aptitude', id:'GAT11', min:'TBA', title:'Data Interpretation', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Quantitative Aptitude', id:'GAT11', min:'TBA', title:'Data Interpretation', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'Quantitative Aptitude', id:'GAT12', min:'TBA', title:'Permutation & Combination + Probability', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Quantitative Aptitude', id:'GAT12', min:'TBA', title:'Permutation & Combination + Probability', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
 
 
@@ -237,19 +261,19 @@
    LOGICAL & ANALYTICAL REASONING
    ===================================== */
 
-{ section:'Logical & Analytical Reasoning', id:'GAT13', min:'TBA', title:'Series (Number & Alphabet)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Logical & Analytical Reasoning', id:'GAT13', min:'TBA', title:'Series (Number & Alphabet)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'Logical & Analytical Reasoning', id:'GAT14', min:'TBA', title:'Coding-Decoding', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Logical & Analytical Reasoning', id:'GAT14', min:'TBA', title:'Coding-Decoding', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'Logical & Analytical Reasoning', id:'GAT15', min:'TBA', title:'Blood Relations', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Logical & Analytical Reasoning', id:'GAT15', min:'TBA', title:'Blood Relations', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'Logical & Analytical Reasoning', id:'GAT16', min:'TBA', title:'Direction Test', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Logical & Analytical Reasoning', id:'GAT16', min:'TBA', title:'Direction Test', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'Logical & Analytical Reasoning', id:'GAT17', min:'TBA', title:'Syllogism', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Logical & Analytical Reasoning', id:'GAT17', min:'TBA', title:'Syllogism', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'Logical & Analytical Reasoning', id:'GAT18', min:'TBA', title:'Statement & Conclusion', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Logical & Analytical Reasoning', id:'GAT18', min:'TBA', title:'Statement & Conclusion', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'Logical & Analytical Reasoning', id:'GAT19', min:'TBA', title:'Seating Arrangement (Basic)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Logical & Analytical Reasoning', id:'GAT19', min:'TBA', title:'Seating Arrangement (Basic)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
 
 
@@ -257,15 +281,15 @@
    GENERAL KNOWLEDGE
    ===================================== */
 
-{ section:'General Knowledge', id:'GAT20', min:'TBA', title:'Indian History (Basic)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'General Knowledge', id:'GAT20', min:'TBA', title:'Indian History (Basic)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'General Knowledge', id:'GAT21', min:'TBA', title:'Indian Polity & Constitution', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'General Knowledge', id:'GAT21', min:'TBA', title:'Indian Polity & Constitution', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'General Knowledge', id:'GAT22', min:'TBA', title:'Indian Geography', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'General Knowledge', id:'GAT22', min:'TBA', title:'Indian Geography', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'General Knowledge', id:'GAT23', min:'TBA', title:'Indian Economy (Static GK)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'General Knowledge', id:'GAT23', min:'TBA', title:'Indian Economy (Static GK)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
-{ section:'General Knowledge', id:'GAT24', min:'TBA', title:'General Science', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'General Knowledge', id:'GAT24', min:'TBA', title:'General Science', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
 
 
@@ -273,7 +297,7 @@
    CURRENT AFFAIRS
    ===================================== */
 
-{ section:'Current Affairs', id:'GAT25', min:'TBA', title:'Current Affairs (Last 6–12 Months)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir' },
+{ section:'Current Affairs', id:'GAT25', min:'TBA', title:'Current Affairs (Last 6–12 Months)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
 
 ];
 

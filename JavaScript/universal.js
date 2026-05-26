@@ -32,7 +32,7 @@ const app = getApps().length === 0
 
 const auth = getAuth(app);
 const db = getFirestore(app);
-
+let isPremiumUser = false;
 export { app, auth, db };
 
 // ---------- Globals ----------
@@ -222,7 +222,7 @@ function renderAll() {
   </button>
 <button class="small view"
   onclick="openLectureNotes('${l.id}')">
-  ${l.premium ? "🔒 Premium Notes" : "Open"}
+  ${l.premium ? " Notes " : "Open"}
 </button>
   <button class="small mock-btn mobile-only"
     onclick="openAIMock('${escapeHtml(l.title)}')">
@@ -250,11 +250,11 @@ function renderAll() {
           <div class="actions">
 
   <button class="small view notes-open">
-    ${l.premium ? "🔒 Premium Notes" : "Open"}
+    ${isPremiumUser ? " Open" : "Notes"}
   </button>
 
   <button class="small download notes-download">
-    ${l.premium ? "👑 Premium Download" : "Download"}
+    ${isPremiumUser ? "⬇ Download" : "Download"}
   </button>
 
 </div>`;
@@ -280,6 +280,7 @@ function renderAll() {
 
         return;
       }
+      renderAll();
     }
   }
 

@@ -68,7 +68,7 @@
 <button class="filter-btn" onclick="filterBy('completed', event)">Completed</button></div>
     </div>
     </div>
-    <div style="min-width:260px">
+   <div style="min-width:260px">
       <div style="padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));">
         <div style="display:flex; justify-content:space-between; gap:12px; align-items:center">
         </div>
@@ -78,21 +78,31 @@
           <div class="ring" id="ringPercent">0%</div>
         </div>
         <div style="margin-top:10px" class="progress"><i id="overallBar"></i></div>
-      </div>
-    </div>
-  </section>
-  </div>
+      
+    
+<nav class="tabs">
    <nav class="tabs">
     <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
+   <button class="tab" data-tab="ncert" onclick="openTab(event)">NCERT</button>
     <button class="tab" data-tab="notes" onclick="openTab(event)">Notes</button>
     <button class="tab" data-tab="pyqs" onclick="openTab(event)">PYQs</button>
+    <button class="tab" data-tab="mock" onclick="openTab(event)">Mock Test</button>
+    </nav>
   </nav>
+    </div>
+    </div>
+
+
  <section id="lectures" class="tabpanel">
     <div class="grid" id="cardsGrid"></div>
   </section>
 
   <section id="mock" class="tabpanel" style="display:none">
   <div class="grid" id="mockGrid"></div>
+</section>
+
+<section id="ncert" class="tabpanel" style="display:none">
+  <div class="grid" id="ncertGrid"></div>
 </section>
 
   <section id="notes" class="tabpanel" style="display:none">
@@ -110,6 +120,9 @@
       <button class="btn ghost" onclick="closeModal()">Close</button>
     </div>
   </div>
+
+
+
   <div class="modal-body">
     <iframe id="videoIframe" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
   </div>
@@ -146,7 +159,7 @@
     </div>
 
     <p class="ai-note">
-      Prompt will be copied and Gemini will open in a new tab.
+      Prompt will be copied and Gemini will opened in a new tab.
       Please paste the prompt there to generate your mock test.
     </p>
 
@@ -175,32 +188,60 @@
 </footer>
 </div>
 
+<div id="premiumModal" class="premium-modal">
+
+  <div class="premium-box">
+
+    <h2>👑 Premium Feature</h2>
+
+    <p>
+      Upgrade to Premium to access Notes, Downloads,
+      AI Mocks and more.
+    </p>
+
+    <div class="premium-actions">
+
+      <a href="premium.html" class="upgrade-btn">
+        Upgrade Now
+      </a>
+
+      <button onclick="closePremiumModal()" class="cancel-btn">
+        Cancel
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 
 <script>
   window.LECTURES = [
   // Part-A Business Mathematics
-  { id: 'BM1', min:'TBA', title: 'Ratio and Proportion, Indices and Logarithms', video: 'https://www.youtube.com/embed/C7mg-WbYm-w?si=RGK-9UbUd1U4yUEj', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir' },
-  { id: 'BM2', min:'TBA', title: 'Equations', video: 'https://www.youtube.com/embed/7MWGayP7Fss', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir' },
-  { id: 'BM3', min:'TBA', title: 'Linear Inequalities with Objective Functions and Optimization', video: 'https://www.youtube.com/embed/e6VXKEczL-4', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir' },
-  { id: 'BM4', min:'TBA', title: 'Mathematics of Finance', video: 'https://www.youtube.com/embed/qJm1ieRiae0', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir' },
-  { id: 'BM5', min:'TBA', title: 'Permutations and Combinations', video: 'https://www.youtube.com/embed/lmNy6AozqUE', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir' },
-  { id: 'BM6', min:'TBA', title: 'Sequence and Series', video: 'https://www.youtube.com/embed/0Qn7LnklT4c', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir' },
-  { id: 'BM7', min:'TBA', title: 'Sets, Relations and Functions; Basics of Limits & Continuity', video: 'https://www.youtube.com/embed/5KZ-kMMorqY', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir' },
-  { id: 'BM8', min:'TBA', title: 'Applications of Differential & Integral Calculus', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir' },
+  { id: 'BM1', min:'TBA', title: 'Ratio and Proportion, Indices and Logarithms', video: 'https://www.youtube.com/embed/C7mg-WbYm-w?si=RGK-9UbUd1U4yUEj', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: false },
+  { id: 'BM2', min:'TBA', title: 'Equations', video: 'https://www.youtube.com/embed/7MWGayP7Fss', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: true },
+  { id: 'BM3', min:'TBA', title: 'Linear Inequalities with Objective Functions and Optimization', video: 'https://www.youtube.com/embed/e6VXKEczL-4', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: true },
+  { id: 'BM4', min:'TBA', title: 'Mathematics of Finance', video: 'https://www.youtube.com/embed/qJm1ieRiae0', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: true },
+  { id: 'BM5', min:'TBA', title: 'Permutations and Combinations', video: 'https://www.youtube.com/embed/lmNy6AozqUE', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: true },
+  { id: 'BM6', min:'TBA', title: 'Sequence and Series', video: 'https://www.youtube.com/embed/0Qn7LnklT4c', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: true },
+  { id: 'BM7', min:'TBA', title: 'Sets, Relations and Functions; Basics of Limits & Continuity', video: 'https://www.youtube.com/embed/5KZ-kMMorqY', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: true },
+  { id: 'BM8', min:'TBA', title: 'Applications of Differential & Integral Calculus', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: true },
 
   // Part-B Logical Reasoning
-  { id: 'LR1', min:'TBA', title: 'Number Series, Coding & Decoding, Odd Man Out', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir' },
-  { id: 'LR2', min:'TBA', title: 'Direction Tests', video: 'https://www.youtube.com/embed/ArobUb475ZUl', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir' },
-  { id: 'LR3', min:'TBA', title: 'Seating Arrangements', video: 'https://www.youtube.com/embed/ArobUb475ZUl', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir' },
-  { id: 'LR4', min:'TBA', title: 'Blood Relations', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir' },
+  { id: 'LR1', min:'TBA', title: 'Number Series, Coding & Decoding, Odd Man Out', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir',premium: true },
+  { id: 'LR2', min:'TBA', title: 'Direction Tests', video: 'https://www.youtube.com/embed/ArobUb475ZUl', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir',premium: true },
+  { id: 'LR3', min:'TBA', title: 'Seating Arrangements', video: 'https://www.youtube.com/embed/ArobUb475ZUl', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir',premium: true },
+  { id: 'LR4', min:'TBA', title: 'Blood Relations', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir',premium: true },
+  { id: 'LR5', min:'TBA', title: 'Syllogisms', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir',premium: true },
+  { id: 'LR6', min:'TBA', title: 'Statements & Conclusions, Statements & Assumptions', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir',premium: true },
 
   // Part-C Statistics
-  { id: 'ST1', min:'TBA', title: 'Statistical Description of Data', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir' },
-  { id: 'ST2', min:'TBA', title: 'Measures of Central Tendency & Dispersion', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir' },
-  { id: 'ST3', min:'TBA', title: 'Probability', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir' },
-  { id: 'ST4', min:'TBA', title: 'Theoretical Distributions', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir' },
-  { id: 'ST5', min:'TBA', title: 'Correlation & Regression', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir' },
-  { id: 'ST6', min:'TBA', title: 'Index Numbers', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir' },
+  { id: 'ST1', min:'TBA', title: 'Statistical Description of Data', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir',premium: true },
+  { id: 'ST2', min:'TBA', title: 'Measures of Central Tendency & Dispersion', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir',premium: true },
+  { id: 'ST3', min:'TBA', title: 'Probability', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir',premium: true },
+  { id: 'ST4', min:'TBA', title: 'Theoretical Distributions', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir',premium: true },
+  { id: 'ST5', min:'TBA', title: 'Correlation & Regression', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir',premium: true },
+  { id: 'ST6', min:'TBA', title: 'Index Numbers', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir',premium: true },
 ];
 
 </script> 

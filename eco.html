@@ -66,9 +66,7 @@
 <button class="filter-btn" onclick="filterBy('completed', event)">Completed</button>
 </div>
 
-
-
-    <div style="min-width:260px">
+<div style="min-width:260px">
       <div style="padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));">
         <div style="display:flex; justify-content:space-between; gap:12px; align-items:center">
         </div>
@@ -80,15 +78,15 @@
         <div style="margin-top:10px" class="progress"><i id="overallBar"></i></div>
       
     
- 
-   <nav class="tabs">
+<nav class="tabs">
    <nav class="tabs">
     <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
    <button class="tab" data-tab="ncert" onclick="openTab(event)">NCERT</button>
     <button class="tab" data-tab="notes" onclick="openTab(event)">Notes</button>
     <button class="tab" data-tab="pyqs" onclick="openTab(event)">PYQs</button>
     <button class="tab" data-tab="mock" onclick="openTab(event)">Mock Test</button>
-      </nav>
+    </nav>
+  </nav>
     </div>
     </div>
 
@@ -96,7 +94,6 @@
  <section id="lectures" class="tabpanel">
     <div class="grid" id="cardsGrid"></div>
   </section>
-
 
   <section id="mock" class="tabpanel" style="display:none">
   <div class="grid" id="mockGrid"></div>
@@ -121,11 +118,13 @@
       <button class="btn ghost" onclick="closeModal()">Close</button>
     </div>
   </div>
+
+
+
   <div class="modal-body">
     <iframe id="videoIframe" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
   </div>
 </div></div>
-
 <div id="aiConfirmModal" class="ai-modal">
   <div class="ai-modal-box">
 
@@ -153,20 +152,12 @@
         <option value="30">30</option>
         <option value="40">40</option>
         <option value="50">50</option>
-        <option value="custom">Custom</option>
       </select>
-<input 
-  type="number" 
-  id="aiCustomCount" 
-  placeholder="Enter number (5–100)"
-  min="5" 
-  max="100"
-  style="display:none; margin-top:6px; padding:8px; border-radius:8px; border:none;"
->
+
     </div>
 
     <p class="ai-note">
-      Prompt will be copied and Gemini will open in a new tab.
+      Prompt will be copied and Gemini will opened in a new tab.
       Please paste the prompt there to generate your mock test.
     </p>
 
@@ -177,7 +168,6 @@
 
   </div>
 </div>
-
 
 
 
@@ -196,6 +186,32 @@
 </footer>
 </div>
 
+<div id="premiumModal" class="premium-modal">
+
+  <div class="premium-box">
+
+    <h2>👑 Premium Feature</h2>
+
+    <p>
+      Upgrade to Premium to access Notes, Downloads,
+      AI Mocks and more.
+    </p>
+
+    <div class="premium-actions">
+
+      <a href="premium.html" class="upgrade-btn">
+        Upgrade Now
+      </a>
+
+      <button onclick="closePremiumModal()" class="cancel-btn">
+        Cancel
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 
 <script>
 window.LECTURES = [
@@ -207,28 +223,28 @@ window.LECTURES = [
 /* CH 1: INTRODUCTION */
 { section:'Microeconomics', id:'Micro 1', title:'Introduction: Simple Economy & Central Problems',
   video:'#', notes:'#', ncert:'CUET Materials/NCERT/Economics/leec2dd/leec201.pdf',
-  pyq:'CUET Materials/Chapter Wise Test/Economics/CUET MCQs Ch 1.pdf', progress:0, teacher:'Tanya Munjal' },
+  pyq:'CUET Materials/Chapter Wise Test/Economics/CUET MCQs Ch 1.pdf', progress:0, teacher:'Tanya Munjal',premium: true },
 
 /* CH 2: THEORY OF CONSUMER BEHAVIOUR */
 { section:'Microeconomics', id:'Micro 2', title:'Consumer Equilibrium',
   video:'https://www.youtube.com/embed/pqaJ26YnvWI', notes:'#', ncert:'CUET Materials/NCERT/Economics/leec2dd/leec202.pdf',
-  pyq:'#', progress:0, teacher:'Tanya Munjal' },
+  pyq:'#', progress:0, teacher:'Tanya Munjal',premium: true },
 
 { section:'Microeconomics', id:'Micro 3', title:'Demand and Elasticity of Demand',
   video:'https://www.youtube.com/embed/XFzGR2rLLZg', notes:'#', ncert:'CUET Materials/NCERT/Economics/leec2dd/leec203.pdf',
-  pyq:'#', progress:0, teacher:'Tanya Munjal' },
+  pyq:'#', progress:0, teacher:'Tanya Munjal',premium: true },
 
 { section:'Microeconomics', id:'Micro 4', title:'Production Function,Revenue and Costs',
   video:'#', notes:'#', ncert:'#',
-  pyq:'#', progress:0, teacher:'Tanya Munjal' },
+  pyq:'#', progress:0, teacher:'Tanya Munjal',premium: true },
 
 { section:'Microeconomics', id:'Micro 5', title:'Supply and Elasticity of Supply',
   video:'#', notes:'#', ncert:'#',
-  pyq:'#', progress:0, teacher:'Tanya Munjal' },
+  pyq:'#', progress:0, teacher:'Tanya Munjal',premium: true },
 
 { section:'Microeconomics', id:'Micro 6', title:' MARKET EQUILIBRIUM',
   video:'#', notes:'#', ncert:'#',
-  pyq:'#', progress:0, teacher:'Tanya Munjal' },
+  pyq:'#', progress:0, teacher:'Tanya Munjal',premium: true },
 
 
 
@@ -238,31 +254,31 @@ window.LECTURES = [
 
 { section:'Macroeconomics', id:'Macro 1', title:'Introduction to Macroeconomics',
   video:'https://www.youtube.com/embed/jTbbaBazcXw', notes:'', ncert:'CUET Materials/NCERT/Economics/leec1dd/leec101.pdf',
-  pyq:'', progress:0, teacher:'Sunil Panda Sir' },
+  pyq:'', progress:0, teacher:'Sunil Panda Sir',premium: true },
 
 { section:'Macroeconomics', id:'Macro 2', title:'National Income & Related Aggregates',
   video:'#', notes:'', ncert:'CUET Materials/NCERT/Economics/leec1dd/leec102.pdf',
-  pyq:'PYQS/NAPQ.pdf', progress:0, teacher:'Sunil Panda Sir' },
+  pyq:'PYQS/NAPQ.pdf', progress:0, teacher:'Sunil Panda Sir',premium: true },
 
 { section:'Macroeconomics', id:'Macro 3', title:'Money & Banking',
   video:'#', notes:'', ncert:'CUET Materials/NCERT/Economics/leec1dd/leec103.pdf',
-  pyq:'', progress:0, teacher:'Sunil Panda Sir' },
+  pyq:'', progress:0, teacher:'Sunil Panda Sir',premium: true },
 
 { section:'Macroeconomics', id:'Macro 4', title:'Aggregate Demand & Aggregate Supply',
   video:'https://www.youtube.com/embed/UsvjLGaMSTQ', notes:'', ncert:'CUET Materials/NCERT/Economics/leec1dd/leec104.pdf',
-  pyq:'', progress:0, teacher:'Love Kaushik Sir' },
+  pyq:'', progress:0, teacher:'Love Kaushik Sir',premium: true },
 
 
 
 { section:'Macroeconomics', id:'Macro 5', title:'Government Budget & the Economy',
   video:'#', notes:'', ncert:'CUET Materials/NCERT/Economics/leec1dd/leec105.pdf',
-  pyq:'', progress:0, teacher:'Sunil Panda Sir' },
+  pyq:'', progress:0, teacher:'Sunil Panda Sir',premium: true },
 
 
 
 { section:'Macroeconomics', id:'Macro 6', title:'Balance of Payments & Foreign Exchange Rates',
   video:'#', notes:'', ncert:'CUET Materials/NCERT/Economics/leec1dd/leec106.pdf',
-  pyq:'', progress:0, teacher:'Sunil Panda Sir' },
+  pyq:'', progress:0, teacher:'Sunil Panda Sir',premium: true },
 
 /* =====================================================
    INDIAN ECONOMIC DEVELOPMENT (NCERT)
@@ -270,35 +286,36 @@ window.LECTURES = [
 
 { section:'Indian Economy', id:'IE 1', title:'Indian Economy on the Eve of Independence',
   video:'#', notes:'#', ncert:'CUET Materials/NCERT/Economics/keec1dd/keec101.pdf',
-  pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
+  pyq:'#', progress:0, teacher:'Sunil Panda Sir',premium: true },
 
 { section:'Indian Economy', id:'IE 2', title:'Indian Economy (1950–1990)',
   video:'#', notes:'#', ncert:'CUET Materials/NCERT/Economics/keec1dd/keec102.pdf',
-  pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
+  pyq:'#', progress:0, teacher:'Sunil Panda Sir',premium: true },
 
 { section:'Indian Economy', id:'IE 3', title:'Liberalisation, Privatisation & Globalisation',
   video:'#', notes:'#', ncert:'CUET Materials/NCERT/Economics/keec1dd/keec103.pdf',
-  pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
+  pyq:'#', progress:0, teacher:'Sunil Panda Sir',premium: true },
 
 { section:'Indian Economy', id:'IE 4', title:'Human Capital Formation in India',
   video:'#', notes:'#', ncert:'CUET Materials/NCERT/Economics/keec1dd/keec104.pdf',
-  pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
+  pyq:'#', progress:0, teacher:'Sunil Panda Sir',premium: true   },
 
 { section:'Indian Economy', id:'IE 5', title:'Rural Development',
   video:'#', notes:'#', ncert:'CUET Materials/NCERT/Economics/keec1dd/keec105.pdf',
-  pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
+  pyq:'#', progress:0, teacher:'Sunil Panda Sir',premium: true },
 
 { section:'Indian Economy', id:'IE 6', title:'Employment: Growth, Informalisation & Challenges',
   video:'#', notes:'#', ncert:'CUET Materials/NCERT/Economics/keec1dd/keec106.pdf',
-  pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
+  pyq:'#', progress:0, teacher:'Sunil Panda Sir',premium: true },
 
 { section:'Indian Economy', id:'IE 7', title:'Environment & Sustainable Development',
   video:'#', notes:'#', ncert:'CUET Materials/NCERT/Economics/keec1dd/keec107.pdf',
-  pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
+  pyq:'#', progress:0, teacher:'Sunil Panda Sir',premium: true },
 
 { section:'Indian Economy', id:'IE 8', title:'Comparative Development: India & Neighbours',
   video:'#', notes:'#', ncert:'CUET Materials/NCERT/Economics/keec1dd/keec108.pdf',
-  pyq:'#', progress:0, teacher:'Sunil Panda Sir' },
+  pyq:'#', progress:0, teacher:'Sunil Panda Sir',premium: true
+ }
 
 ];
 </script>
