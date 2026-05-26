@@ -73,6 +73,8 @@ document.getElementById("logoutBtn");
 const themeSwitch =
 document.getElementById("themeSwitch");
 
+const upgradeBtn =
+document.getElementById("upgradeBtn");
 
 // STATS ELEMENTS
 
@@ -128,6 +130,16 @@ onAuthStateChanged(auth, async(user)=>{
       
   const data = snap.data();
 
+
+  const isPremium =
+data.plan === "premium";
+
+if(upgradeBtn && !isPremium){
+
+  upgradeBtn.style.display =
+  "inline-flex";
+
+}
 
 
   // PREMIUM BADGE
@@ -435,3 +447,5 @@ window.closePremiumModal = function(){
     modal.style.display = "none";
   }
 }
+
+const isPremium = userData?.plan === "premium";

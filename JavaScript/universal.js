@@ -215,16 +215,20 @@ function renderAll() {
           </div>
         </div>
 
-        <div class="actions">
-          <button class="small play"
-            onclick="openVideo('${escapeHtml(l.video)}','${escapeHtml(l.title)}','${l.id}')">
-            Play
-          </button>
-          <button class="small mock-btn mobile-only"
-            onclick="openAIMock('${escapeHtml(l.title)}')">
-            AI Mock
-          </button>
-        </div>
+       <div class="actions">
+  <button class="small play"
+    onclick="openVideo('${escapeHtml(l.video)}','${escapeHtml(l.title)}','${l.id}')">
+    Play
+  </button>
+<button class="small view"
+  onclick="openLectureNotes('${l.id}')">
+  ${l.premium ? "🔒 Premium Notes" : "Open"}
+</button>
+  <button class="small mock-btn mobile-only"
+    onclick="openAIMock('${escapeHtml(l.title)}')">
+    AI Mock
+  </button>
+</div>
       `;
 
       lectureContainer.wrapper.appendChild(div);
@@ -666,6 +670,49 @@ window.openTab = openTab;
 
 // ---------- AI MOCK ----------
 let currentChapter = "";
+
+window.openLectureNotes = async function(lectureId){
+
+  const lecture =
+  LECTURES.find(l => l.id === lectureId);
+
+  if(!lecture) return;
+
+  // PREMIUM CHECK
+  if(lecture.premium === true){
+
+    const userRef =
+    doc(db, "users", currentUserId);
+
+    const snap =
+    await getDoc(userRef);
+
+    if(snap.exists()){
+
+      const data = snap.data();
+
+      if(data.plan !== "premium"){
+
+        openPremiumModal();
+
+        return;
+      }
+    }
+  }
+
+  // OPEN NOTES
+  window.open(lecture.notes || "#", "_blank");
+
+  saveActivity(
+    "notes_open",
+    lecture.title,
+    lecture.id,
+    {
+      action:"open",
+      fileType:"notes"
+    }
+  );
+}
 
 window.openAIMock = function (chapter) {
   saveActivity("mock_generate", chapter, chapter, {
