@@ -839,13 +839,21 @@ onAuthStateChanged(auth, async (user) => {
 
   if (premiumBadge) {
 
-    if (data.plan === "premium") {
+    const premiumPlans = [
+  "1 Month",
+  "6 Months",
+  "12 Months"
+];
+
+if (premiumPlans.includes(data.plan)) {
 
       premiumBadge.innerHTML = "👑 Premium";
 
+      
+
     } else {
 
-      premiumBadge.innerHTML = "";
+      premiumBadge.innerHTML = "Free User";
 
     }
 

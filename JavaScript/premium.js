@@ -30,6 +30,26 @@ onAuthStateChanged(auth, async (user) => {
 
     if (data.plan === btnPlan) {
 
+      document.querySelectorAll(".popular-tag")
+.forEach(tag => tag.remove());
+
+document.querySelectorAll(".price-card")
+.forEach(card => {
+  card.classList.remove("popular");
+});
+
+const card = btn.closest(".price-card");
+
+card.classList.add("popular");
+
+const currentTag =
+document.createElement("div");
+
+currentTag.className = "popular-tag";
+currentTag.innerHTML = "CURRENT PLAN";
+
+card.prepend(currentTag);
+
       btn.innerHTML = "Let's Study";
 
       btn.style.background =
