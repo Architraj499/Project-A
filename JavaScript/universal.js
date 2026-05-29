@@ -680,26 +680,25 @@ window.openLectureNotes = async function(lectureId){
   if(!lecture) return;
 
   // PREMIUM CHECK
-  if(lecture.premium === true){
+if (lecture.premium === true) {
 
-    const userRef =
-    doc(db, "users", currentUserId);
+  const userRef = doc(db, "users", currentUserId);
+  const snap = await getDoc(userRef);
 
-    const snap =
-    await getDoc(userRef);
+  const premiumPlans = [
+    "1 Month",
+    "6 Months",
+    "12 Months"
+  ];
 
-    if(snap.exists()){
-
-      const data = snap.data();
-
-      if(data.plan !== "premium"){
-
-        openPremiumModal();
-
-        return;
-      }
-    }
+  if (
+    !snap.exists() ||
+    !premiumPlans.includes(snap.data().plan)
+  ) {
+    openPremiumModal();
+    return;
   }
+}
 
   // OPEN NOTES
   window.open(lecture.notes || "#", "_blank");

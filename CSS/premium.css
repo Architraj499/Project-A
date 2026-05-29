@@ -265,3 +265,20 @@
   }
 
 }
+
+
+.premium-active-btn{
+  animation: premiumGlow 2s infinite alternate;
+}
+
+@keyframes premiumGlow{
+
+  from{
+    box-shadow:0 0 12px rgba(255,183,3,0.35);
+  }
+
+  to{
+    box-shadow:0 0 28px rgba(255,183,3,0.75);
+  }
+
+}

@@ -141,27 +141,24 @@ if(upgradeBtn && !isPremium){
 
 }
 
+//  Premium Badge
+ const premiumPlans = [
+  "1 Month",
+  "6 Months",
+  "12 Months"
+];
 
-  // PREMIUM BADGE
+if (premiumPlans.includes(data.plan)) {
 
-  const premiumBadge =
-  document.getElementById("premiumBadge");
+  premiumBadge.innerHTML =
+  `👑 ${data.plan.toUpperCase()} PLAN`;
 
-  if(premiumBadge){
+} else {
 
-    if(data.plan === "premium"){
+  premiumBadge.innerHTML =
+  "🆓 Free User";
 
-      premiumBadge.innerHTML =
-      "👑 Premium User";
-
-    }else{
-
-      premiumBadge.innerHTML =
-      "🆓 Free User";
-
-    }
-
-  }
+}
 
   // NAME
 
