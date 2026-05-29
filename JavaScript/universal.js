@@ -264,25 +264,26 @@ function renderAll() {
        n.querySelector(".notes-open")?.addEventListener("click", async () => {
 
   // CHECK PREMIUM ACCESS
-  if (l.premium === true) {
+ if (lecture.premium === true) {
 
-    const userRef = doc(db, "users", currentUserId);
+  const userRef = doc(db, "users", currentUserId);
+  const snap = await getDoc(userRef);
 
-    const snap = await getDoc(userRef);
+  const premiumPlans = [
+    "1 Month",
+    "6 Months",
+    "12 Months"
+  ];
 
-    if (snap.exists()) {
-
-      const data = snap.data();
-
-      if (data.plan !== "premium") {
-
-       openPremiumModal();
-
-        return;
-      }
-      renderAll();
-    }
+  if (
+    !snap.exists() ||
+    !premiumPlans.includes(snap.data().plan)
+  ) {
+    openPremiumModal();
+    return;
   }
+}
+
 
   // OPEN NOTES
   window.open(l.notes || "#", "_blank");
@@ -296,25 +297,25 @@ function renderAll() {
 
         n.querySelector(".notes-download")?.addEventListener("click", async () => {
           // CHECK PREMIUM ACCESS
-          if (l.premium === true) {
+ if (lecture.premium === true) {
 
-            const userRef = doc(db, "users", currentUserId);
+  const userRef = doc(db, "users", currentUserId);
+  const snap = await getDoc(userRef);
 
-            const snap = await getDoc(userRef);
+  const premiumPlans = [
+    "1 Month",
+    "6 Months",
+    "12 Months"
+  ];
 
-            if (snap.exists()) {
-
-              const data = snap.data();
-
-              if (data.plan !== "premium") {
-
-                openPremiumModal();
-
-                return;
-              }
-            }
-          }
-
+  if (
+    !snap.exists() ||
+    !premiumPlans.includes(snap.data().plan)
+  ) {
+    openPremiumModal();
+    return;
+  }
+}
           saveActivity("notes_download", l.title, l.id, {
             action: "download",
             fileType: "notes"
@@ -344,6 +345,7 @@ function renderAll() {
         pyqContainer.wrapper.appendChild(p);
 
         p.querySelector(".pyq-open")?.addEventListener("click", () => {
+          
           saveActivity("pyq_open", l.title, l.id, {
             action: "open",
             fileType: "pyq"
