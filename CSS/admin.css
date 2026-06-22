@@ -531,43 +531,120 @@ textarea:focus{
 
 /* ---------------- MOBILE ---------------- */
 
-@media(max-width:768px){
+@media (max-width:768px){
 
   body{
     padding:15px;
   }
 
+  /* Topbar */
+
+  .topbar{
+
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+
+  }
+
+  .topbar h1{
+
+    font-size:28px;
+
+  }
+
+  #logoutBtn{
+
+    width:100%;
+
+  }
+
+  /* Stats */
+
+  .stats{
+
+    grid-template-columns:1fr;
+
+    gap:15px;
+
+  }
+
+  .stats .card h1{
+
+    font-size:32px;
+
+  }
+
+  /* Table */
+
   table{
+
+    min-width:700px;
+
     font-size:14px;
+
   }
 
   th,
   td{
+
     padding:10px;
+
+  }
+
+  /* Buttons */
+
+  .premium-btn,
+  .remove-btn{
+
+    display:block;
+
+    width:100%;
+
+    margin:4px 0;
+
+  }
+
+  /* Announcement Form */
+
+  input,
+  textarea{
+
+    font-size:16px;
+
+  }
+
+  #publishAnnouncement{
+
+    width:100%;
+
+    padding:14px;
+
+    font-size:16px;
+
+  }
+
+  /* Announcement Cards */
+
+  #announcementList .card{
+
+    padding:16px;
+
+  }
+
+  #announcementList h2{
+
+    font-size:18px;
+
   }
 
 }
 
-.premium-btn:hover{
 
-box-shadow:
-0 0 18px
-rgba(34,197,94,.4);
+.table-wrapper{
 
-}
+  overflow-x:auto;
 
-.remove-btn:hover{
-
-box-shadow:
-0 0 18px
-rgba(239,68,68,.4);
-
-}
-
-.pin-announcement:hover{
-
-box-shadow:
-0 0 18px
-rgba(245,158,11,.4);
+  border-radius:16px;
 
 }
