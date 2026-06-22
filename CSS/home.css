@@ -328,7 +328,7 @@ opacity:.9;
 
 }
 
-@media (max-width:768px){
+@media (max-width:600px){
 
   .hero{
     flex-direction:column;

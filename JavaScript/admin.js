@@ -1,5 +1,7 @@
 // admin.js
+import emailjs from "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/+esm";
 
+emailjs.init("siChPjqF00KVyxv8O");
 import { auth, db } from "./universal.js";
 
 import {
@@ -37,6 +39,51 @@ document.getElementById("premiumUsers");
 
 const freeUsersEl =
 document.getElementById("freeUsers");
+
+
+
+
+async function sendPremiumEmail(userData, plan, expiry) {
+
+  const formattedExpiry =
+  expiry.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+try {
+
+  console.log({
+    user_name: userData.fullname,
+    plan_name: plan,
+    expiry_date: formattedExpiry
+  });
+
+  const result =
+await emailjs.send(
+  "service_o06gkqs",
+  "template_f701pgr",
+  {
+    email: userData.email,
+    user_name: userData.fullname,
+    plan_name: plan,
+    expiry_date: formattedExpiry
+  }
+);
+    console.log("Premium email sent");
+
+  } catch (err) {
+
+    console.error(
+      "Email Error:",
+      err
+    );
+
+  }
+
+}
+
 
 
 // ---------------- DASHBOARD ----------------
@@ -180,6 +227,24 @@ Use one of these:
             expiry.toISOString()
         }
       );
+      await sendPremiumEmail(
+  data,
+  plan,
+  expiry
+);
+
+await addDoc(
+  collection(db,"notifications"),
+  {
+    userId: docSnap.id,
+    title: "Premium Activated 🎉",
+    message:
+      `Your ${plan} plan has been activated.`,
+    read: false,
+    createdAt:
+      serverTimestamp()
+  }
+);
 
       alert(
 `Premium Activated

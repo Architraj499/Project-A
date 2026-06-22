@@ -10,6 +10,48 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
+import emailjs from "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/+esm";
+
+emailjs.init("siChPjqF00KVyxv8O");
+
+
+// ---------- EMAIL FUNCTION ----------
+
+async function sendPremiumEmail(userData, plan, expiry) {
+
+  const formattedExpiry =
+  expiry.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  try {
+
+    await emailjs.send(
+      "service_o06gkqs",
+      "template_f701pgr",
+      {
+        email: userData.email,
+        user_name: userData.fullname,
+        plan_name: plan,
+        expiry_date: formattedExpiry
+      }
+    );
+
+    console.log("Premium email sent");
+
+  } catch (err) {
+
+    console.error(
+      "Email Error:",
+      err
+    );
+
+  }
+
+}
+
 
 // ---------- CHECK CURRENT PLAN ----------
 
@@ -31,24 +73,24 @@ onAuthStateChanged(auth, async (user) => {
     if (data.plan === btnPlan) {
 
       document.querySelectorAll(".popular-tag")
-.forEach(tag => tag.remove());
+      .forEach(tag => tag.remove());
 
-document.querySelectorAll(".price-card")
-.forEach(card => {
-  card.classList.remove("popular");
-});
+      document.querySelectorAll(".price-card")
+      .forEach(card => {
+        card.classList.remove("popular");
+      });
 
-const card = btn.closest(".price-card");
+      const card = btn.closest(".price-card");
 
-card.classList.add("popular");
+      card.classList.add("popular");
 
-const currentTag =
-document.createElement("div");
+      const currentTag =
+      document.createElement("div");
 
-currentTag.className = "popular-tag";
-currentTag.innerHTML = "CURRENT PLAN";
+      currentTag.className = "popular-tag";
+      currentTag.innerHTML = "CURRENT PLAN";
 
-card.prepend(currentTag);
+      card.prepend(currentTag);
 
       btn.innerHTML = "Let's Study";
 
@@ -62,7 +104,6 @@ card.prepend(currentTag);
       btn.style.fontWeight = "700";
       btn.style.border = "none";
 
-      // Mark current plan button
       btn.dataset.currentPlan = "true";
     }
 
@@ -79,7 +120,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
     btn.addEventListener("click", async () => {
 
-      // Current plan -> Study page
       if (btn.dataset.currentPlan === "true") {
         window.location.href = "cuet.html";
         return;
@@ -105,11 +145,53 @@ window.addEventListener("DOMContentLoaded", () => {
         setTimeout(resolve, 2000)
       );
 
+      const snap =
+      await getDoc(
+        doc(db, "users", user.uid)
+      );
+
+      const userData =
+      snap.data();
+
+      let expiry = new Date();
+
+      if (btn.dataset.plan === "1 Month") {
+
+        expiry.setMonth(
+          expiry.getMonth() + 1
+        );
+
+      }
+
+      else if (btn.dataset.plan === "6 Months") {
+
+        expiry.setMonth(
+          expiry.getMonth() + 6
+        );
+
+      }
+
+      else if (btn.dataset.plan === "12 Months") {
+
+        expiry.setFullYear(
+          expiry.getFullYear() + 1
+        );
+
+      }
+
       await updateDoc(
         doc(db, "users", user.uid),
         {
-          plan: btn.dataset.plan
+          plan: btn.dataset.plan,
+          planExpiry:
+            expiry.toISOString()
         }
+      );
+
+      await sendPremiumEmail(
+        userData,
+        btn.dataset.plan,
+        expiry
       );
 
       alert("🎉 Payment Successful!");
