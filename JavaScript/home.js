@@ -33,7 +33,7 @@ async function loadAnnouncements() {
         "createdAt",
         "desc"
       ),
-      limit(3)
+      limit(5)
     );
 
     const snap =
@@ -53,58 +53,88 @@ async function loadAnnouncements() {
       return;
     }
 
-const announcements = [];
+    const announcements = [];
 
-snap.forEach(docSnap => {
+    snap.forEach(docSnap => {
 
-  announcements.push({
-    id: docSnap.id,
-    ...docSnap.data()
-  });
+      announcements.push({
+        id: docSnap.id,
+        ...docSnap.data()
+      });
 
-});
+    });
 
-// Pinned first
-announcements.sort((a, b) => {
+    // Pinned First
 
-  if (a.pinned && !b.pinned)
-    return -1;
+    announcements.sort((a, b) => {
 
-  if (!a.pinned && b.pinned)
-    return 1;
+      if (a.pinned && !b.pinned)
+        return -1;
 
-  return 0;
+      if (!a.pinned && b.pinned)
+        return 1;
 
-});
+      return 0;
 
-announcements.forEach(data => {
+    });
 
-  const card =
-  document.createElement("div");
+    announcements.forEach(data => {
 
-  card.className =
-  "card";
+      const card =
+      document.createElement("div");
 
-  card.innerHTML = `
-    <h3>
-      ${data.pinned ? "📌" : "📢"}
-      ${data.title}
-    </h3>
+      card.className =
+      data.pinned
+      ? "card pinned-card"
+      : "card";
 
-    <p>
-      ${data.message}
-    </p>
-  `;
+      card.innerHTML = `
+        <h3>
+          ${data.pinned ? "📌" : "📢"}
+          ${data.title}
+        </h3>
 
-  container.appendChild(card);
+        <p>
+          ${data.message}
+        </p>
 
-});
+        ${
+          data.link
+          ?
+          `
+          <a
+href="${
+data.link.startsWith('http')
+? data.link
+: 'https://' + data.link
+}"
+target="_blank"
+rel="noopener noreferrer"
+class="announcement-link">
+
+${data.buttonText || "Open"}
+
+</a>
+          `
+          :
+          ""
+        }
+      `;
+
+      container.appendChild(
+        card
+      );
+
+    });
 
   }
 
   catch(err){
 
-    console.error(err);
+    console.error(
+      "Announcement Error:",
+      err
+    );
 
   }
 

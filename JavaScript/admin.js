@@ -38,8 +38,6 @@ document.getElementById("premiumUsers");
 const freeUsersEl =
 document.getElementById("freeUsers");
 
-const announcementList =
-document.getElementById("announcementList");
 
 // ---------------- DASHBOARD ----------------
 
@@ -381,7 +379,22 @@ async function loadAnnouncements() {
     ${data.title}
   </h3>
 
-  <p>${data.message}</p>
+ <p>${data.message}</p>
+
+${
+data.link
+?
+`
+<a
+href="${data.link}"
+target="_blank"
+class="announcement-link">
+${data.buttonText || "Open"}
+</a>
+`
+:
+""
+}
 
   <button class="pin-announcement">
     ${data.pinned ? "Unpin" : "Pin"}
@@ -544,6 +557,21 @@ publishBtn?.addEventListener(
     )
     .value
     .trim();
+const link =
+document
+.getElementById(
+  "announcementLink"
+)
+.value
+.trim();
+
+const buttonText =
+document
+.getElementById(
+  "announcementButtonText"
+)
+.value
+.trim();
 
     if (!title || !message) {
 
@@ -556,19 +584,17 @@ publishBtn?.addEventListener(
 
     try {
 
-      await addDoc(
-        collection(
-          db,
-          "announcements"
-        ),
-        {
-          title,
-          message,
-          active: true,
-          pinned: false,
-          createdAt:
-            serverTimestamp()
-        }
+await addDoc(
+  collection(db,"announcements"),
+  {
+    title,
+    message,
+    link,
+    buttonText,
+    active:true,
+    pinned:false,
+    createdAt:serverTimestamp()
+  }
       );
 
       alert(
