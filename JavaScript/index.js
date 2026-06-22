@@ -80,7 +80,7 @@ signupForm.addEventListener("submit", async (e) => {
       totalSiteSeconds: 0,
       totalLectureSeconds: 0,
       createdAt: Date.now(),
-      role: "student",
+      role: "user",
       status: "active",
       // PREMIUM SYSTEM
   plan: "free",
@@ -147,7 +147,7 @@ loginForm.addEventListener("submit", async (e) => {
         totalSiteSeconds: 0,
         totalLectureSeconds: 0,
         createdAt: Date.now(),
-        role: "student",
+        role: "user",
         status: "active",
         overallProgress: 0,
         progress: {},

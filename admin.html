@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Admin Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="CSS/admin.css">
+
+</head>
+<body>
+
+<div class="topbar">
+
+  <div>
+
+    <h1>
+      🚀 Asprients Admin Panel
+    </h1>
+
+    <p id="adminName">
+      Loading...
+    </p>
+
+  </div>
+
+  <button id="logoutBtn">
+    Logout
+  </button>
+
+</div>
+
+<div class="stats">
+
+  <div class="card">
+    <h3>Total Users</h3>
+    <h1 id="totalUsers">0</h1>
+  </div>
+
+  <div class="card">
+    <h3>Premium Users</h3>
+    <h1 id="premiumUsers">0</h1>
+  </div>
+
+  <div class="card">
+    <h3>Free Users</h3>
+    <h1 id="freeUsers">0</h1>
+  </div>
+<div class="card">
+  <h3>Active Users Today</h3>
+  <h1 id="activeUsers">0</h1>
+</div>
+
+<div class="card">
+  <h3>Total Site Hours</h3>
+  <h1 id="siteHours">0</h1>
+</div>
+
+<div class="card">
+  <h3>Total Lecture Hours</h3>
+  <h1 id="lectureHours">0</h1>
+</div>
+</div>
+
+<h2>Users</h2>
+
+<div style="overflow-x:auto;">
+  <table id="usersTable">
+    <thead>
+      <tr>
+  <th>Name</th>
+  <th>Email</th>
+  <th>Plan</th>
+  <th>Role</th>
+  <th>Actions</th>
+</tr>
+    </thead>
+
+    <tbody id="usersBody">
+    </tbody>
+  </table>
+</div>
+<hr>
+
+<h2>Post Announcement</h2>
+
+<input
+  id="announcementTitle"
+  placeholder="Announcement Title">
+
+<br><br>
+
+<textarea
+  id="announcementMessage"
+  placeholder="Announcement Message"
+  rows="5"
+  cols="50"></textarea>
+
+<br><br>
+
+<button id="publishAnnouncement">
+  Publish Announcement
+</button>
+
+<hr>
+
+<h2>Manage Announcements</h2>
+
+<div id="announcementList">
+
+  <div class="card">
+    Loading announcements...
+  </div>
+
+</div>
+
+<script type="module" src="JavaScript/admin-guard.js"></script>
+<script type="module" src="JavaScript/admin.js"></script>
+
+</body>
+
+</html>

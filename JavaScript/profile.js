@@ -198,7 +198,14 @@ if (premiumPlans.includes(data.plan)) {
 const progress =
 data.subjectProgress || {};
 
+const adminBtn =
+document.getElementById("adminBtn");
 
+if (
+  userData.role === "admin"
+) {
+  adminBtn.style.display = "block";
+}
 
 // SUBJECT LIST
 

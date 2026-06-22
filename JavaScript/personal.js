@@ -347,7 +347,7 @@ onAuthStateChanged(auth, async (user) => {
     }
 
     /* ---------- USER INFO ---------- */
-    document.getElementById("profileName").innerText = d.fullname || "Student";
+    document.getElementById("profileName").innerText = d.fullname || "user";
     document.getElementById("profileEmail").innerText = user.email || "—";
     document.getElementById("siteTime").innerText = formatTime(d.totalSiteSeconds);
     document.getElementById("lectureTime").innerText = formatTime(d.totalLectureSeconds);
