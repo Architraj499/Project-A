@@ -43,15 +43,26 @@ async function loadAnnouncements() {
 
     if (snap.empty) {
 
-      container.innerHTML = `
-        <div class="card">
-          <h3>No Announcements</h3>
-          <p>Nothing posted yet.</p>
-        </div>
-      `;
+  container.innerHTML = `
+    <div class="no-updates">
 
-      return;
-    }
+      <div class="no-updates-icon">
+        📭
+      </div>
+
+      <h2>
+        No Updates
+      </h2>
+
+      <p>
+        Nothing new has been posted yet.
+      </p>
+
+    </div>
+  `;
+
+  return;
+}
 
     const announcements = [];
 
