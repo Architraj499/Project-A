@@ -39,7 +39,6 @@ async function sendPremiumEmail(userData, plan, expiry) {
       }
     );
 
-    console.log("Premium email sent");
 
   } catch (err) {
 

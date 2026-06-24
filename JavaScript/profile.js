@@ -130,6 +130,26 @@ onAuthStateChanged(auth, async(user)=>{
       
   const data = snap.data();
 
+ 
+const adminBtn =
+document.getElementById("adminBtn");
+
+
+if (adminBtn) {
+
+ 
+
+  if (data.role === "admin") {
+
+   
+
+    adminBtn.style.display = "flex";
+
+  }
+
+}
+
+
 
   const isPremium =
 data.plan === "premium";
@@ -198,14 +218,7 @@ if (premiumPlans.includes(data.plan)) {
 const progress =
 data.subjectProgress || {};
 
-const adminBtn =
-document.getElementById("adminBtn");
 
-if (
-  userData.role === "admin"
-) {
-  adminBtn.style.display = "block";
-}
 
 // SUBJECT LIST
 
@@ -451,5 +464,3 @@ window.closePremiumModal = function(){
     modal.style.display = "none";
   }
 }
-
-const isPremium = userData?.plan === "premium";

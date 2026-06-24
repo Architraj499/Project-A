@@ -71,7 +71,7 @@ await emailjs.send(
     expiry_date: formattedExpiry
   }
 );
-    console.log("Premium email sent");
+   
 
   } catch (err) {
 

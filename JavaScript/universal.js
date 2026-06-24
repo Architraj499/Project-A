@@ -958,7 +958,7 @@ function startCountdown(elementId, targetDate) {
   }
 
   updateCountdown();
-  setInterval(updateCountdown, 1000);
+  setInterval(updateCountdown, 6000);
 }
 
 startCountdown("boardsCountdown", "2027-02-01T09:00:00");

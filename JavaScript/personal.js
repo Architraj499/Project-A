@@ -347,12 +347,32 @@ onAuthStateChanged(auth, async (user) => {
     }
 
     /* ---------- USER INFO ---------- */
-    document.getElementById("profileName").innerText = d.fullname || "user";
-    document.getElementById("profileEmail").innerText = user.email || "—";
-    document.getElementById("siteTime").innerText = formatTime(d.totalSiteSeconds);
-    document.getElementById("lectureTime").innerText = formatTime(d.totalLectureSeconds);
-    document.getElementById("nameInput").value = d.fullname || "";
-    document.getElementById("usernameDisplay").innerText = d.fullname || "User";
+    const profileName = document.getElementById("profileName");
+const profileEmail = document.getElementById("profileEmail");
+const siteTime = document.getElementById("siteTime");
+const lectureTime = document.getElementById("lectureTime");
+const nameInput = document.getElementById("nameInput");
+const usernameDisplay = document.getElementById("usernameDisplay");
+
+if (profileName)
+  profileName.innerText = d.fullname || "user";
+
+if (profileEmail)
+  profileEmail.innerText = user.email || "—";
+
+if (siteTime)
+  siteTime.innerText = formatTime(d.totalSiteSeconds);
+
+if (lectureTime)
+  lectureTime.innerText = formatTime(d.totalLectureSeconds);
+
+if (nameInput)
+  nameInput.value = d.fullname || "";
+
+if (usernameDisplay)
+  usernameDisplay.innerText = d.fullname || "User";
+
+
 
     /* ---------- STREAK ---------- */
     const today = todayStr();

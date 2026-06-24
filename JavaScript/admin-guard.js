@@ -1,3 +1,5 @@
+// admin-guard.js
+
 import { auth, db } from "./universal.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
@@ -26,7 +28,7 @@ onAuthStateChanged(auth, async (user) => {
       location.replace("home.html");
       return;
     }
-
+document.body.style.display = "block";
   } catch (err) {
 
     console.error(err);
