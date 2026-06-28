@@ -989,6 +989,10 @@ if (premiumPlans.includes(data.plan)) {
   } catch (err) {
     console.error("Auth timer init failed:", err);
   }
+  setInterval(async () => {
+        await checkWebsiteMaintenance(auth.currentUser);
+    }, 5000);
+
 });
 // ---------- GLOBAL THEME SYSTEM ----------
 
