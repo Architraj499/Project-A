@@ -27,7 +27,7 @@ JSON.parse(
     )
 );
 
-console.log(payload);
+
 
 onAuthStateChanged(auth, async (user) => {
 
@@ -51,7 +51,7 @@ onAuthStateChanged(auth, async (user) => {
             { merge: true }
         );
 
-        console.log("✅ CUET Score Saved");
+        
 
         window.location.href = "Profile.html";
 

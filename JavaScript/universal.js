@@ -20,7 +20,7 @@ async function checkWebsiteMaintenance() {
 
     } catch (err) {
 
-        console.log(err);
+        
 
     }
 

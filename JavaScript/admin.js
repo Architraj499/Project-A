@@ -54,11 +54,7 @@ async function sendPremiumEmail(userData, plan, expiry) {
 
 try {
 
-  console.log({
-    user_name: userData.fullname,
-    plan_name: plan,
-    expiry_date: formattedExpiry
-  });
+ 
 
   const result =
 await emailjs.send(
