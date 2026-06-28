@@ -1,3 +1,9 @@
+const maintenance = true;
+
+if (maintenance) {
+    window.location.href = "maintenance.html";
+}
+
 window.ytPlayer = null;
 window.currentLectureId = null;
 window.watchedSeconds = 0;
