@@ -1,32 +1,4 @@
-async function checkWebsiteMaintenance() {
-
-    try {
-
-        const response = await fetch("maintenance.json?t=" + Date.now());
-
-        if (!response.ok) return;
-
-        const data = await response.json();
-
-        if (data.maintenance) {
-
-            if (!window.location.pathname.endsWith("maintenance.html")) {
-
-                window.location.replace("maintenance.html");
-
-            }
-
-        }
-
-    } catch (err) {
-
-        
-
-    }
-
-}
-
-checkWebsiteMaintenance();
+// universal.js
 
 window.ytPlayer = null;
 window.currentLectureId = null;
@@ -60,12 +32,84 @@ const firebaseConfig = {
   appId: "1:453218332819:web:5740173fa4d8156dae9d66"
 };
 
+
+
+
 const app = getApps().length === 0
   ? initializeApp(firebaseConfig)
   : getApp();
 
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+async function checkWebsiteMaintenance(user){
+
+    try{
+
+        const settingsSnap =
+        await getDoc(
+            doc(db,"settings","website")
+        );
+
+        if(!settingsSnap.exists()) return;
+
+        const maintenance =
+        settingsSnap.data().maintenance;
+
+        if(!maintenance) return;
+
+        // Guest users
+        if(!user){
+
+           if(!user){
+
+    // Login page ko maintenance par mat bhejo
+    if(!user){
+
+    if(!location.pathname.endsWith("maintenance.html")){
+
+        location.replace("maintenance.html");
+
+    }
+
+    return;
+
+}
+
+}
+
+        }
+
+        // Logged in users
+        const userSnap =
+        await getDoc(
+            doc(db,"users",user.uid)
+        );
+
+        const role =
+        userSnap.exists()
+        ? userSnap.data().role
+        : "user";
+
+        if(role !== "admin"){
+
+            if(!location.pathname.endsWith("maintenance.html")){
+
+                location.replace("maintenance.html");
+
+            }
+
+        }
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+    }
+
+}
 let isPremiumUser = false;
 export { app, auth, db };
 
@@ -882,6 +926,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ---------- Auth ----------
 onAuthStateChanged(auth, async (user) => {
+
+  await checkWebsiteMaintenance(user);
+
   if (!user) return;
 
   currentUserId = user.uid;

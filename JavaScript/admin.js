@@ -17,7 +17,8 @@ import {
   updateDoc,
   addDoc,
   deleteDoc,
-  serverTimestamp
+  serverTimestamp,
+  setDoc
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
 // ---------------- ELEMENTS ----------------
@@ -39,6 +40,96 @@ document.getElementById("premiumUsers");
 
 const freeUsersEl =
 document.getElementById("freeUsers");
+
+const maintenanceToggle =
+document.getElementById("maintenanceToggle");
+
+const maintenanceStatus =
+document.getElementById("maintenanceStatus");
+
+const settingsRef =
+doc(db,"settings","website");
+
+
+
+async function loadMaintenance(){
+
+    try{
+
+        const snap = await getDoc(settingsRef);
+
+        if(!snap.exists()){
+
+            await setDoc(settingsRef,{
+                maintenance:false,
+                updatedAt:serverTimestamp()
+            });
+
+            maintenanceToggle.checked=false;
+            maintenanceStatus.textContent="🟢 Website is Live";
+
+            return;
+
+        }
+
+        const enabled =
+        snap.data().maintenance;
+
+        maintenanceToggle.checked=
+        enabled;
+
+        maintenanceStatus.textContent=
+        enabled
+        ? "🔴 Website Under Maintenance"
+        : "🟢 Website is Live";
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+    }
+
+}
+
+
+
+maintenanceToggle?.addEventListener(
+"change",
+async()=>{
+
+    try{
+
+       await setDoc(
+    settingsRef,
+    {
+        maintenance: maintenanceToggle.checked,
+        updatedAt: serverTimestamp()
+    },
+    {
+        merge: true
+    }
+);
+
+        maintenanceStatus.textContent=
+        maintenanceToggle.checked
+        ? "🔴 Website Under Maintenance"
+        : "🟢 Website is Live";
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        alert(err.message);
+
+    }
+
+});
+
+
 
 
 
@@ -555,6 +646,7 @@ ${data.buttonText || "Open"}
 
 onAuthStateChanged(
   auth,
+  
   async (user) => {
 
     if (!user) return;
@@ -580,6 +672,7 @@ onAuthStateChanged(
 
         await loadDashboard();
         await loadAnnouncements();
+        await loadMaintenance();
 
       }
 
