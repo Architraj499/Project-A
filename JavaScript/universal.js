@@ -45,7 +45,11 @@ import {
   addDoc,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-
+export {
+  doc,
+  setDoc,
+  onAuthStateChanged
+};
 // ---------- Firebase config ----------
 const firebaseConfig = {
   apiKey: "AIzaSyDHRDRRm2KBmCuUf3qvTIRI5hO0aXFFx3w",
