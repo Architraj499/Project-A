@@ -51,17 +51,19 @@
           🔎 <input id="searchInput" placeholder="Search chapters, topics..." />
         </div>
         </section>
-   <div class="container">
+  <div class="container">
   <section class="subject-hero">
     <div class="subject-card">
       <h1>Hindi</h1>
-      <div class="subject-meta">Class 12th Bihar Board</div>
+      <div class="subject-meta">Class 12th Bihar Board </div>
       <div class="subject-actions">
-        <button class="tab active" onclick="filterBy('all')">All</button>
-        <button class="tab" onclick="filterBy('completed')">Completed</button>
-        <button class="tab" onclick="filterBy('pending')">Pending</button>
-      </div>
-    </div>
+  <button class="filter-btn active" onclick="filterBy('all', event)">All</button>
+<button class="filter-btn" onclick="filterBy('pending', event)">Pending</button>
+<button class="filter-btn" onclick="filterBy('completed', event)">Completed</button>
+</div>
+
+
+
     <div style="min-width:260px">
       <div style="padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));">
         <div style="display:flex; justify-content:space-between; gap:12px; align-items:center">
@@ -72,11 +74,9 @@
           <div class="ring" id="ringPercent">0%</div>
         </div>
         <div style="margin-top:10px" class="progress"><i id="overallBar"></i></div>
-      </div>
-    </div>
-  </section>
-  </div>
-   <nav class="tabs">
+      
+    
+<nav class="tabs">
    <nav class="tabs">
     <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
    <button class="tab" data-tab="ncert" onclick="openTab(event)">NCERT</button>
@@ -119,7 +119,6 @@
 
 
 
-
   <div class="modal-body">
     <iframe id="videoIframe" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
   </div>
@@ -127,7 +126,7 @@
 <div id="aiConfirmModal" class="ai-modal">
   <div class="ai-modal-box">
 
-    <h2> Mock test Generation</h2>
+   <h2> Mock test Generation</h2>
     <p class="ai-desc">
       Course: <strong id="aiCourseName"></strong>
 
@@ -156,7 +155,7 @@
     </div>
 
     <p class="ai-note">
-      Prompt will be copied and Gemini will open in a new tab.
+      Prompt will be copied and Gemini will opened in a new tab.
       Please paste the prompt there to generate your mock test.
     </p>
 
@@ -167,6 +166,7 @@
 
   </div>
 </div>
+
 
 
 

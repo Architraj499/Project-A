@@ -1,4 +1,4 @@
-const maintenance = true;
+const maintenance = false; // Set to true to enable maintenance mode
 
 if (maintenance) {
     window.location.href = "maintenance.html";
