@@ -635,3 +635,20 @@ input:checked + .slider::before{
 .premium-upgrade-btn:hover{
   transform: translateY(-2px) scale(1.03);
 }
+
+
+
+footer {
+  background:var(--card); border-top:1px solid rgba(255,255,255,0.05);
+  margin-top:40px; padding:24px 20px; color:var(--muted); text-align:center;
+}
+footer p {
+  text-align:center; margin:8px 0;
+}
+.footer-links {
+  margin-top:8px; display:flex; justify-content:center; gap:16px; flex-wrap:wrap;
+}
+.footer-links a {
+  color:var(--muted); font-weight:600; transition:0.3s;
+}
+.footer-links a:hover { color:var(--accent-2); }
