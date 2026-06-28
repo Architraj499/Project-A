@@ -1,8 +1,32 @@
-const maintenance = false; // Set to true to enable maintenance mode
+async function checkWebsiteMaintenance() {
 
-if (maintenance) {
-    window.location.href = "maintenance.html";
+    try {
+
+        const response = await fetch("maintenance.json?t=" + Date.now());
+
+        if (!response.ok) return;
+
+        const data = await response.json();
+
+        if (data.maintenance) {
+
+            if (!window.location.pathname.endsWith("maintenance.html")) {
+
+                window.location.replace("maintenance.html");
+
+            }
+
+        }
+
+    } catch (err) {
+
+        console.log(err);
+
+    }
+
 }
+
+checkWebsiteMaintenance();
 
 window.ytPlayer = null;
 window.currentLectureId = null;

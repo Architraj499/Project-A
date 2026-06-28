@@ -198,6 +198,29 @@ p{
     </div>
 
 </div>
+<script>
+async function checkMaintenance() {
+    try {
+        const response = await fetch("maintenance.json?t=" + Date.now());
 
+        if (!response.ok) return;
+
+        const data = await response.json();
+
+        if (data.maintenance === false) {
+            window.location.replace("index.html");
+        }
+
+    } catch (err) {
+        console.log("Maintenance check failed");
+    }
+}
+
+// Check immediately
+checkMaintenance();
+
+// Then check every 5 seconds
+setInterval(checkMaintenance, 5000);
+</script>
 </body>
 </html>
