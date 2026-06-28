@@ -716,8 +716,36 @@ if (lecture.premium === true) {
   );
 }
 
-window.openAIMock = function (chapter) {
-  saveActivity("mock_generate", chapter, chapter, {
+// OPENING AI MOCK TEST
+
+window.openAIMock = async function (chapter) {
+
+  const lecture = LECTURES.find(l => l.title === chapter);
+
+  if (!lecture) return;
+
+  // PREMIUM CHECK
+  if (lecture.premium === true) {
+
+    const userRef = doc(db, "users", currentUserId);
+    const snap = await getDoc(userRef);
+
+    const premiumPlans = [
+      "1 Month",
+      "6 Months",
+      "12 Months"
+    ];
+
+    if (
+      !snap.exists() ||
+      !premiumPlans.includes(snap.data().plan)
+    ) {
+      openPremiumModal();
+      return;
+    }
+  }
+
+  saveActivity("mock_generate", chapter, lecture.id, {
     action: "generate"
   });
 
@@ -734,6 +762,8 @@ window.openAIMock = function (chapter) {
   const modal = document.getElementById("aiConfirmModal");
   if (modal) modal.style.display = "flex";
 };
+
+
 
 window.closeAIModal = function () {
   const modal = document.getElementById("aiConfirmModal");

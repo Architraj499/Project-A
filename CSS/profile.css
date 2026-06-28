@@ -225,7 +225,15 @@ a{
   backdrop-filter:blur(10px);
 
 }
+.badge1{
+  width:fit-content;
+  background:rgba(255,255,255,.14);
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:13px;
+  backdrop-filter:blur(10px);
 
+}
 /* QUICK ACTIONS */
 
 .hero-actions{
