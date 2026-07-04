@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CUET - Business Studies</title>
+    <title>Boards - English</title>
 
 
 <link rel="icon" href="images/logo.png" type="image/png">
 
     <link rel="stylesheet" href="CSS\sub.css">
-    <link rel="icon" href="images/logo.png" type="image/png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" href="images/logo.png" type="image/png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="210x210" href="android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
 <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
@@ -21,28 +21,28 @@
   <div class="logo"><img class="cuet-logo" src="images\logo.png" alt="CUET Logo"></div>
   <nav>
     <a href="home.html">Home</a>
-    <a href="Boards.html"class="active">Boards</a> 
-    <a href="cuet.html" >CUET</a>
+    <a href="Boards.html" class="active">Boards</a> 
+    <a href="cuet.html">CUET</a>
     <a href="cafoundation.html">CA Foundation</a>
     <a href="Profile.html">Profile</a>
   </nav>
   <div class="user-info">
     Welcome,<a href="Profile.html"> <span id="usernameDisplay">User</span>
 <span id="premiumBadge"></span></a>
-
+    
   </div>
 </header> 
-
 
 <section class="hero">
   <div class="hero-content">
     <div class="surf">
       <a href ="BoardsAcc.html">Accountancy</a>
-      <a href="BoardsBSt.html"class="active">Business Studies</a>
+      <a href="BoardsBSt.html">Business Studies</a>
       <a href="Boardseco.html">Economics</a>
-      <a href="BoardsEng.html">English</a>
+      <a href="BoardsEng.html" class="active">English</a>
       <a href="BoardsEps.html">Entrepreneurship</a>
       <a href="BoardsHd.html">Hindi</a>
+    </div>
     </div>
    <div class="actions">
         <div class="search" role="search" aria-label="Search lectures">
@@ -52,8 +52,8 @@
    <div class="container">
   <section class="subject-hero">
     <div class="subject-card">
-      <h1>Business Studies</h1>
-      <div class="subject-meta">Class 12 | CUET 2026 |<a href="Pdfs/BST_Syllabus.pdf" target="_blank">  Syllabus</a> </div>
+      <h1>English</h1>
+      <div class="subject-meta">Class 12 | CUET 2026 |<a href="Pdfs/ENGLISH_Syllabus.pdf" target="_blank">  Syllabus</a> </div>
       <div class="subject-actions">
   <button class="filter-btn active" onclick="filterBy('all', event)">All</button>
 <button class="filter-btn" onclick="filterBy('pending', event)">Pending</button>
@@ -186,25 +186,14 @@
 </div>
 
 <script>
-  window.LECTURES = [
-  { id: 'B_B1', min: '50min', title: 'Nature and Significance of Management', video: 'https://www.youtube.com/embed/8NJgok-uP1A', notes: 'Notes/BSTCH1.pdf', pyq: 'PYQS/BSTCH1PQ.pdf', progress: 0.0, teacher: 'Sunil Panda Sir' },
 
-  { id: 'B_B2', min: '56min', title: 'Principles of Management', video: 'https://www.youtube.com/embed/y8cEBf-o3iw', notes: 'Notes/BSTCH2.pdf', pyq: '#', progress: 0.0, teacher: 'Sunil Panda Sir' },
-  { id: 'B_B3', min: 'TBA', title: 'Business Environment', video: '', notes: 'Notes/BSTCH3.pdf', pyq: '#', progress: 0.0, teacher: 'Mr. Z' },
-  { id: 'B_B4', min: 'TBA', title: 'Planning', video: '', notes: '#', pyq: '#', progress: 0.0, teacher: 'Manish Sir' },
-  { id: 'B_B5', min: 'TBA', title: 'Organising', video: '', notes: '#', pyq: '#', progress: 0.0, teacher: 'Ms. Y' },
-  { id: 'B_B6', min: 'TBA', title: 'Staffing', video: '', notes: '#', pyq: '#', progress: 0.0, teacher: 'Mr. Z' },
-  { id: 'B_B7', min: 'TBA', title: 'Directing', video: '', notes: '#', pyq: '#', progress: 0.0, teacher: 'Manish Sir' },
-  { id: 'B_B8', min: 'TBA', title: 'Controlling', video: '', notes: '#', pyq: '#', progress: 0.0, teacher: 'Ms. Y' },
-  { id: 'B_B9', min: 'TBA', title: 'Financial Management', video: '', notes: '#', pyq: '#', progress: 0.0, teacher: 'Mr. Z' },
-  { id: 'B_B10', min: 'TBA', title: 'Financial Markets', video: '', notes: '#', pyq: '#', progress: 0.0, teacher: 'Manish Sir' },
-  { id: 'B_B11', min: 'TBA', title: 'Marketing Management', video: '', notes: '#', pyq: '#', progress: 0.0, teacher: 'Ms. Y' },
-  { id: 'B_B12', min: 'TBA', title: 'Consumer Protection', video: '', notes: '#', pyq: '#', progress: 0.0, teacher: 'Mr. Z' },
-];
-</script> 
+
+    </script>
 <script type="module" src="JavaScript/universal.js"></script>
- <script>
+<script>
+  window.Subject = "English";
   window.Course = "Boards";
-</script> 
+</script>
+ 
 </body>
 </html>

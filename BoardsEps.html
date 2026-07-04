@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boards - Hindi</title>
+    <title>Boards - Entrepreneurship</title>
 
 
 <link rel="icon" href="images/logo.png" type="image/png">
 
     <link rel="stylesheet" href="CSS\sub.css">
-    <link rel="icon" href="images/logo.png" type="image/png">
+<link rel="icon" href="images/logo.png" type="image/png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="210x210" href="android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
@@ -18,10 +18,10 @@
 </head>
 <body>
  <header class="navbar">
-  <a  href="home.html"><div class="logo"><img class="cuet-logo" src="images\logo.png" alt="CUET Logo"></div></a>
+  <div class="logo"><img class="cuet-logo" src="images\logo.png" alt="CUET Logo"></div>
   <nav>
     <a href="home.html">Home</a>
-    <a href="Boards.html"class="active">Boards</a> 
+    <a href="Boards.html" class="active">Boards</a> 
     <a href="cuet.html">CUET</a>
     <a href="cafoundation.html">CA Foundation</a>
     <a href="Profile.html">Profile</a>
@@ -29,10 +29,9 @@
   <div class="user-info">
     Welcome,<a href="Profile.html"> <span id="usernameDisplay">User</span>
 <span id="premiumBadge"></span></a>
-
+    
   </div>
 </header> 
-
 
 <section class="hero">
   <div class="hero-content">
@@ -40,10 +39,9 @@
       <a href ="BoardsAcc.html">Accountancy</a>
       <a href="BoardsBSt.html">Business Studies</a>
       <a href="Boardseco.html">Economics</a>
-      <a href="soon.html">English</a>
-      <a href="soon.html">Entrepreneurship</a>
-      <a href="hindi.html" class="active">Hindi</a>
-
+      <a href="BoardsEng.html">English</a>
+      <a href="BoardsEps.html" class="active">Entrepreneurship</a>
+      <a href="BoardsHd.html">Hindi</a>
     </div>
     </div>
    <div class="actions">
@@ -51,11 +49,11 @@
           🔎 <input id="searchInput" placeholder="Search chapters, topics..." />
         </div>
         </section>
-  <div class="container">
+   <div class="container">
   <section class="subject-hero">
     <div class="subject-card">
-      <h1>Hindi</h1>
-      <div class="subject-meta">Class 12th Bihar Board </div>
+      <h1>Economics</h1>
+      <div class="subject-meta">Class 12 | CUET 2026 |<a href="Pdfs/ECONOMICS_Syllabus.pdf" target="_blank">  Syllabus</a> </div>
       <div class="subject-actions">
   <button class="filter-btn active" onclick="filterBy('all', event)">All</button>
 <button class="filter-btn" onclick="filterBy('pending', event)">Pending</button>
@@ -169,7 +167,6 @@
 
 
 
-
 <div class="footer-wrapper">
 <footer class="footer">
   <div class="footer-content">
@@ -190,39 +187,12 @@
 
 
 <script>
-  window.LECTURES = [
-    { id: 'H1', min:'71min', title: 'बातचीत', video:'https://www.youtube.com/embed/1zfHcxfVD10', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H2', min:'66min', title: 'उसने कहा था', video:'https://www.youtube.com/embed/UoFOhKgbvEA', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H3', min:'74min', title: 'संपूर्ण क्रांति', video:'https://www.youtube.com/embed/N1UaaEO23xc', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H4', min:'73min', title: 'अर्धनारीश्वर', video:'https://www.youtube.com/embed/7kl6ccvIo3E', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H5', min:'55min', title: 'रोज', video:'https://www.youtube.com/embed/4KIkbnibME4', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H6', min:'66min', title: 'एक लेख और एक पत्र', video:'https://www.youtube.com/embed/IvLw7A1kS7k', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H7', min:'63min', title: 'ओ सदानीरा', video:'https://www.youtube.com/embed/S-UQcHscD60', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H8', min:'58min', title: 'सिपाही की माँ', video:'https://www.youtube.com/embed/pfP94T_mygs', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H9', min:'58min', title: 'प्रगीत और समाज', video:'https://www.youtube.com/embed/kZ1-z5-WiLE', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H10', min:'57min', title: 'जूठन', video:'https://www.youtube.com/embed/UKRtrLQhpoY', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H11', min:'59min', title: 'हँसते हुए मेरा अकेलापन', video:'https://www.youtube.com/embed/AzozwXFroas', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H12', min:'TBA', title: 'तिरिछ', video:'https://www.youtube.com/embed/', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H13', min:'TBA', title: 'शिक्षा', video:'https://www.youtube.com/embed/Zd5DopbcPK0', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H14', min:'TBA', title: 'कड़बक', video:'https://www.youtube.com/embed/NrOXp35DLaU', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H15', min:'TBA', title: 'पद (कबीर)', video:'https://www.youtube.com/embed/', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H16', min:'TBA', title: 'पद (तुलसीदास)', video:'https://www.youtube.com/embed/', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H17', min:'TBA', title: 'छप्पय', video:'https://www.youtube.com/embed/', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H18', min:'TBA', title: 'कवित्त', video:'https://www.youtube.com/embed/', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H19', min:'TBA', title: 'तुमुल कोलाहल कलह में', video:'https://www.youtube.com/embed/', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H20', min:'TBA', title: 'पुत्र-वियोग', video:'https://www.youtube.com/embed/', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H21', min:'TBA', title: 'उषा', video:'https://www.youtube.com/embed/', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H22', min:'TBA', title: 'जन-जन का चेहरा एक', video:'https://www.youtube.com/embed/', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H23', min:'TBA', title: 'अधिनायक', video:'https://www.youtube.com/embed/', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H24', min:'TBA', title: 'प्यारे नन्हें बेटे को', video:'https://www.youtube.com/embed/', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H25', min:'TBA', title: 'गाँव का घर', video:'https://www.youtube.com/embed/', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' },
-    { id: 'H26', min:'TBA', title: 'हार-जीत', video:'', notes:'#', pyq:'#', progress:0, teacher:'Sanjay Sir' }
-  ];
-</script>
-
+    </script>
 <script type="module" src="JavaScript/universal.js"></script>
- <script>
+<script>
+  window.Subject = "Entrepreneurship";
   window.Course = "Boards";
 </script>
+ 
 </body>
 </html>
