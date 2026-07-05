@@ -18,21 +18,21 @@ onAuthStateChanged(auth, async (user) => {
     );
 
     if (!snap.exists()) {
-      location.replace("home.html");
+      location.replace("../dashboard/home.html");
       return;
     }
 
     const role = snap.data().role || "user";
 
     if (role !== "admin") {
-      location.replace("home.html");
+      location.replace("../dashboard/home.html");
       return;
     }
 document.body.style.display = "block";
   } catch (err) {
 
     console.error(err);
-    location.replace("home.html");
+    location.replace("../dashboard/home.html");
 
   }
 

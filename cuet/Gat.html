@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUET - General Aptitude Test</title>
+
+
+<link rel="icon" href="../assets/images/logo.png  " type="image/png">
+
+    <link rel="stylesheet" href="../CSS/sub.css">
+<link rel="icon" href="../assets/images/logo.png  " type="image/png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="210x210" href="../assets/icons/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../assets/icons/android-chrome-512x512.png">
+<link rel="mask-icon" href="../assets/icons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#1f4068">
+</head>
+<body>
+ <header class="navbar">
+  <div class="logo"><img class="cuet-logo" src="../assets/images/logo.png" alt="CUET Logo"></div>
+  <nav>
+    <a href="../dashboard/home.html">Home</a>
+    <a href="../boards/Boards.html">Boards</a> 
+    <a href="../cuet.html" class="active">CUET</a>
+    <a href="../cafoundation.html">CA Foundation</a>
+    <a href="../dashboard/Profile.html">Profile</a>
+  </nav>
+  <div class="user-info">
+    Welcome,<a href="../dashboard/Profile.html"> <span id="usernameDisplay">User</span>
+<span id="premiumBadge"></span></a>
+   
+  </div>
+</header> 
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="surf">
+      <a href="../cuet/Accountancy.html">Accountancy</a>
+  <a href="../cuet/bst.html" >Business Studies</a>
+  <a href="../cuet/eco.html">Economics</a>
+  <a href="../cuet/eng.html">English</a>
+  <a href="../cuet/Gat.html"class="active">General Aptitude Test</a>
+
+    </div>
+    </div>
+      <div class="actions">
+        <div class="search" role="search" aria-label="Search lectures">
+          🔎 <input id="searchInput" placeholder="Search chapters, topics..." />
+        </div>
+        </section>
+   <div class="container">
+  <section class="subject-hero">
+    <div class="subject-card">
+      <h1>General Aptitude Test</h1>
+      <div class="subject-meta">Class 12 | CUET 2026 |<a href="../assets/Pdfs/Gat.pdf" target="_blank">  Syllabus</a> </div>
+      <div class="subject-actions">
+  <button class="filter-btn active" onclick="filterBy('all', event)">All</button>
+<button class="filter-btn" onclick="filterBy('pending', event)">Pending</button>
+<button class="filter-btn" onclick="filterBy('completed', event)">Completed</button>
+</div>
+<div style="min-width:260px">
+      <div style="padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));">
+        <div style="display:flex; justify-content:space-between; gap:12px; align-items:center">
+        </div>
+            <div style="font-weight:800">Overall Progress</div>
+            <div class="muted">You have finished <strong id="overallPercent">0%</strong> of this subject</div>
+          </div>
+          <div class="ring" id="ringPercent">0%</div>
+        </div>
+        <div style="margin-top:10px" class="progress"><i id="overallBar"></i></div>
+      
+    
+<nav class="tabs">
+   <nav class="tabs">
+    <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
+   <button class="tab" data-tab="ncert" onclick="openTab(event)">NCERT</button>
+    <button class="tab" data-tab="notes" onclick="openTab(event)">Notes</button>
+    <button class="tab" data-tab="pyqs" onclick="openTab(event)">PYQs</button>
+    <button class="tab" data-tab="mock" onclick="openTab(event)">Mock Test</button>
+    </nav>
+  </nav>
+    </div>
+    </div>
+
+
+ <section id="lectures" class="tabpanel">
+    <div class="grid" id="cardsGrid"></div>
+  </section>
+
+  <section id="mock" class="tabpanel" style="display:none">
+  <div class="grid" id="mockGrid"></div>
+</section>
+
+<section id="ncert" class="tabpanel" style="display:none">
+  <div class="grid" id="ncertGrid"></div>
+</section>
+
+  <section id="notes" class="tabpanel" style="display:none">
+    <div class="grid" id="notesGrid"></div>
+  </section>
+
+  <section id="pyqs" class="tabpanel" style="display:none">
+    <div class="grid" id="pyqGrid"></div>
+  </section>
+</div> 
+<div id="videoModal" class="modal"><div class="modal-box">
+  <div class="modal-header">
+    <div id="modalTitle">Playing</div>
+    <div style="display:flex; gap:8px; align-items:center">
+      <button class="btn ghost" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+
+
+  <div class="modal-body">
+    <iframe id="videoIframe" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div></div>
+<div id="aiConfirmModal" class="ai-modal">
+  <div class="ai-modal-box">
+
+   <h2> Mock test Generation</h2>
+    <p class="ai-desc">
+      Course: <strong id="aiCourseName"></strong>
+
+    <p class="ai-desc">
+      Chapter: <strong id="aiChapterName"></strong>
+    </p>
+
+    <div class="ai-options">
+
+      <label>Difficulty</label>
+      <select id="aiDifficulty">
+        <option value="Easy">Easy</option>
+        <option value="Medium" selected>Medium</option>
+        <option value="Hard">Hard</option>
+      </select>
+
+      <label>Number of Questions</label>
+      <select id="aiCount">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+      </select>
+
+    </div>
+
+    <p class="ai-note">
+      Prompt will be copied and Gemini will opened in a new tab.
+      Please paste the prompt there to generate your mock test.
+    </p>
+
+    <div class="ai-actions">
+      <button class="ai-cancel" onclick="closeAIModal()">Cancel</button>
+      <button class="ai-confirm" id="aiConfirmBtn">Generate</button>
+    </div>
+
+  </div>
+</div>
+
+
+
+<div class="footer-wrapper">
+<footer class="footer">
+  <div class="footer-content">
+    <p><b>© 2026 Asprients </b>All rights reserved. | Devloped By <b><a href="../https://www.linkedin.com/in/architraj499" target="_blank">Archit</a></b></p> 
+    <div class="footer-links">
+      <a href="../legal/Privacy.html">Privacy Policy</a>
+      <a href="../legal/tou.html">Terms of Use</a>
+      <a href="../legal/contactus.html">Contact Us</a>
+      <a href="../legal/acd.html">Account Deletion</a>
+       <a href="../dashboard/personal.html">Personal Dashboard</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>Last updated: 04 July 2026</p>
+  </div>
+</footer>
+</div>
+
+<div id="premiumModal" class="premium-modal">
+
+  <div class="premium-box">
+
+    <h2>👑 Premium Feature</h2>
+
+    <p>
+      Upgrade to Premium to access Notes, Downloads,
+      AI Mocks and more.
+    </p>
+
+    <div class="premium-actions">
+
+      <a href="../common/premium.html" class="upgrade-btn">
+        Upgrade Now
+      </a>
+
+      <button onclick="closePremiumModal()" class="cancel-btn">
+        Cancel
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+ window.LECTURES = [
+
+/* =====================================
+   QUANTITATIVE APTITUDE
+   ===================================== */
+
+{ section:'Quantitative Aptitude', id:'GAT1.1', min:'TBA', title:'Number System', video:'https://www.youtube.com/embed/F8WGk-PAxhc', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: false},
+{ section:'Quantitative Aptitude', id:'GAT1.2', min:'TBA', title:'Number System', video:'https://www.youtube.com/embed/VMq_jD5Xih8', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+{ section:'Quantitative Aptitude', id:'GAT1.3', min:'TBA', title:'Number System', video:'https://www.youtube.com/embed/-VXAqqZ86Wg', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+
+{ section:'Quantitative Aptitude', id:'GAT2.1', min:'TBA', title:'Percentage', video:'https://www.youtube.com/embed/pvTn1-N92rc', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+{ section:'Quantitative Aptitude', id:'GAT2.2', min:'TBA', title:'Percentage', video:'https://www.youtube.com/embed/icc3ZlegNTY', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+{ section:'Quantitative Aptitude', id:'GAT2.3', min:'TBA', title:'Percentage', video:'https://www.youtube.com/embed/9n8sKqjHh7o', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+
+
+{ section:'Quantitative Aptitude', id:'GAT3.1', min:'TBA', title:'Profit & Loss', video:'https://www.youtube.com/embed/6KH4AfdiZH8', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+{ section:'Quantitative Aptitude', id:'GAT3.2', min:'TBA', title:'Profit & Loss', video:'https://www.youtube.com/embed/Y60BM4uV7qI', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+{ section:'Quantitative Aptitude', id:'GAT3.3', min:'TBA', title:'Profit & Loss', video:'https://www.youtube.com/embed/kUgegI7_5OQ', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+
+{ section:'Quantitative Aptitude', id:'GAT4', min:'TBA', title:'Ratio & Proportion', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'Quantitative Aptitude', id:'GAT5', min:'TBA', title:'Average', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'Quantitative Aptitude', id:'GAT6', min:'TBA', title:'Algebra (Basic)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+
+{ section:'Quantitative Aptitude', id:'GAT7', min:'TBA', title:'Simple & Compound Interest', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'Quantitative Aptitude', id:'GAT8', min:'TBA', title:'Time & Work', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'Quantitative Aptitude', id:'GAT9', min:'TBA', title:'Time, Speed & Distance', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'Quantitative Aptitude', id:'GAT10', min:'TBA', title:'Mensuration', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'Quantitative Aptitude', id:'GAT11', min:'TBA', title:'Data Interpretation', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'Quantitative Aptitude', id:'GAT12', min:'TBA', title:'Permutation & Combination + Probability', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+
+
+/* =====================================
+   LOGICAL & ANALYTICAL REASONING
+   ===================================== */
+
+{ section:'Logical & Analytical Reasoning', id:'GAT13', min:'TBA', title:'Series (Number & Alphabet)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'Logical & Analytical Reasoning', id:'GAT14', min:'TBA', title:'Coding-Decoding', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'Logical & Analytical Reasoning', id:'GAT15', min:'TBA', title:'Blood Relations', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'Logical & Analytical Reasoning', id:'GAT16', min:'TBA', title:'Direction Test', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'Logical & Analytical Reasoning', id:'GAT17', min:'TBA', title:'Syllogism', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'Logical & Analytical Reasoning', id:'GAT18', min:'TBA', title:'Statement & Conclusion', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'Logical & Analytical Reasoning', id:'GAT19', min:'TBA', title:'Seating Arrangement (Basic)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+
+
+/* =====================================
+   GENERAL KNOWLEDGE
+   ===================================== */
+
+{ section:'General Knowledge', id:'GAT20', min:'TBA', title:'Indian History (Basic)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'General Knowledge', id:'GAT21', min:'TBA', title:'Indian Polity & Constitution', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'General Knowledge', id:'GAT22', min:'TBA', title:'Indian Geography', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'General Knowledge', id:'GAT23', min:'TBA', title:'Indian Economy (Static GK)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+{ section:'General Knowledge', id:'GAT24', min:'TBA', title:'General Science', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+
+
+/* =====================================
+   CURRENT AFFAIRS
+   ===================================== */
+
+{ section:'Current Affairs', id:'GAT25', min:'TBA', title:'Current Affairs (Last 6–12 Months)', video:'soon.html', notes:'#', pyq:'#', progress:0, teacher:'GAT Sir',premium: true },
+
+];
+
+</script> 
+<script type="module" src="../JavaScript/universal.js"></script> <script>
+  window.Subject = "General Aptitude Test";
+  window.Course = "CUET";
+</script> 
+</body>
+</html>

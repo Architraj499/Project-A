@@ -17,7 +17,7 @@ params.get("data");
 
 if(!encoded)
 {
-    window.location.href = "home.html";
+    window.location.href = "../dashboard/home.html";
 }
 
 const payload =
@@ -53,7 +53,7 @@ onAuthStateChanged(auth, async (user) => {
 
         
 
-        window.location.href = "Profile.html";
+        window.location.href = "../dashboard/Profile.html";
 
     } catch (err) {
 

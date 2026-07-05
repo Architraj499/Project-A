@@ -39,7 +39,7 @@ async function checkMaintenance(user){
         // Maintenance OFF
         if(!settings.data().maintenance){
 
-            location.replace("index.html");
+            location.replace("/index.html");
             return;
 
         }
@@ -55,7 +55,7 @@ async function checkMaintenance(user){
                 userSnap.data().role === "admin"
             ){
 
-                location.replace("home.html");
+                location.replace("../dashboard/home.html");
 
             }
 

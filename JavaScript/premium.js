@@ -120,7 +120,7 @@ window.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", async () => {
 
       if (btn.dataset.currentPlan === "true") {
-        window.location.href = "cuet.html";
+        window.location.href = "../dashboard/cuet.html";
         return;
       }
 

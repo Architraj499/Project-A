@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CA - Quantative Aptitude</title>
+
+
+<link rel="icon" href="../assets/images/logo.png  " type="image/png">
+
+    <link rel="stylesheet" href="../CSS\sub.css">
+<link rel="icon" href="../assets/images/logo.png  " type="image/png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="210x210" href="../android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../android-chrome-512x512.png">
+<link rel="mask-icon" href="../safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#1f4068">
+</head>
+<body>
+ <header class="navbar">
+  <div class="logo"><img class="cuet-logo" src="../images\logo.png" alt="CUET Logo"></div>
+  <nav>
+    <a href="../home.html">Home</a>
+    <a href="../boards/Boards.html">Boards</a> 
+    <a href="../cuet.html">CUET</a>
+    <a href="../cafoundation.html" class="active">CA Foundation</a>
+  </nav>
+  <div class="user-info">
+    Welcome,<a href="../Profile.html"> <span id="usernameDisplay">User</span>
+<span id="premiumBadge"></span></a>
+    
+  </div>
+</header> 
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="surf">
+  <a href="../ca/Accounting.html">Book Keeping</a>
+  <a href="../ca/law.html">Business Law</a>
+  <a href="../ca/Quant.html" class="active">Quantative Aptitude</a>
+  <a href="../ca/B_eco.html">Business Economics </a>
+  
+</div>
+    </div>
+   <div class="actions">
+        <div class="search" role="search" aria-label="Search lectures">
+          🔎 <input id="searchInput" placeholder="Search chapters, topics..." />
+        </div>
+        </section>
+    <div class="container">
+  <section class="subject-hero">
+    <div class="subject-card">
+      <h1>Quantitative Aptitude</h1>
+      <div class="subject-meta">CA Foundation | <a href="../Pdfs/quantitative-aptitude.pdf" target="_blank">  Syllabus</a> </div>
+      <div class="subject-actions">
+  <button class="filter-btn active" onclick="filterBy('all', event)">All</button>
+<button class="filter-btn" onclick="filterBy('pending', event)">Pending</button>
+<button class="filter-btn" onclick="filterBy('completed', event)">Completed</button>
+</div>
+
+<div style="min-width:260px">
+      <div style="padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));">
+        <div style="display:flex; justify-content:space-between; gap:12px; align-items:center">
+        </div>
+            <div style="font-weight:800">Overall Progress</div>
+            <div class="muted">You have finished <strong id="overallPercent">0%</strong> of this subject</div>
+          </div>
+          <div class="ring" id="ringPercent">0%</div>
+        </div>
+        <div style="margin-top:10px" class="progress"><i id="overallBar"></i></div>
+      
+    
+<nav class="tabs">
+   <nav class="tabs">
+    <button class="tab active" data-tab="lectures" onclick="openTab(event)">Lectures</button>
+   <button class="tab" data-tab="ncert" onclick="openTab(event)">Module</button>
+    <button class="tab" data-tab="notes" onclick="openTab(event)">Notes</button>
+    <button class="tab" data-tab="pyqs" onclick="openTab(event)">PYQs</button>
+    <button class="tab" data-tab="mock" onclick="openTab(event)">Mock Test</button>
+    </nav>
+  </nav>
+    </div>
+    </div>
+
+
+ <section id="lectures" class="tabpanel">
+    <div class="grid" id="cardsGrid"></div>
+  </section>
+
+  <section id="mock" class="tabpanel" style="display:none">
+  <div class="grid" id="mockGrid"></div>
+</section>
+
+<section id="ncert" class="tabpanel" style="display:none">
+  <div class="grid" id="ncertGrid"></div>
+</section>
+
+  <section id="notes" class="tabpanel" style="display:none">
+    <div class="grid" id="notesGrid"></div>
+  </section>
+
+  <section id="pyqs" class="tabpanel" style="display:none">
+    <div class="grid" id="pyqGrid"></div>
+  </section>
+</div> 
+<div id="videoModal" class="modal"><div class="modal-box">
+  <div class="modal-header">
+    <div id="modalTitle">Playing</div>
+    <div style="display:flex; gap:8px; align-items:center">
+      <button class="btn ghost" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+
+
+  <div class="modal-body">
+    <iframe id="videoIframe" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div></div>
+<div id="aiConfirmModal" class="ai-modal">
+  <div class="ai-modal-box">
+
+   <h2> Mock test Generation</h2>
+    <p class="ai-desc">
+      Course: <strong id="aiCourseName"></strong>
+
+    <p class="ai-desc">
+      Chapter: <strong id="aiChapterName"></strong>
+    </p>
+
+    <div class="ai-options">
+
+      <label>Difficulty</label>
+      <select id="aiDifficulty">
+        <option value="Easy">Easy</option>
+        <option value="Medium" selected>Medium</option>
+        <option value="Hard">Hard</option>
+      </select>
+
+      <label>Number of Questions</label>
+      <select id="aiCount">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+      </select>
+
+    </div>
+
+    <p class="ai-note">
+      Prompt will be copied and Gemini will opened in a new tab.
+      Please paste the prompt there to generate your mock test.
+    </p>
+
+    <div class="ai-actions">
+      <button class="ai-cancel" onclick="closeAIModal()">Cancel</button>
+      <button class="ai-confirm" id="aiConfirmBtn">Generate</button>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<div class="footer-wrapper">
+<footer class="footer">
+  <div class="footer-content">
+    <p><b>© 2026 Asprients </b>All rights reserved. | Devloped By <b><a href="../https://www.linkedin.com/in/architraj499" target="_blank">Archit</a></b></p> 
+    <div class="footer-links">
+      <a href="../legal/privacy.html">Privacy Policy</a>
+      <a href="../legal/tou.html">Terms of Use</a>
+      <a href="../legal/contactus.html">Contact Us</a>
+      <a href="../legal/acd.html">Account Deletion</a>
+       <a href="../dashboard/personal.html">Personal Dashboard</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>Last updated: 04 July 2026</p>
+  </div>
+</footer>
+</div>
+
+<div id="premiumModal" class="premium-modal">
+
+  <div class="premium-box">
+
+    <h2>👑 Premium Feature</h2>
+
+    <p>
+      Upgrade to Premium to access Notes, Downloads,
+      AI Mocks and more.
+    </p>
+
+    <div class="premium-actions">
+
+      <a href="../common/premium.html" class="upgrade-btn">
+        Upgrade Now
+      </a>
+
+      <button onclick="closePremiumModal()" class="cancel-btn">
+        Cancel
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  window.LECTURES = [
+  // Part-A Business Mathematics
+  { id: 'BM1', min:'TBA', title: 'Ratio and Proportion, Indices and Logarithms', video: 'https://www.youtube.com/embed/C7mg-WbYm-w?si=RGK-9UbUd1U4yUEj', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: false },
+  { id: 'BM2', min:'TBA', title: 'Equations', video: 'https://www.youtube.com/embed/7MWGayP7Fss', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: true },
+  { id: 'BM3', min:'TBA', title: 'Linear Inequalities with Objective Functions and Optimization', video: 'https://www.youtube.com/embed/e6VXKEczL-4', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: true },
+  { id: 'BM4', min:'TBA', title: 'Mathematics of Finance', video: 'https://www.youtube.com/embed/qJm1ieRiae0', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: true },
+  { id: 'BM5', min:'TBA', title: 'Permutations and Combinations', video: 'https://www.youtube.com/embed/lmNy6AozqUE', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: true },
+  { id: 'BM6', min:'TBA', title: 'Sequence and Series', video: 'https://www.youtube.com/embed/0Qn7LnklT4c', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: true },
+  { id: 'BM7', min:'TBA', title: 'Sets, Relations and Functions; Basics of Limits & Continuity', video: 'https://www.youtube.com/embed/5KZ-kMMorqY', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: true },
+  { id: 'BM8', min:'TBA', title: 'Applications of Differential & Integral Calculus', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Math Sir',premium: true },
+
+  // Part-B Logical Reasoning
+  { id: 'LR1', min:'TBA', title: 'Number Series, Coding & Decoding, Odd Man Out', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir',premium: true },
+  { id: 'LR2', min:'TBA', title: 'Direction Tests', video: 'https://www.youtube.com/embed/ArobUb475ZUl', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir',premium: true },
+  { id: 'LR3', min:'TBA', title: 'Seating Arrangements', video: 'https://www.youtube.com/embed/ArobUb475ZUl', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir',premium: true },
+  { id: 'LR4', min:'TBA', title: 'Blood Relations', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir',premium: true },
+  { id: 'LR5', min:'TBA', title: 'Syllogisms', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir',premium: true },
+  { id: 'LR6', min:'TBA', title: 'Statements & Conclusions, Statements & Assumptions', video: 'soon.html', notes: '#', pyq: '#', progress: 0, teacher: 'Logical Sir',premium: true },
+
+  // Part-C Statistics
+  { id: 'ST1', min:'TBA', title: 'Statistical Description of Data', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir',premium: true },
+  { id: 'ST2', min:'TBA', title: 'Measures of Central Tendency & Dispersion', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir',premium: true },
+  { id: 'ST3', min:'TBA', title: 'Probability', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir',premium: true },
+  { id: 'ST4', min:'TBA', title: 'Theoretical Distributions', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir',premium: true },
+  { id: 'ST5', min:'TBA', title: 'Correlation & Regression', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir',premium: true },
+  { id: 'ST6', min:'TBA', title: 'Index Numbers', video: 'https://www.youtube.com/embed/b3Y78ICAEpI', notes: '#', pyq: '#', progress: 0, teacher: 'Statistics Sir',premium: true },
+];
+
+</script> 
+<script type="module" src="../JavaScript/universal.js"></script>
+  <script>
+  window.Course = "CA Foundation";
+</script>
+</body>
+</html>

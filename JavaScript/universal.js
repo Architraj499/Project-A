@@ -66,9 +66,9 @@ async function checkWebsiteMaintenance(user){
     // Login page ko maintenance par mat bhejo
     if(!user){
 
-    if(!location.pathname.endsWith("maintenance.html")){
+    if(!location.pathname.endsWith("../admin/maintenance.html")){
 
-        location.replace("maintenance.html");
+        location.replace("../admin/maintenance.html");
 
     }
 
@@ -93,9 +93,9 @@ async function checkWebsiteMaintenance(user){
 
         if(role !== "admin"){
 
-            if(!location.pathname.endsWith("maintenance.html")){
+            if(!location.pathname.endsWith("../admin/maintenance.html")){
 
-                location.replace("maintenance.html");
+                location.replace("../admin/maintenance.html");
 
             }
 

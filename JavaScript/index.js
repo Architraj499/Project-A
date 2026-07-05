@@ -88,7 +88,7 @@ signupForm.addEventListener("submit", async (e) => {
     });
 
     message.innerText = "Signup successful! Redirecting...";
-    window.location.href = "home.html";
+    window.location.href = "../dashboard/home.html";
 
   } catch (err) {
     console.error("Signup Error:", err);
@@ -157,7 +157,7 @@ loginForm.addEventListener("submit", async (e) => {
       });
     }
 
-    window.location.href = "home.html";
+    window.location.href = "../dashboard/home.html";
 
   } catch (err) {
     message.innerText = "Invalid credentials";

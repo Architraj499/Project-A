@@ -27,7 +27,7 @@ onAuthStateChanged(auth, (user) => {
     location.pathname === "/"
   ) {
 
-    window.location.href = "home.html";
+    window.location.href = "../dashboard/home.html";
 
   }
 
