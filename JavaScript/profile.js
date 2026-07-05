@@ -99,7 +99,7 @@ onAuthStateChanged(auth, async(user)=>{
 
   if(!user){
 
-    window.location.href = "index.html";
+    window.location.href = "/index.html";
 
     return;
 
@@ -380,7 +380,7 @@ if(logoutBtn){
 
       await signOut(auth);
 
-      window.location.href = "index.html";
+      window.location.href = "/index.html";
 
     }catch(err){
 

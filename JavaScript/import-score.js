@@ -33,7 +33,7 @@ onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
         alert("Please login first.");
-        window.location.href = "index.html";
+        window.location.href = "/index.html";
         return;
     }
 

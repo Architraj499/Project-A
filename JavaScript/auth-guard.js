@@ -11,9 +11,9 @@ onAuthStateChanged(auth, (user) => {
   // Not Logged In
   if (!user) {
 
-    if (!location.pathname.endsWith("index.html")) {
+    if (!location.pathname.endsWith("/index.html")) {
 
-      window.location.href = "index.html";
+      window.location.href = "/index.html";
 
     }
 
@@ -23,7 +23,7 @@ onAuthStateChanged(auth, (user) => {
 
   // Logged In User
   if (
-    location.pathname.endsWith("index.html") ||
+    location.pathname.endsWith("/index.html") ||
     location.pathname === "/"
   ) {
 

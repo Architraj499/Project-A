@@ -7,7 +7,7 @@ import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-
 onAuthStateChanged(auth, async (user) => {
 
   if (!user) {
-    location.replace("index.html");
+    location.replace("/index.html");
     return;
   }
 

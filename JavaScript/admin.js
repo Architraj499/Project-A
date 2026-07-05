@@ -787,7 +787,7 @@ logoutBtn?.addEventListener(
     await signOut(auth);
 
     location.replace(
-      "index.html"
+      "/index.html"
     );
 
   }

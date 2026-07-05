@@ -322,7 +322,7 @@ function setupProfileUpdate() {
 ========================================================= */
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
-    location.href = "index.html";
+    location.href = "/index.html";
     return;
   }
 
