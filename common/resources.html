@@ -6,47 +6,56 @@
   <title>Resources - Asprient</title>
 
 
-<link rel="icon" href="assets/images/logo.png  " type="image/png">
+<link rel="icon" href="../assets/images/logo.png  " type="image/png">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../CSS/Course.css">
   <!-- Favicon -->
-<link rel="icon" href="assets/images/logo.png  " type="image/png">
+<link rel="icon" href="../assets/images/logo.png  " type="image/png">
               
  <!-- Apple Touch Icon -->
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
                                           
 <!-- Android / Chrome Icons -->
-<link rel="icon" type="image/png" sizes="210x210" href="android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
+<link rel="icon" type="image/png" sizes="210x210" href="../assets/images/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../assets/images/android-chrome-512x512.png">
                                                                                                     
  <!-- Safari Pinned Tab (vector) -->
-<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+<link rel="mask-icon" href="../assets/images/safari-pinned-tab.svg" color="#5bbad5">
                                                                                                                                                               
 <!-- Optional: Theme color for mobile address bar -->
 <meta name="theme-color" content="#1f4068">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="../CSS/resources.css">
 </head>
 <body>
 
- <div class="logo"> <img src="../assets/images/logo.png" alt=" Logo"></div>
-    <nav>
-      <a href="../dashboard/home.html">Home</a>
-      <a href="../boards/Boards.html">Boards</a>
-      <a href="../cuet.html">CUET</a>
-      <a href="../cafoundation.html">CA Foundation</a>
-    <a href="../dashboard/Profile.html">Profile</a>
-      
-    </nav>
-    <div class="user-info">
-    Welcome, <span id="usernameDisplay">User</span>
-<span id="premiumBadge"></span>
-    <button id="logoutBtn">Logout</button>
+<header class="navbar">
+  <div class="logo">
+   <a  href="home.html"><img src="../assets/images/logo.png  " alt="Logo"></i></a> 
   </div>
-  </header>
+  <nav>
+    <a href="../dashboard/home.html" id="acc" class="active">Home</a>
+    <a href="../boards/Boards.html" id="acc">Boards</a>
+    <a href="../cuet.html" id="acc">CUET</a>
+    <a href="../cafoundation.html" id="acc">CA Foundation</a>
+    <a href="../dashboard/Profile.html" >Profile</a>
+  </nav>
+ 
+
+
+
+  <div class="user-info">
+    Welcome,<a href="../dashboard/Profile.html"> <span id="usernameDisplay">User</span>
+<span id="premiumBadge"></span></a>
+   
+  </div>
+</header>
+
 
   <section class="hero">
+  <div class="hero-content">
     <h1>Study Resources</h1>
     <p>Formula sheets, mind maps & PDFs 📑</p>
+    </div>
   </section>
 
   <section class="quick-links">
@@ -71,12 +80,13 @@
        <a href="../dashboard/personal.html">Personal Dashboard</a>
     </div>
   </div>
-  <div class="footer-bottom">
+ <div class="footer-bottom">
     <p>Last updated: 04 July 2026</p>
+    <p id="version"></p>
   </div>
 </footer>
 </div>
   
-<script type="module" src="script.js"></script>
+<script type="module" src="../JavaScript/universal.js"></script>
 </body>
 </html>

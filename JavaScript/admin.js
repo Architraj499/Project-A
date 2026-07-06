@@ -1,6 +1,9 @@
 // admin.js
 import emailjs from "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/+esm";
-import { ROUTES } from "./routes.js";
+import { ROUTES } from "./routes.js";import { APP } from "./version.js";
+
+document.getElementById("version").textContent =
+`${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`; 
 emailjs.init("siChPjqF00KVyxv8O");
 import { auth, db } from "./universal.js";
 

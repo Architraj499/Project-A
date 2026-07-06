@@ -1,5 +1,8 @@
 // ---------------- MOCK ENGINE ----------------
-import { ROUTES } from "./routes.js";
+import { ROUTES } from "./routes.js";import { APP } from "./version.js";
+
+document.getElementById("version").textContent =
+`${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`; 
 import { db } from "./universal.js";
 import {
   collection,

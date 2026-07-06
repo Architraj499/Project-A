@@ -1,4 +1,7 @@
-import { ROUTES } from "./routes.js";
+import { ROUTES } from "./routes.js";import { APP } from "./version.js";
+
+document.getElementById("version").textContent =
+`${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`; 
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 
 import {

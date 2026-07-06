@@ -1,5 +1,8 @@
 // universal.js
-import { ROUTES } from "./routes.js";
+import { ROUTES } from "./routes.js";import { APP } from "./version.js";
+
+document.getElementById("version").textContent =
+`${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`; 
 window.ytPlayer = null;
 window.currentLectureId = null;
 window.watchedSeconds = 0;

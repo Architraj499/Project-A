@@ -1,5 +1,8 @@
 // admin-guard.js
-import { ROUTES } from "./routes.js";
+import { ROUTES } from "./routes.js";import { APP } from "./version.js";
+
+document.getElementById("version").textContent =
+`${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`; 
 import { auth, db } from "./universal.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
