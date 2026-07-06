@@ -1,6 +1,6 @@
 // admin.js
 import emailjs from "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/+esm";
-
+import { ROUTES } from "./routes.js";
 emailjs.init("siChPjqF00KVyxv8O");
 import { auth, db } from "./universal.js";
 
@@ -787,7 +787,7 @@ logoutBtn?.addEventListener(
     await signOut(auth);
 
     location.replace(
-      "/index.html"
+      ROUTES.HOME
     );
 
   }

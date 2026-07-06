@@ -1,5 +1,5 @@
 // profile.js
-
+import { ROUTES } from "./routes.js";
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 
@@ -99,7 +99,7 @@ onAuthStateChanged(auth, async(user)=>{
 
   if(!user){
 
-    window.location.href = "/index.html";
+    window.location.href = ROUTES.HOME;
 
     return;
 
@@ -380,7 +380,7 @@ if(logoutBtn){
 
       await signOut(auth);
 
-      window.location.href = "/index.html";
+      window.location.href = ROUTES.HOME;
 
     }catch(err){
 

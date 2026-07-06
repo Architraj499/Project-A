@@ -1,5 +1,5 @@
 // personal.js
-
+import { ROUTES } from "./routes.js";
 import { auth, db } from "./universal.js";
 
 import { onAuthStateChanged } from
@@ -322,7 +322,7 @@ function setupProfileUpdate() {
 ========================================================= */
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
-    location.href = "/index.html";
+    location.href = ROUTES.HOME;
     return;
   }
 

@@ -1,6 +1,6 @@
 // auth-guard.js
 
-
+import { ROUTES } from "./routes.js";
 import { auth } from "./universal.js";
 
 import { onAuthStateChanged }
@@ -11,9 +11,9 @@ onAuthStateChanged(auth, (user) => {
   // Not Logged In
   if (!user) {
 
-    if (!location.pathname.endsWith("/index.html")) {
+    if (!location.pathname.endsWith(ROUTES.HOME)) {
 
-      window.location.href = "/index.html";
+      window.location.href = ROUTES.HOME;
 
     }
 
@@ -23,11 +23,11 @@ onAuthStateChanged(auth, (user) => {
 
   // Logged In User
   if (
-    location.pathname.endsWith("/index.html") ||
+    location.pathname.endsWith(ROUTES.HOME) ||
     location.pathname === "/"
   ) {
 
-    window.location.href = "../dashboard/home.html";
+    window.location.href = ROUTES.DASHBOARD;
 
   }
 

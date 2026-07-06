@@ -1,4 +1,5 @@
 // index.js
+import { ROUTES } from "./routes.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
@@ -88,7 +89,7 @@ signupForm.addEventListener("submit", async (e) => {
     });
 
     message.innerText = "Signup successful! Redirecting...";
-    window.location.href = "../dashboard/home.html";
+    window.location.href = ROUTES.DASHBOARD;
 
   } catch (err) {
     console.error("Signup Error:", err);
@@ -157,7 +158,7 @@ loginForm.addEventListener("submit", async (e) => {
       });
     }
 
-    window.location.href = "../dashboard/home.html";
+    window.location.href = ROUTES.DASHBOARD;
 
   } catch (err) {
     message.innerText = "Invalid credentials";

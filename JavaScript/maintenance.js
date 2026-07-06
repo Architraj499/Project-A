@@ -1,3 +1,4 @@
+import { ROUTES } from "./routes.js";
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 
 import {
@@ -39,7 +40,7 @@ async function checkMaintenance(user){
         // Maintenance OFF
         if(!settings.data().maintenance){
 
-            location.replace("/index.html");
+            location.replace(ROUTES.HOME);
             return;
 
         }
@@ -55,7 +56,7 @@ async function checkMaintenance(user){
                 userSnap.data().role === "admin"
             ){
 
-                location.replace("../dashboard/home.html");
+                location.replace(ROUTES.DASHBOARD);
 
             }
 

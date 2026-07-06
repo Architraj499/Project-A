@@ -1,5 +1,5 @@
 // universal.js
-
+import { ROUTES } from "./routes.js";
 window.ytPlayer = null;
 window.currentLectureId = null;
 window.watchedSeconds = 0;
@@ -66,9 +66,9 @@ async function checkWebsiteMaintenance(user){
     // Login page ko maintenance par mat bhejo
     if(!user){
 
-    if(!location.pathname.endsWith("../admin/maintenance.html")){
+    if(!location.pathname.endsWith(ROUTES.MAINTENANCE)){
 
-        location.replace("../admin/maintenance.html");
+        location.replace(ROUTES.MAINTENANCE);
 
     }
 
@@ -93,9 +93,9 @@ async function checkWebsiteMaintenance(user){
 
         if(role !== "admin"){
 
-            if(!location.pathname.endsWith("../admin/maintenance.html")){
+            if(!location.pathname.endsWith(ROUTES.MAINTENANCE)){
 
-                location.replace("../admin/maintenance.html");
+                location.replace(ROUTES.MAINTENANCE);
 
             }
 
@@ -920,7 +920,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       console.error(err);
     }
-    window.location.href = "/index.html";
+    window.location.href = ROUTES.HOME;
   });
 });
 

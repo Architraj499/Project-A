@@ -5,7 +5,7 @@ import {
     setDoc,
     onAuthStateChanged
 } from "./universal.js";
-
+import { ROUTES } from "./routes.js";
 
 
 
@@ -17,7 +17,7 @@ params.get("data");
 
 if(!encoded)
 {
-    window.location.href = "../dashboard/home.html";
+    window.location.href = ROUTES.DASHBOARD;
 }
 
 const payload =
@@ -33,7 +33,7 @@ onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
         alert("Please login first.");
-        window.location.href = "/index.html";
+        window.location.href = ROUTES.HOME;
         return;
     }
 
@@ -53,7 +53,7 @@ onAuthStateChanged(auth, async (user) => {
 
         
 
-        window.location.href = "../dashboard/Profile.html";
+        window.location.href =ROUTES.PROFILE;
 
     } catch (err) {
 
