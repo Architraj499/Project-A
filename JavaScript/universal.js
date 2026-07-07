@@ -1,4 +1,25 @@
 // universal.js
+import {
+  auth,
+  db,
+
+  onAuthStateChanged,
+  signOut,
+
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+
+  collection,
+  addDoc,
+
+  serverTimestamp
+
+} from "./config/firebase.js";
+
+
+
 import { ROUTES } from "./routes.js";import { APP } from "./version.js";
 
 document.getElementById("version").textContent =
@@ -7,43 +28,14 @@ window.ytPlayer = null;
 window.currentLectureId = null;
 window.watchedSeconds = 0;
 
-// ---------- Firebase ----------
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  collection,
-  addDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-export {
-  doc,
-  setDoc,
-  onAuthStateChanged
-};
-// ---------- Firebase config ----------
-const firebaseConfig = {
-  apiKey: "AIzaSyDHRDRRm2KBmCuUf3qvTIRI5hO0aXFFx3w",
-  authDomain: "asprients-95c1f.firebaseapp.com",
-  projectId: "asprients-95c1f",
-  storageBucket: "asprients-95c1f.appspot.com",
-  messagingSenderId: "453218332819",
-  appId: "1:453218332819:web:5740173fa4d8156dae9d66"
-};
 
 
 
 
-const app = getApps().length === 0
-  ? initializeApp(firebaseConfig)
-  : getApp();
 
-const auth = getAuth(app);
-const db = getFirestore(app);
+
+
+
 
 async function checkWebsiteMaintenance(user){
 
@@ -114,7 +106,7 @@ async function checkWebsiteMaintenance(user){
 
 }
 let isPremiumUser = false;
-export { app, auth, db };
+
 
 // ---------- Globals ----------
 let currentUserId = null;

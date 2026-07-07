@@ -4,7 +4,7 @@ import { ROUTES } from "./routes.js";import { APP } from "./version.js";
 
 document.getElementById("version").textContent =
 `${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`; 
-import { auth } from "./universal.js";
+import { auth } from "./config/firebase.js";
 
 import { onAuthStateChanged }
 from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";

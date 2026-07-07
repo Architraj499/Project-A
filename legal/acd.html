@@ -8,8 +8,6 @@
 
 <link rel="icon" href="../assets/images/logo.png  " type="image/png">
 
-<link rel="icon" href="../assets/images/logo.png  " type="image/png">
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -156,7 +154,7 @@ a:-webkit-any-link {
 <div class="footer-wrapper">
 <footer class="footer">
   <div class="footer-content">
-    <p><b>© 2026 Asprients </b>All rights reserved. | Devloped By <b><a href="../https://www.linkedin.com/in/architraj499" target="_blank">Archit</a></b></p> 
+    <p><b>© 2026 Asprients </b>All rights reserved. | Devloped By <b><a href="https://www.linkedin.com/in/architraj499" target="_blank">Archit</a></b></p> 
     <div class="footer-links">
       <a href="../legal/Privacy.html">Privacy Policy</a>
       <a href="../legal/tou.html">Terms of Use</a>
@@ -174,45 +172,31 @@ a:-webkit-any-link {
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { ROUTES } from "../JavaScript/routes.js";
+import { APP } from "../JavaScript/version.js";
 
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  serverTimestamp,
-  doc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    auth,
+    db,
+    onAuthStateChanged,
+    collection,
+    addDoc,
+    serverTimestamp,
+    doc,
+    getDoc
+} from "../JavaScript/config/firebase.js";
 
+const versionEl = document.getElementById("version");
+
+if (versionEl) {
+  versionEl.textContent =
+    `${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`;
+}
 
 /* ---------- EMAILJS INIT ---------- */
 
 emailjs.init("hE9caZMTVqw0Uo97s");
 
-
-/* ---------- FIREBASE CONFIG ---------- */
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDHRDRRm2KBmCuUf3qvTIRI5hO0aXFFx3w",
-  authDomain: "asprients-95c1f.firebaseapp.com",
-  projectId: "asprients-95c1f",
-  storageBucket: "asprients-95c1f.appspot.com",
-  messagingSenderId: "453218332819",
-  appId: "1:453218332819:web:5740173fa4d8156dae9d66"
-};
-
-
-/* ---------- INITIALIZE ---------- */
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
 
 
 /* ---------- DOM ELEMENTS ---------- */
@@ -275,7 +259,8 @@ onAuthStateChanged(auth, async (user) => {
 
     userInfo.innerHTML = `
       ⚠️ You must be signed in to submit a request.
-      <a href=${ROUTES.HOME} class="link">Go to login</a>
+      <br><br>
+      <a href="${ROUTES.HOME}" class="link">Go to Login</a>
     `;
 
     form.style.display = "none";
@@ -401,7 +386,8 @@ form.addEventListener("submit", async (e) => {
 
 
     successBox.style.display = "block";
-
+    userInfo.innerHTML = "✅ Your deletion request has been submitted successfully.";
+    form.style.display = "none";
     form.reset();
 
   } catch (err) {

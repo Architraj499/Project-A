@@ -1,20 +1,19 @@
 // index.js
-import { ROUTES } from "./routes.js";import { APP } from "./version.js";
+import { ROUTES } from "./routes.js";
+import { APP } from "./version.js";
+import {
+  auth,
+  db,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  onAuthStateChanged,
+  doc,
+  getDoc,
+  setDoc
+} from "./config/firebase.js";
 
-document.getElementById("version").textContent =
-`${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`; 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDHRDRRm2KBmCuUf3qvTIRI5hO0aXFFx3w",
-  authDomain: "asprients-95c1f.firebaseapp.com",
-  projectId: "asprients-95c1f",
-  storageBucket: "asprients-95c1f.firebasestorage.app",
-  messagingSenderId: "453218332819",
-  appId: "1:453218332819:web:5740173fa4d8156dae9d66"
-};
 const loginEmail = document.getElementById("loginEmail");
 const loginPassword = document.getElementById("loginPassword");
 
@@ -24,9 +23,6 @@ const signupPassword = document.getElementById("signupPassword");
 const signupConfirm = document.getElementById("signupConfirm");
 
 const forgotPassword = document.getElementById("forgotPassword");
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
 
 const loginForm = document.getElementById("loginForm");
 const signupForm = document.getElementById("signupForm");

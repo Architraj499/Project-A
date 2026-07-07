@@ -1,18 +1,19 @@
-import { db } from "./universal.js";
 import { ROUTES } from "./routes.js";
 import { APP } from "./version.js";
 
-document.getElementById("version").textContent =
-`${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`; 
 import {
+  db,
   collection,
   query,
   where,
   orderBy,
   limit,
   getDocs
-}
-from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+} from "./config/firebase.js";
+
+document.getElementById("version").textContent =
+`${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`; 
+
 
 const container =
 document.getElementById(

@@ -2,56 +2,16 @@
 import { ROUTES } from "./routes.js";import { APP } from "./version.js";
 
 document.getElementById("version").textContent =
-`${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`; 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+`${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`;
 
 import {
-
-  getAuth,
-  onAuthStateChanged,
-  signOut
-
-}
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-import {
-
-  getFirestore,
-  doc,
-  getDoc
-
-}
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-
-// FIREBASE CONFIG
-
-const firebaseConfig = {
-
-  apiKey: "AIzaSyDHRDRRm2KBmCuUf3qvTIRI5hO0aXFFx3w",
-
-  authDomain: "asprients-95c1f.firebaseapp.com",
-
-  projectId: "asprients-95c1f",
-
-  storageBucket: "asprients-95c1f.appspot.com",
-
-  messagingSenderId: "453218332819",
-
-  appId: "1:453218332819:web:5740173fa4d8156dae9d66"
-
-};
-
-
-// INITIALIZE
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
-
+    auth,
+    db,
+    onAuthStateChanged,
+    signOut,
+    doc,
+    getDoc
+} from "./config/firebase.js";
 
 // ELEMENTS
 

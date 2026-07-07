@@ -1,4 +1,4 @@
-import { auth, db } from "./universal.js";
+import { auth, db } from "./config/firebase.js";
 import { ROUTES } from "./routes.js";import { APP } from "./version.js";
 
 document.getElementById("version").textContent =

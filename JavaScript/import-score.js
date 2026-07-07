@@ -4,7 +4,7 @@ import {
     doc,
     setDoc,
     onAuthStateChanged
-} from "./universal.js";
+} from "./config/firebase.js";
 import { ROUTES } from "./routes.js";import { APP } from "./version.js";
 
 document.getElementById("version").textContent =

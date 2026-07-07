@@ -2,34 +2,15 @@ import { ROUTES } from "./routes.js";import { APP } from "./version.js";
 
 document.getElementById("version").textContent =
 `${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`; 
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 
 import {
-    getAuth,
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-
-import {
-    getFirestore,
+    auth,
+    db,
+    onAuthStateChanged,
     doc,
     getDoc
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+} from "./config/firebase.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDHRDRRm2KBmCuUf3qvTIRI5hO0aXFFx3w",
-  authDomain: "asprients-95c1f.firebaseapp.com",
-  projectId: "asprients-95c1f",
-  storageBucket: "asprients-95c1f.appspot.com",
-  messagingSenderId: "453218332819",
-  appId: "1:453218332819:web:5740173fa4d8156dae9d66"
-};
-
-const app = getApps().length
-    ? getApp()
-    : initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-const db = getFirestore(app);
 
 async function checkMaintenance(user){
 
@@ -41,12 +22,14 @@ async function checkMaintenance(user){
         if(!settings.exists()) return;
 
         // Maintenance OFF
-        if(!settings.data().maintenance){
+        if (!settings.data().maintenance) {
 
-            location.replace(ROUTES.HOME);
-            return;
+    if (location.pathname !== ROUTES.HOME) {
+        location.replace(ROUTES.HOME);
+    }
 
-        }
+    return;
+}
 
         // Admin bypass
         if(user){
