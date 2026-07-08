@@ -1,4 +1,4 @@
-import { ROUTES } from "./routes.js";import { APP } from "./version.js";
+import { ROUTES } from "./config/routes.js";import { APP } from "./config/version.js";
 
 document.getElementById("version").textContent =
 `${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`; 

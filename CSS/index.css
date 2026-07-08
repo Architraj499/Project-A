@@ -251,6 +251,9 @@ form.active{
   display:block;
   margin:0 auto 10px;
 }
+.logo:hover{
+  transform:rotate(360deg) scale(1.7);
+}
 #message {
   color: red;
   font-weight: bold;

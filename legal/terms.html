@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Welcome to Asprients</title>
+
+<link rel="icon" href="../assets/images/logo.png" type="image/png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../CSS/terms.css">
+
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="container">
+
+    <div class="card">
+
+        <img
+            src="../assets/images/logo.png"
+            class="logo"
+            alt="Asprients">
+
+        <p class="step">
+            Step 1 of 1
+        </p>
+
+        <h1>
+            Welcome to Asprients 👋
+        </h1>
+
+        <p class="subtitle">
+
+            Before accessing your dashboard,
+            please review and accept our policies.
+
+        </p>
+
+  
+<div class="policy-box">
+
+    <div class="policy">
+
+        <div class="policy-info">
+
+            <h3>📜 Terms of Use</h3>
+
+            <p>
+                Learn how Asprients works.
+            </p>
+
+        </div>
+
+        <button
+            id="openTerms"
+            class="read-btn">
+
+            Read →
+
+        </button>
+
+    </div>
+
+    <div class="policy">
+
+        <div class="policy-info">
+
+            <h3>🔒 Privacy Policy</h3>
+
+            <p>
+                Learn how we protect your data.
+            </p>
+
+        </div>
+
+        <button
+            id="openPrivacy"
+            class="read-btn">
+
+            Read →
+
+        </button>
+
+    </div>
+
+</div>
+
+
+
+        <div class="checkboxes">
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    id="termsCheck" disabled>
+
+                <span>
+
+                    I agree to the
+                    <b>Terms of Use</b>
+
+                </span>
+
+            </label>
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    id="privacyCheck" disabled>
+
+                <span>
+
+                    I have read the
+                    <b>Privacy Policy</b>
+
+                </span>
+
+            </label>
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    id="ageCheck">
+
+                <span>
+
+                    I confirm that I am
+                    13 years or older.
+
+                </span>
+
+            </label>
+
+        </div>
+
+        <button
+            id="continueBtn"
+            disabled>
+
+            Continue (5)
+
+        </button>
+
+        <div class="footer">
+
+            <p>
+
+                Version
+                <span id="termsVersion">
+                    1.0
+                </span>
+
+            </p>
+
+            <p>
+
+                Last Updated
+
+                <br>
+
+                08 July 2026
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Policy Modal -->
+
+<div
+id="policyModal"
+class="modal" >
+
+<div class="modal-card">
+
+<div class="modal-header">
+
+<h2 id="modalTitle">
+
+Terms
+
+</h2>
+
+<button
+id="closeModal"
+type="button">
+
+✕
+
+</button>
+
+</div>
+
+<div
+id="modalContent"
+class="modal-content">
+
+Loading...
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+<script type="module" src="../JavaScript/terms.js"></script>
+
+</body>
+</html>

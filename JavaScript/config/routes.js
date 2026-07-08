@@ -20,6 +20,7 @@ export const ROUTES = {
   TERMS: `${BASE}/legal/tou.html`,
   CONTACT: `${BASE}/legal/contactus.html`,
   ACCOUNT_DELETION: `${BASE}/legal/acd.html`,
+  TERMS: `${BASE}/legal/terms.html`,
 
   // Common
   MAINTENANCE: `${BASE}/common/maintenance.html`,

@@ -1,6 +1,6 @@
 // index.js
-import { ROUTES } from "./routes.js";
-import { APP } from "./version.js";
+import { ROUTES } from "./config/routes.js";
+import { APP } from "./config/version.js";
 import {
   auth,
   db,
@@ -84,11 +84,14 @@ signupForm.addEventListener("submit", async (e) => {
       status: "active",
       // PREMIUM SYSTEM
   plan: "free",
-  planExpiry: null
+  planExpiry: null,
+   termsAccepted: false,
+  termsAcceptedAt: null,
+  termsVersion: null
     });
 
     message.innerText = "Signup successful! Redirecting...";
-    window.location.href = ROUTES.DASHBOARD;
+   window.location.href = ROUTES.TERMS;
 
   } catch (err) {
     console.error("Signup Error:", err);
@@ -153,11 +156,27 @@ loginForm.addEventListener("submit", async (e) => {
         progress: {},
         // PREMIUM SYSTEM
   plan: "free",
-  planExpiry: null
+  planExpiry: null,
+  termsAccepted: false,
+termsAcceptedAt: null,
+termsVersion: null,
       });
     }
 
+    const data = snap.data();
+
+if (
+    !data.termsAccepted ||
+    data.termsVersion !== APP.TERMS_VERSION
+) {
+
+    window.location.href = ROUTES.TERMS;
+
+} else {
+
     window.location.href = ROUTES.DASHBOARD;
+
+}
 
   } catch (err) {
     message.innerText = "Invalid credentials";

@@ -1,5 +1,5 @@
-import { ROUTES } from "./routes.js";
-import { APP } from "./version.js";
+import { ROUTES } from "./config/routes.js";
+import { APP } from "./config/version.js";
 
 import {
   db,
