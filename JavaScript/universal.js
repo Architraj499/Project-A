@@ -941,6 +941,15 @@ onAuthStateChanged(auth, async (user) => {
   if (nameEl) {
     nameEl.innerText = data.fullname;
   }
+const avatar = document.getElementById("avatar");
+
+if (avatar && data.fullname) {
+
+    avatar.textContent =
+    data.fullname.charAt(0).toUpperCase();
+
+}
+
 
   // PREMIUM BADGE
   const premiumBadge = document.getElementById("premiumBadge");

@@ -56,6 +56,9 @@ document.getElementById("studyHours");
 const streakEl =
 document.getElementById("streakCount");
 
+const premiumBadge =
+document.getElementById("premiumBadge");
+
 // AUTH
 
 onAuthStateChanged(auth, async(user)=>{
@@ -144,24 +147,26 @@ if (premiumPlans.includes(data.plan)) {
 }
 
   // NAME
+console.log(data);
 
-  const fullname =
-  data.fullname || "User";
+const fullname = data.fullname || "User";
 
-  if(usernameDisplay){
+console.log(fullname);
 
-    usernameDisplay.textContent =
-    fullname;
+if(usernameDisplay){
 
-  }
+    usernameDisplay.textContent = fullname;
 
-  if(avatar){
+}
+
+if(avatar){
 
     avatar.textContent =
     fullname.charAt(0).toUpperCase();
 
-  }
+    console.log("Avatar Updated");
 
+}
   // STREAK
 
   const streak =
