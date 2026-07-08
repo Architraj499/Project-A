@@ -23,7 +23,7 @@ export const ROUTES = {
   TERMS: `${BASE}/legal/terms.html`,
 
   // Common
-  MAINTENANCE: `${BASE}/common/maintenance.html`,
+  MAINTENANCE: `${BASE}/admin/maintenance.html`,
   COMING_SOON: `${BASE}/common/soon.html`,
 
   // Sections
