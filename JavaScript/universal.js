@@ -28,6 +28,11 @@ window.ytPlayer = null;
 window.currentLectureId = null;
 window.watchedSeconds = 0;
 
+const PREMIUM_PLANS = [
+    "1 Month",
+    "6 Months",
+    "12 Months"
+];
 
 async function checkWebsiteMaintenance(user){
 
@@ -46,14 +51,9 @@ async function checkWebsiteMaintenance(user){
         if(!maintenance) return;
 
         // Guest users
-        if(!user){
+      if (!user) {
 
-           if(!user){
-
-    // Login page ko maintenance par mat bhejo
-    if(!user){
-
-    if(!location.pathname.endsWith(ROUTES.MAINTENANCE)){
+    if (!location.pathname.endsWith(ROUTES.MAINTENANCE)) {
 
         location.replace(ROUTES.MAINTENANCE);
 
@@ -63,9 +63,6 @@ async function checkWebsiteMaintenance(user){
 
 }
 
-}
-
-        }
 
         // Logged in users
         const userSnap =
@@ -107,7 +104,10 @@ const LECTURES = window.LECTURES || [];
 let lastActivityKey = "";
 let lastActivityTime = 0;
 
+let lastSiteSave = 0;
+let lastLectureSave = 0;
 const localName = localStorage.getItem("fullname");
+
 if (localName) {
   const el = document.getElementById("fullname");
   if (el) el.innerText = localName;
@@ -330,23 +330,20 @@ function renderAll() {
        n.querySelector(".notes-open")?.addEventListener("click", async () => {
 
   // CHECK PREMIUM ACCESS
- if (lecture.premium === true) {
-const premiumPlans = [
-    "1 Month",
-    "6 Months",
-    "12 Months"
-];
 
-if (
-    !currentUserData ||
-    !premiumPlans.includes(currentUserData.plan)
-) {
+if (lecture.premium === true) {
 
-    openPremiumModal();
+    if (
+        !currentUserData ||
+        !PREMIUM_PLANS.includes(currentUserData.plan)
+    ) {
 
-    return;
+        openPremiumModal();
 
-}
+        return;
+
+    }
+
 }
 
 
@@ -362,23 +359,20 @@ if (
 
         n.querySelector(".notes-download")?.addEventListener("click", async () => {
           // CHECK PREMIUM ACCESS
- if (lecture.premium === true) {
-const premiumPlans = [
-    "1 Month",
-    "6 Months",
-    "12 Months"
-];
 
-if (
-    !currentUserData ||
-    !premiumPlans.includes(currentUserData.plan)
-) {
+if (lecture.premium === true) {
 
-    openPremiumModal();
+    if (
+        !currentUserData ||
+        !PREMIUM_PLANS.includes(currentUserData.plan)
+    ) {
 
-    return;
+        openPremiumModal();
 
-}
+        return;
+
+    }
+
 }
           saveActivity("notes_download", l.title, l.id, {
             action: "download",
@@ -646,73 +640,118 @@ function updateTimeDisplay() {
   if (siteEl) siteEl.innerText = formatTime(siteSeconds);
 }
 
-async function saveTimeToFirestore() {
-  if (!currentUserId) return;
 
-  try {
-    const userRef = doc(db, "users", currentUserId);
-    await updateDoc(userRef, {
-      totalSiteSeconds: siteSeconds
-    });
-  } catch (err) {
-    console.error(err);
-  }
-}
+
 
 function startSiteTimer() {
-  if (siteTimerInterval) clearInterval(siteTimerInterval);
 
-  siteTimerInterval = setInterval(() => {
-    siteSeconds++;
-    updateTimeDisplay();
-    saveTimeToFirestore();
-  }, 1000);
+    if (siteTimerInterval)
+        clearInterval(siteTimerInterval);
+
+    siteTimerInterval = setInterval(() => {
+
+        siteSeconds++;
+
+        updateTimeDisplay();
+
+        // Save every 30 seconds
+        if (siteSeconds - lastSiteSave >= 30) {
+
+            lastSiteSave = siteSeconds;
+
+            syncUserTime();
+        }
+
+    },1000);
+
 }
+
 
 // ---------- Lecture Timer ----------
-async function saveLectureTimeToFirestore() {
-  if (!currentUserId) return;
+async function syncUserTime() {
 
-  try {
-    const userRef = doc(db, "users", currentUserId);
-    await updateDoc(userRef, {
-      totalLectureSeconds: lectureSeconds
-    });
+    if (!currentUserId) return;
 
+    try {
 
-  } catch (err) {
-    console.error("Lecture time save error:", err);
-  }
+        await updateDoc(
+
+            doc(db, "users", currentUserId),
+
+            {
+
+                totalSiteSeconds: siteSeconds,
+
+                totalLectureSeconds: lectureSeconds
+
+            }
+
+        );
+
+    }
+
+    catch (err) {
+
+        console.error("Time Sync Error:", err);
+
+    }
+
 }
 
+
+
+
 function startLectureTimer() {
-  if (lectureTimerInterval) clearInterval(lectureTimerInterval);
 
-  watchedSeconds = 0;
+    if (lectureTimerInterval)
+        clearInterval(lectureTimerInterval);
 
-  lectureTimerInterval = setInterval(() => {
-    lectureSeconds++;
-    watchedSeconds++;
+    watchedSeconds = 0;
 
-    updateLectureTimeDisplay();
+    lectureTimerInterval = setInterval(() => {
 
-    const lec = LECTURES.find(l => l.id === currentLectureId);
-    if (!lec || lec.progress >= 1) return;
+        lectureSeconds++;
+        watchedSeconds++;
 
-    const totalSeconds = minutesToSeconds(lec.min);
-    if (!totalSeconds) return;
+        updateLectureTimeDisplay();
 
-    if (watchedSeconds / totalSeconds >= 0.8) {
-      markCompleted(currentLectureId);
-    }
-  }, 1000);
+        // Save every 30 seconds
+        if (lectureSeconds - lastLectureSave >= 30) {
+
+            lastLectureSave = lectureSeconds;
+
+            syncUserTime();
+
+        }
+
+        const lec =
+        LECTURES.find(l => l.id === currentLectureId);
+
+        if (!lec || lec.progress >= 1)
+            return;
+
+        const totalSeconds =
+        minutesToSeconds(lec.min);
+
+        if (!totalSeconds)
+            return;
+
+        if (watchedSeconds / totalSeconds >= 0.8) {
+
+            markCompleted(currentLectureId);
+
+        }
+
+    },1000);
+
+
 }
 
 function stopLectureTimer() {
   clearInterval(lectureTimerInterval);
   lectureTimerInterval = null;
 
-  saveLectureTimeToFirestore();
+  syncUserTime();
 }
 
 function updateLectureTimeDisplay() {
@@ -744,25 +783,20 @@ window.openLectureNotes = async function(lectureId){
   LECTURES.find(l => l.id === lectureId);
 
   if(!lecture) return;
-
-  // PREMIUM CHECK
+// CHECK PREMIUM ACCESS
 if (lecture.premium === true) {
-const premiumPlans = [
-    "1 Month",
-    "6 Months",
-    "12 Months"
-];
 
-if (
-    !currentUserData ||
-    !premiumPlans.includes(currentUserData.plan)
-) {
+    if (
+        !currentUserData ||
+        !PREMIUM_PLANS.includes(currentUserData.plan)
+    ) {
 
-    openPremiumModal();
+        openPremiumModal();
 
-    return;
+        return;
 
-}
+    }
+
 }
 
   // OPEN NOTES
@@ -787,26 +821,21 @@ window.openAIMock = async function (chapter) {
 
   if (!lecture) return;
 
-  // PREMIUM CHECK
-  if (lecture.premium === true) {
-const premiumPlans = [
-    "1 Month",
-    "6 Months",
-    "12 Months"
-];
+ // CHECK PREMIUM ACCESS
+if (lecture.premium === true) {
 
-if (
-    !currentUserData ||
-    !premiumPlans.includes(currentUserData.plan)
-) {
+    if (
+        !currentUserData ||
+        !PREMIUM_PLANS.includes(currentUserData.plan)
+    ) {
 
-    openPremiumModal();
+        openPremiumModal();
 
-    return;
+        return;
+
+    }
 
 }
-  }
-
   saveActivity("mock_generate", chapter, lecture.id, {
     action: "generate"
   });
@@ -919,6 +948,14 @@ onUserLoaded((user, data) => {
 
     currentUserId = user.uid;
     currentUserData = data;
+    const premiumPlans = [
+    "1 Month",
+    "6 Months",
+    "12 Months"
+];
+
+isPremiumUser =
+premiumPlans.includes(data.plan);
 
     const nameEl =
     document.getElementById("usernameDisplay");
@@ -1078,6 +1115,11 @@ window.openPremiumModal = function(){
     modal.style.display = "flex";
   }
 }
+window.addEventListener("beforeunload", () => {
+
+    syncUserTime();
+
+});
 
 window.closePremiumModal = function(){
 
