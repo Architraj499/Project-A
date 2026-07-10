@@ -1,6 +1,7 @@
+// Home.js
 import { ROUTES } from "./config/routes.js";
 import { APP } from "./config/version.js";
-
+import { onUserLoaded } from "./core/user.js";
 import {
   db,
   collection,

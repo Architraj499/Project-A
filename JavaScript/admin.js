@@ -12,12 +12,12 @@ if(versionEl){
 }
 
 emailjs.init("siChPjqF00KVyxv8O");
-import { auth, db } from "./config/firebase.js";
+import { db } from "./config/firebase.js";
+import { signOut } from "./config/firebase.js";
 
 import {
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    onUserChanged
+} from "./core/auth.js";
 
 import {
   doc,
@@ -652,50 +652,40 @@ ${data.buttonText || "Open"}
   }
 
 }
+
 // ---------------- AUTH ----------------
 
-onAuthStateChanged(
-  auth,
-  
-  async (user) => {
+onUserChanged(async (user) => {
 
     if (!user) return;
 
     try {
 
-      const snap =
-      await getDoc(
-        doc(
-          db,
-          "users",
-          user.uid
-        )
-      );
+        const snap = await getDoc(
+            doc(db, "users", user.uid)
+        );
 
-      if (
-        snap.exists()
-      ) {
+        if (!snap.exists()) return;
 
         adminName.textContent =
-          "Welcome Admin, " +
-          snap.data().fullname;
+        "Welcome Admin, " +
+        snap.data().fullname;
 
         await loadDashboard();
-        await loadAnnouncements();
-        await loadMaintenance();
 
-      }
+        await loadAnnouncements();
+
+        await loadMaintenance();
 
     }
 
     catch (err) {
 
-      console.error(err);
+        console.error(err);
 
     }
 
-  }
-);
+});
 
 const publishBtn =
 document.getElementById(

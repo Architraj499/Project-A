@@ -1,18 +1,21 @@
 // profile.js
-import { ROUTES } from "./config/routes.js";import { APP } from "./config/version.js";
+import { ROUTES } from "./config/routes.js";
+import { APP } from "./config/version.js";
+import { onUserLoaded } from "./core/user.js";
+const versionEl =
+document.getElementById("version");
 
-document.getElementById("version").textContent =
-`${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`;
+if(versionEl){
+
+    versionEl.textContent =
+    `${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`;
+
+}
 
 import {
     auth,
-    db,
-    onAuthStateChanged,
-    signOut,
-    doc,
-    getDoc
+    signOut
 } from "./config/firebase.js";
-
 // ELEMENTS
 
 const usernameDisplay =
@@ -61,7 +64,7 @@ document.getElementById("premiumBadge");
 
 // AUTH
 
-onAuthStateChanged(auth, async(user)=>{
+onUserLoaded((user, data) => {
 
   if(!user){
 
@@ -82,21 +85,6 @@ onAuthStateChanged(auth, async(user)=>{
   if(uidText)
   uidText.textContent = user.uid;
 
-
-  try{
-
-    const userRef =
-    doc(db,"users",user.uid);
-
-    const snap =
-    await getDoc(userRef);
-
-    if(snap.exists()){
-
-      
-  const data = snap.data();
-
- 
 const adminBtn =
 document.getElementById("adminBtn");
 
@@ -322,14 +310,7 @@ if(caEl){
 
       }
 
-    }
-
-  }catch(err){
-
-    
-
-  }
-
+  
 });
 
 

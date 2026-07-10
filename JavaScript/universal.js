@@ -17,7 +17,7 @@ import {
   serverTimestamp
 
 } from "./config/firebase.js";
-
+import { onUserLoaded } from "./core/user.js";
 
 
 import { ROUTES } from "./config/routes.js";import { APP } from "./config/version.js";
@@ -27,14 +27,6 @@ document.getElementById("version").textContent =
 window.ytPlayer = null;
 window.currentLectureId = null;
 window.watchedSeconds = 0;
-
-
-
-
-
-
-
-
 
 
 async function checkWebsiteMaintenance(user){
@@ -110,6 +102,7 @@ let isPremiumUser = false;
 
 // ---------- Globals ----------
 let currentUserId = null;
+let currentUserData = null;
 const LECTURES = window.LECTURES || [];
 let lastActivityKey = "";
 let lastActivityTime = 0;
@@ -338,23 +331,22 @@ function renderAll() {
 
   // CHECK PREMIUM ACCESS
  if (lecture.premium === true) {
-
-  const userRef = doc(db, "users", currentUserId);
-  const snap = await getDoc(userRef);
-
-  const premiumPlans = [
+const premiumPlans = [
     "1 Month",
     "6 Months",
     "12 Months"
-  ];
+];
 
-  if (
-    !snap.exists() ||
-    !premiumPlans.includes(snap.data().plan)
-  ) {
+if (
+    !currentUserData ||
+    !premiumPlans.includes(currentUserData.plan)
+) {
+
     openPremiumModal();
+
     return;
-  }
+
+}
 }
 
 
@@ -371,23 +363,22 @@ function renderAll() {
         n.querySelector(".notes-download")?.addEventListener("click", async () => {
           // CHECK PREMIUM ACCESS
  if (lecture.premium === true) {
-
-  const userRef = doc(db, "users", currentUserId);
-  const snap = await getDoc(userRef);
-
-  const premiumPlans = [
+const premiumPlans = [
     "1 Month",
     "6 Months",
     "12 Months"
-  ];
+];
 
-  if (
-    !snap.exists() ||
-    !premiumPlans.includes(snap.data().plan)
-  ) {
+if (
+    !currentUserData ||
+    !premiumPlans.includes(currentUserData.plan)
+) {
+
     openPremiumModal();
+
     return;
-  }
+
+}
 }
           saveActivity("notes_download", l.title, l.id, {
             action: "download",
@@ -756,23 +747,22 @@ window.openLectureNotes = async function(lectureId){
 
   // PREMIUM CHECK
 if (lecture.premium === true) {
-
-  const userRef = doc(db, "users", currentUserId);
-  const snap = await getDoc(userRef);
-
-  const premiumPlans = [
+const premiumPlans = [
     "1 Month",
     "6 Months",
     "12 Months"
-  ];
+];
 
-  if (
-    !snap.exists() ||
-    !premiumPlans.includes(snap.data().plan)
-  ) {
+if (
+    !currentUserData ||
+    !premiumPlans.includes(currentUserData.plan)
+) {
+
     openPremiumModal();
+
     return;
-  }
+
+}
 }
 
   // OPEN NOTES
@@ -799,23 +789,22 @@ window.openAIMock = async function (chapter) {
 
   // PREMIUM CHECK
   if (lecture.premium === true) {
+const premiumPlans = [
+    "1 Month",
+    "6 Months",
+    "12 Months"
+];
 
-    const userRef = doc(db, "users", currentUserId);
-    const snap = await getDoc(userRef);
+if (
+    !currentUserData ||
+    !premiumPlans.includes(currentUserData.plan)
+) {
 
-    const premiumPlans = [
-      "1 Month",
-      "6 Months",
-      "12 Months"
-    ];
+    openPremiumModal();
 
-    if (
-      !snap.exists() ||
-      !premiumPlans.includes(snap.data().plan)
-    ) {
-      openPremiumModal();
-      return;
-    }
+    return;
+
+}
   }
 
   saveActivity("mock_generate", chapter, lecture.id, {
@@ -920,84 +909,80 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ---------- Auth ----------
-onAuthStateChanged(auth, async (user) => {
 
-  await checkWebsiteMaintenance(user);
+onUserLoaded((user, data) => {
 
-  if (!user) return;
+    checkWebsiteMaintenance(user);
 
-  currentUserId = user.uid;
+    if (!user) return;
+    if (!data) return;
 
-  try {
-    const snap = await getDoc(doc(db, "users", currentUserId));
+    currentUserId = user.uid;
+    currentUserData = data;
 
-    if (snap.exists()) {
-      const data = snap.data();
+    const nameEl =
+    document.getElementById("usernameDisplay");
 
-      if (data.fullname) {
+    if(nameEl){
 
-  const nameEl = document.getElementById("usernameDisplay");
-
-  if (nameEl) {
-    nameEl.innerText = data.fullname;
-  }
-const avatar = document.getElementById("avatar");
-
-if (avatar && data.fullname) {
-
-    avatar.textContent =
-    data.fullname.charAt(0).toUpperCase();
-
-}
-
-
-  // PREMIUM BADGE
-  const premiumBadge = document.getElementById("premiumBadge");
-
-  if (premiumBadge) {
-
-    const premiumPlans = [
-  "1 Month",
-  "6 Months",
-  "12 Months"
-];
-
-if (premiumPlans.includes(data.plan)) {
-
-      premiumBadge.innerHTML = "👑 Premium";
-
-      
-
-    } else {
-
-      premiumBadge.innerHTML = "Free User";
+        nameEl.innerText =
+        data.fullname || "User";
 
     }
 
-  }
-}
+    const avatar =
+    document.getElementById("avatar");
 
-      siteSeconds = data.totalSiteSeconds || 0;
-      lectureSeconds = data.totalLectureSeconds || 0;
+    if(avatar && data.fullname){
 
-      if (data.fullname) {
-        const nameEl = document.getElementById("usernameDisplay");
-        if (nameEl) nameEl.innerText = data.fullname;
-      }
+        avatar.textContent =
+        data.fullname.charAt(0).toUpperCase();
 
-      renderAll();
-      updateTimeDisplay();
-      updateLectureTimeDisplay();
-      startSiteTimer();
     }
-  } catch (err) {
-    console.error("Auth timer init failed:", err);
-  }
-  setInterval(async () => {
-        await checkWebsiteMaintenance(auth.currentUser);
-    }, 5000);
+
+    const premiumBadge =
+    document.getElementById("premiumBadge");
+
+    if(premiumBadge){
+
+        const premiumPlans = [
+            "1 Month",
+            "6 Months",
+            "12 Months"
+        ];
+
+        premiumBadge.innerHTML =
+        premiumPlans.includes(data.plan)
+        ? "👑 Premium"
+        : "Free User";
+
+    }
+
+    siteSeconds =
+    data.totalSiteSeconds || 0;
+
+    lectureSeconds =
+    data.totalLectureSeconds || 0;
+
+    renderAll();
+
+    updateTimeDisplay();
+
+    updateLectureTimeDisplay();
+
+    startSiteTimer();
+
+    setInterval(() => {
+
+        checkWebsiteMaintenance(auth.currentUser);
+
+    },5000);
 
 });
+
+
+
+
 // ---------- GLOBAL THEME SYSTEM ----------
 
 function applyTheme(theme){

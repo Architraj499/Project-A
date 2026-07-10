@@ -1,47 +1,60 @@
-// admin-guard.js
-import { ROUTES } from "./config/routes.js";import { APP } from "./config/version.js";
-
-
+import { ROUTES } from "./config/routes.js";
 
 import {
-    auth,
     db,
-    onAuthStateChanged,
     doc,
     getDoc
 } from "./config/firebase.js";
 
+import {
+    onUserChanged
+} from "./core/auth.js";
 
-onAuthStateChanged(auth, async (user) => {
+onUserChanged(async (user) => {
 
-  if (!user) {
-    location.replace(ROUTES.HOME);
-    return;
-  }
+    if (!user) {
 
-  try {
+        location.replace(ROUTES.HOME);
+        return;
 
-    const snap = await getDoc(
-      doc(db, "users", user.uid)
-    );
-
-    if (!snap.exists()) {
-      location.replace(ROUTES.DASHBOARD);
-      return;
     }
 
-    const role = snap.data().role || "user";
+    try {
 
-    if (role !== "admin") {
-      location.replace(ROUTES.DASHBOARD);
-      return;
+        const snap = await getDoc(
+            doc(db, "users", user.uid)
+        );
+
+        if (!snap.exists()) {
+
+            location.replace(ROUTES.DASHBOARD);
+            return;
+
+        }
+
+        const role =
+        snap.data().role || "user";
+
+        if (role !== "admin") {
+
+            location.replace(ROUTES.DASHBOARD);
+            return;
+
+        }
+
+        document.body.style.display =
+        "block";
+
     }
-document.body.style.display = "block";
-  } catch (err) {
 
-    console.error(err);
-    location.replace(ROUTES.DASHBOARD);
+    catch (err) {
 
-  }
+        console.error(err);
+
+        location.replace(
+            ROUTES.DASHBOARD
+        );
+
+    }
 
 });
