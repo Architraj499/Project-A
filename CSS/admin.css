@@ -528,7 +528,11 @@ textarea:focus{
   background:#374151;
   border-radius:20px;
 }
-
+a:-webkit-any-link {
+  display:none;
+  text-decoration: none;
+  color: inherit;
+}
 /* ---------------- MOBILE ---------------- */
 
 @media (max-width:768px){
