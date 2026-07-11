@@ -1,8 +1,8 @@
 import { auth, db } from "./config/firebase.js";
-import { ROUTES } from "./config/routes.js";import { APP } from "./config/version.js";
+import { ROUTES } from "./config/routes.js";
+import { APP } from "./config/version.js";
 
-document.getElementById("version").textContent =
-`${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`; 
+ 
 import {
   doc,
   getDoc,
