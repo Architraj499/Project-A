@@ -36,7 +36,7 @@ catch {
     await res.json();
 
 }
-console.log("Saving login log...");
+
 const device =
 getDeviceInfo();
         await addDoc(
@@ -92,7 +92,7 @@ device.device,
             }
 
         );
-console.log("Login log saved");
+
     }
 
     catch (err) {

@@ -122,24 +122,28 @@ if(upgradeBtn && !isPremium){
   "12 Months"
 ];
 
-if (premiumPlans.includes(data.plan)) {
+if (premiumBadge) {
 
-  premiumBadge.innerHTML =
-  `👑 ${data.plan.toUpperCase()} PLAN`;
+    if (premiumPlans.includes(data.plan)) {
 
-} else {
+        premiumBadge.innerHTML =
+        `👑 ${data.plan.toUpperCase()} PLAN`;
 
-  premiumBadge.innerHTML =
-  "🆓 Free User";
+    } else {
+
+        premiumBadge.innerHTML =
+        "🆓 Free User";
+
+    }
 
 }
 
   // NAME
-console.log(data);
+
 
 const fullname = data.fullname || "User";
 
-console.log(fullname);
+
 
 if(usernameDisplay){
 
@@ -152,7 +156,7 @@ if(avatar){
     avatar.textContent =
     fullname.charAt(0).toUpperCase();
 
-    console.log("Avatar Updated");
+    
 
 }
   // STREAK

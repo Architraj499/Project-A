@@ -957,8 +957,7 @@ async function loadLoginHistory(uid){
     )
 
 );
-console.log(snap.size);
-        console.log("Login History Docs:", snap.size);
+
 
         if(snap.empty){
 
@@ -1059,8 +1058,7 @@ const activityLabels = {
 };
 async function loadActivity(uid){
 
-  console.log("Modal UID:", uid);
-console.log("Current Logged In UID:", auth.currentUser.uid);
+
 
     const container =
     document.getElementById(
@@ -1094,7 +1092,7 @@ console.log("Current Logged In UID:", auth.currentUser.uid);
             )
 
         );
-        console.log("Activity Docs:", snap.size);
+        
 
         if(snap.empty){
 
