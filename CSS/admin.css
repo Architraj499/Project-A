@@ -705,3 +705,204 @@ a:-webkit-any-link {
 .switch:hover .slider{
     box-shadow:0 0 8px rgba(34,197,94,.35);
 }
+
+/* ===========================
+   USER DETAILS MODAL
+=========================== */
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.65);
+
+    backdrop-filter:blur(6px);
+
+    z-index:9999;
+
+    justify-content:center;
+
+    align-items:center;
+
+    animation:fadeIn .25s ease;
+
+}
+
+.modal-content{
+
+    width:min(800px,95%);
+
+    max-height:90vh;
+
+    overflow:auto;
+
+    background:#1b1d23;
+
+    border-radius:18px;
+
+    padding:28px;
+
+    color:#fff;
+
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+
+}
+
+.close{
+
+    float:right;
+
+    font-size:30px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.close:hover{
+
+    color:#ff5252;
+
+}
+
+.profile-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    margin-bottom:20px;
+
+}
+
+.avatar{
+
+    width:80px;
+
+    height:80px;
+
+    border-radius:50%;
+
+    background:#4f7cff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:34px;
+
+    font-weight:700;
+
+    color:#fff;
+
+}
+
+.info-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+
+    gap:18px;
+
+    margin:18px 0;
+
+}
+
+.info-grid div{
+
+    background:#242833;
+
+    padding:16px;
+
+    border-radius:12px;
+
+}
+
+.info-grid strong{
+
+    display:block;
+
+    color:#8fa7ff;
+
+    margin-bottom:6px;
+
+}
+
+.info-grid p{
+
+    margin:0;
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+.modal button{
+
+    margin-top:15px;
+
+    margin-right:10px;
+
+    padding:12px 18px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    background:#4f7cff;
+
+    color:white;
+
+    font-weight:600;
+
+}
+
+.modal button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+
+.history-card{
+
+    background:#2a2d35;
+
+    padding:14px;
+
+    margin:10px 0;
+
+    border-radius:10px;
+
+    border-left:4px solid #4f7cff;
+
+}

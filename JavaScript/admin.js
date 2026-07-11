@@ -13,7 +13,7 @@ if(versionEl){
 
 emailjs.init("siChPjqF00KVyxv8O");
 import { db } from "./config/firebase.js";
-import { signOut } from "./config/firebase.js";
+import {  auth,signOut } from "./config/firebase.js";
 
 import {
     onUserChanged
@@ -24,6 +24,9 @@ import {
   getDoc,
   collection,
   getDocs,
+  query,
+    orderBy,
+    limit,
   updateDoc,
   addDoc,
   deleteDoc,
@@ -227,21 +230,38 @@ async function loadDashboard() {
         <td>${data.plan || "free"}</td>
         <td>${data.role || "user"}</td>
 
-        <td>
+      <td>
 
-          <button class="premium-btn">
-            Upgrade
-          </button>
+<button class="view-btn">
+    View
+</button>
 
-          <button class="remove-btn">
-            Remove
-          </button>
+<button class="premium-btn">
+    Upgrade
+</button>
 
-        </td>
+<button class="remove-btn">
+    Remove
+</button>
+
+</td>
+
+
+        
       `;
 
       usersBody.appendChild(row);
+// ---------- VIEW USER ----------
 
+row.querySelector(".view-btn")
+?.addEventListener("click", async ()=>{
+
+    await openUserModal(
+        docSnap.id,
+        data
+    );
+
+});
       // ---------- PREMIUM BUTTON ----------
 
       row.querySelector(".premium-btn")
@@ -778,6 +798,388 @@ await addDoc(
   }
 );
 
+
+
+
+
+async function openUserModal(uid,data){
+
+    document.getElementById("userModal")
+    .style.display="flex";
+
+    document.getElementById("modalName")
+    .innerText =
+    data.fullname || "-";
+
+    document.getElementById("modalEmail")
+    .innerText =
+    data.email || "-";
+
+    document.getElementById("modalPlan")
+    .innerText =
+    data.plan || "Free";
+
+    document.getElementById("modalRole")
+    .innerText =
+    data.role || "User";
+
+    document.getElementById("modalUID")
+    .innerText =
+    uid;
+
+    document.getElementById("modalAvatar")
+    .innerText =
+    (data.fullname || "U")
+    .charAt(0)
+    .toUpperCase();
+
+    document.getElementById("modalStudy")
+    .innerText =
+    Math.floor(
+        (data.totalLectureSeconds||0)
+        /3600
+    )+" h";
+
+    document.getElementById("modalSite")
+    .innerText =
+    Math.floor(
+        (data.totalSiteSeconds||0)
+        /3600
+    )+" h";
+
+    document.getElementById("modalStreak")
+    .innerText =
+    data.streakCount || 0;
+
+    document.getElementById("modalJoined")
+    .innerText =
+    data.createdAt
+    ? new Date(data.createdAt)
+        .toLocaleDateString()
+    : "-";
+    try{
+
+    
+const loginSnap = await getDocs(
+
+    query(
+
+        collection(
+            db,
+            "users",
+            uid,
+            "loginLogs"
+        ),
+
+        orderBy(
+            "loginTime",
+            "desc"
+        ),
+
+        limit(1)
+
+    )
+
+);
+
+    if(!loginSnap.empty){
+
+        const login =
+        loginSnap.docs[0].data();
+
+        document.getElementById("modalDevice")
+        .innerText =
+        login.device || "-";
+
+        document.getElementById("modalBrowser")
+        .innerText =
+        login.browser || "-";
+
+        document.getElementById("modalLocation")
+        .innerText =
+        login.location ||
+
+        `${login.city || ""}, ${login.region || ""}, ${login.country || ""}`;
+
+        document.getElementById("modalLastLogin")
+        .innerText =
+        login.loginTime
+        ?.toDate()
+        .toLocaleString()
+        || "-";
+
+    }
+
+}
+
+catch(err){
+
+    console.error(err);
+
+}
+await loadLoginHistory(uid);
+
+await loadActivity(uid);
+
+
+}
+
+async function loadLoginHistory(uid){
+
+    const container =
+    document.getElementById(
+        "loginHistoryContainer"
+    );
+
+    container.innerHTML =
+    "<p>Loading...</p>";
+
+    try{
+
+     const snap = await getDocs(
+
+    query(
+
+        collection(
+            db,
+            "users",
+            uid,
+            "loginLogs"
+        ),
+
+        orderBy(
+            "loginTime",
+            "desc"
+        ),
+
+        limit(10)
+
+    )
+
+);
+console.log(snap.size);
+        console.log("Login History Docs:", snap.size);
+
+        if(snap.empty){
+
+            container.innerHTML =
+            "<p>No Login History</p>";
+
+            return;
+
+        }
+
+        container.innerHTML="";
+
+        snap.forEach(doc=>{
+
+            const d =
+            doc.data();
+
+            container.innerHTML +=
+
+            `
+            <div class="history-card">
+
+                <div>
+
+                    <strong>
+
+                        ${d.device}
+
+                    </strong>
+
+                    •
+
+                    ${d.browser}
+
+                </div>
+
+                <div>
+
+                    📍 ${d.location ||
+                    `${d.city},
+                    ${d.region}`}
+
+                </div>
+
+                <div>
+
+                    🌐 ${d.ip}
+
+                </div>
+
+                <small>
+
+                    ${
+                    d.loginTime
+                    ?.toDate()
+                    .toLocaleString()
+                    }
+
+                </small>
+
+            </div>
+
+            `;
+
+        });
+
+    }
+
+   catch(err){
+
+    console.error(err);
+
+}
+
+
+
+}
+const activityLabels = {
+
+    lecture: "🎥 Played Lecture",
+
+    lecture_completed: "✅ Lecture Completed",
+
+    notes_open: "📖 Opened Notes",
+
+    notes_download: "⬇ Downloaded Notes",
+
+    mock_generate: "🤖 AI Mock Generated",
+
+    pyq_open: "📄 Opened PYQ",
+
+    pyq_download: "⬇ Downloaded PYQ",
+
+    ncert_open: "📚 Opened NCERT",
+
+    ncert_download: "⬇ Downloaded NCERT"
+
+};
+async function loadActivity(uid){
+
+  console.log("Modal UID:", uid);
+console.log("Current Logged In UID:", auth.currentUser.uid);
+
+    const container =
+    document.getElementById(
+        "activityContainer"
+    );
+
+    container.innerHTML =
+    "<p>Loading...</p>";
+
+    try{
+
+        const snap =
+        await getDocs(
+
+            query(
+
+                collection(
+                    db,
+                    "users",
+                    uid,
+                    "activity"
+                ),
+
+                orderBy(
+                    "time",
+                    "desc"
+                ),
+
+                limit(5)
+
+            )
+
+        );
+        console.log("Activity Docs:", snap.size);
+
+        if(snap.empty){
+
+            container.innerHTML =
+            "<p>No Activity</p>";
+
+            return;
+
+        }
+
+        container.innerHTML="";
+
+        snap.forEach(doc=>{
+
+            const d =
+            doc.data();
+
+            container.innerHTML +=
+
+            `
+            <div class="history-card">
+
+                <strong>
+                 ${activityLabels[d.type] || d.type}
+
+                </strong>
+
+                <br>
+
+                ${d.title || ""}
+
+                <br>
+
+                <small>
+
+                    ${
+                    d.time
+?.toDate()
+.toLocaleString()
+                    }
+
+                </small>
+
+            </div>
+
+            `;
+
+        });
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+    }
+
+}
+
+
+
+document
+.getElementById("closeUserModal")
+.addEventListener("click",()=>{
+
+    document
+    .getElementById("userModal")
+    .style.display="none";
+
+});
+
+window.addEventListener("click",(e)=>{
+
+    if(
+        e.target.id==="userModal"
+    ){
+
+        document
+        .getElementById("userModal")
+        .style.display="none";
+
+    }
+
+});
+  
 // ---------------- LOGOUT ----------------
 
 logoutBtn?.addEventListener(
@@ -785,6 +1187,9 @@ logoutBtn?.addEventListener(
   async () => {
 
     await signOut(auth);
+    sessionStorage.removeItem("loginLogged");
+sessionStorage.removeItem("userData");
+
 
     location.replace(
       ROUTES.HOME

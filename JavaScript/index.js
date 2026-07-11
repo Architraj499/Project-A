@@ -12,7 +12,7 @@ import {
   getDoc,
   setDoc
 } from "./config/firebase.js";
-
+import { saveLoginLog } from "./core/loginLogs.js";
 
 const loginEmail = document.getElementById("loginEmail");
 const loginPassword = document.getElementById("loginPassword");
@@ -89,6 +89,7 @@ signupForm.addEventListener("submit", async (e) => {
   termsAcceptedAt: null,
   termsVersion: null
     });
+    await saveLoginLog(user.uid);
 
     message.innerText = "Signup successful! Redirecting...";
    window.location.href = ROUTES.TERMS;
@@ -161,6 +162,7 @@ loginForm.addEventListener("submit", async (e) => {
 termsAcceptedAt: null,
 termsVersion: null,
       });
+      await saveLoginLog(user.uid);
     }
 
     const data = snap.data();

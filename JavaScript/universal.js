@@ -22,8 +22,15 @@ import { onUserLoaded } from "./core/user.js";
 
 import { ROUTES } from "./config/routes.js";import { APP } from "./config/version.js";
 
-document.getElementById("version").textContent =
-`${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`; 
+const version =
+document.getElementById("version");
+
+if(version){
+
+    version.textContent =
+    `${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`;
+
+}
 window.ytPlayer = null;
 window.currentLectureId = null;
 window.watchedSeconds = 0;
@@ -930,6 +937,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById("logoutBtn")?.addEventListener("click", async () => {
     try {
       await signOut(auth);
+      sessionStorage.removeItem("loginLogged");
+sessionStorage.removeItem("userData");
+
     } catch (err) {
       console.error(err);
     }
@@ -1009,11 +1019,17 @@ premiumPlans.includes(data.plan);
 
     startSiteTimer();
 
-    setInterval(() => {
+  let maintenanceInterval = null;
+
+if (!maintenanceInterval) {
+
+    maintenanceInterval = setInterval(() => {
 
         checkWebsiteMaintenance(auth.currentUser);
 
-    },5000);
+    }, 5000);
+
+}
 
 });
 

@@ -7,7 +7,7 @@ import {
     doc,
     getDoc
 } from "../config/firebase.js";
-
+import { saveLoginLog } from "./loginLogs.js";
 import {
     onUserChanged
 } from "./auth.js";
@@ -37,21 +37,52 @@ function notify(){
 
 onUserChanged(async(user)=>{
 
-    currentUser = user;
+  currentUser = user;
 
-    if(!user){
+if(!user){
 
-        currentUserData = null;
+    currentUserData = null;
 
-        sessionStorage.removeItem(
-            "userData"
+    sessionStorage.removeItem("userData");
+    sessionStorage.removeItem("loginLogged");
+
+    notify();
+
+    return;
+
+}
+
+// Login log only once per browser session
+if(!sessionStorage.getItem("loginLogged")){
+
+    try{
+
+        const snap =
+        await getDoc(
+            doc(db,"users",user.uid)
         );
 
-        notify();
+        const data =
+        snap.exists()
+        ? snap.data()
+        : {};
 
-        return;
+        await saveLoginLog(user,data);
+
+        sessionStorage.setItem(
+            "loginLogged",
+            "true"
+        );
 
     }
+
+    catch(err){
+
+        console.error(err);
+
+    }
+
+}
 
     // ----------------------------
     // CACHE
@@ -80,22 +111,23 @@ onUserChanged(async(user)=>{
             doc(db,"users",user.uid)
         );
 
-        if(snap.exists()){
+       if(snap.exists()){
 
-            currentUserData =
-            snap.data();
+    currentUserData =
+    snap.data();
 
-            sessionStorage.setItem(
 
-                "userData",
+    sessionStorage.setItem(
 
-                JSON.stringify(
-                    currentUserData
-                )
+        "userData",
 
-            );
+        JSON.stringify(
+            currentUserData
+        )
 
-        }
+    );
+
+}
 
     }
 
@@ -150,32 +182,41 @@ export function getUserData(){
 // ==========================================
 // Refresh Cache
 // ==========================================
-
 export async function refreshUserData(){
 
     if(!currentUser) return;
 
-    const snap =
-    await getDoc(
-        doc(db,"users",currentUser.uid)
-    );
+    try{
 
-    if(snap.exists()){
-
-        currentUserData =
-        snap.data();
-
-        sessionStorage.setItem(
-
-            "userData",
-
-            JSON.stringify(
-                currentUserData
-            )
-
+        const snap =
+        await getDoc(
+            doc(db,"users",currentUser.uid)
         );
 
-        notify();
+        if(snap.exists()){
+
+            currentUserData =
+            snap.data();
+
+            sessionStorage.setItem(
+
+                "userData",
+
+                JSON.stringify(
+                    currentUserData
+                )
+
+            );
+
+            notify();
+
+        }
+
+    }
+
+    catch(err){
+
+        console.error(err);
 
     }
 

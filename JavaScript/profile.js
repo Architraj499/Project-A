@@ -328,6 +328,9 @@ if(logoutBtn){
     try{
 
       await signOut(auth);
+      sessionStorage.removeItem("loginLogged");
+sessionStorage.removeItem("userData");
+
 
       window.location.href = ROUTES.HOME;
 
