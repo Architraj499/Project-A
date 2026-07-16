@@ -16,7 +16,14 @@ import {
 import emailjs from "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/+esm";
 
 emailjs.init("siChPjqF00KVyxv8O");
+const versionEl = document.getElementById("version");
 
+if(versionEl){
+
+    versionEl.textContent =
+    `${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`;
+
+}
 
 // ---------- EMAIL FUNCTION ----------
 
