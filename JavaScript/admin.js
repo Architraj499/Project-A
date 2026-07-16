@@ -952,7 +952,7 @@ async function loadLoginHistory(uid){
             "desc"
         ),
 
-        limit(10)
+        limit(5)
 
     )
 
