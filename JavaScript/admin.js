@@ -10,7 +10,7 @@ if(versionEl){
     `${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`;
 
 }
-
+import "./admin/featureManager.js";
 emailjs.init("siChPjqF00KVyxv8O");
 import { db } from "./config/firebase.js";
 import {  auth,signOut } from "./config/firebase.js";

@@ -34,9 +34,11 @@ import {
   where,
   orderBy,
   limit,
-  serverTimestamp
+  serverTimestamp,
+  onSnapshot,
+  writeBatch,
+Timestamp
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-
 // ==========================================
 // Firebase Config
 // ==========================================
@@ -99,5 +101,8 @@ export {
   where,
   orderBy,
   limit,
-  serverTimestamp
+  serverTimestamp,
+  onSnapshot,
+  writeBatch,
+Timestamp
 };

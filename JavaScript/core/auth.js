@@ -1,3 +1,4 @@
+// auth.js
 // ==========================================
 // Authentication Manager
 // ==========================================
@@ -7,6 +8,8 @@ import {
     onAuthStateChanged
 } from "../config/firebase.js";
 
+import System from "../core/system.js";
+
 let currentUser = null;
 
 const listeners = [];
@@ -14,11 +17,13 @@ const listeners = [];
 // ==========================================
 // Listen Auth State
 // ==========================================
-
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
 
     currentUser = user;
 
+    await System.init();
+
+   
     listeners.forEach(listener => {
 
         listener(user);

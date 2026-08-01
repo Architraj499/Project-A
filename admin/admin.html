@@ -101,7 +101,34 @@
         🟢 Website is Live
     </p>
 
+
+    
 </div>
+<hr>
+
+<div class="feature-toolbar">
+
+    <button id="newFeatureBtn">
+        ➕ New Feature
+    </button>
+
+</div>
+
+
+    <hr>
+
+<div class="card">
+
+    <h2>⚡ Feature Management</h2>
+
+    <div id="featureContainer">
+
+        <p>Loading Features...</p>
+
+    </div>
+
+</div>
+
 <h2>Post Announcement</h2>
 
 <input
@@ -368,7 +395,46 @@
 <script type="module" src="../JavaScript/admin-guard.js"></script>
 <script type="module" src="../JavaScript/admin.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<div id="featureModal" class="modal">
 
+    <div class="modal-content">
+
+        <span id="closeFeatureModal"
+              class="close">
+
+            &times;
+
+        </span>
+
+        <h2>Create Feature</h2>
+
+        <input
+            id="featureId"
+            placeholder="Feature ID">
+
+        <br><br>
+
+        <input
+            id="featureName"
+            placeholder="Feature Name">
+
+        <br><br>
+
+        <textarea
+            id="featureDescription"
+            placeholder="Description"></textarea>
+
+        <br><br>
+
+        <button id="createFeature">
+
+            🚀 Create Feature
+
+        </button>
+
+    </div>
+
+</div>
 </body>
 
 </html>
