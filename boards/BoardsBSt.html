@@ -7,7 +7,7 @@
 
 
 <link rel="icon" href="../assets/images/logo.png  " type="image/png">
-
+<link rel="stylesheet" href="../CSS/popup.css">
     <link rel="stylesheet" href="../CSS/sub.css">
     <link rel="icon" href="../assets/images/logo.png  " type="image/png">
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -24,10 +24,10 @@
     <a href="../boards/Boards.html"class="active">Boards</a> 
     <a href="../cuet/cuet.html" >CUET</a>
     <a href="../ca/cafoundation.html">CA Foundation</a>
-    <a href="../dashboard/Profile.html">Profile</a>
+    <a href="../dashboard/Profile.html" class="auth-required">Profile</a>
   </nav>
   <div class="user-info">
-    Welcome,<a href="../dashboard/Profile.html"> <span id="usernameDisplay">User</span>
+    Hii,<a href="../dashboard/Profile.html"> <span id="usernameDisplay"></span>
 <span id="premiumBadge"></span></a>
 
   </div>
@@ -175,8 +175,8 @@
       <a href="../legal/Privacy.html">Privacy Policy</a>
       <a href="../legal/tou.html">Terms of Use</a>
       <a href="../legal/contactus.html">Contact Us</a>
-      <a href="../legal/acd.html">Account Deletion</a>
-       <a href="../dashboard/personal.html">Personal Dashboard</a>
+      <a href="../legal/acd.html" class="auth-required">Account Deletion</a>
+       <a href="../dashboard/personal.html" class="auth-required">Personal Dashboard</a>
     </div>
   </div>
  <div class="footer-bottom">
@@ -185,7 +185,7 @@
   </div>
 </footer>
 </div>
-
+<script src="../JavaScript/popup.js"></script>
 <script>
   window.LECTURES = [
   { id: 'B_B1', min: '50min', title: 'Nature and Significance of Management', video: 'https://www.youtube.com/embed/8NJgok-uP1A', notes: 'Notes/BSTCH1.pdf', pyq: 'PYQS/BSTCH1PQ.pdf', progress: 0.0, teacher: 'Sunil Panda Sir' },

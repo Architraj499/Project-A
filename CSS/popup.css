@@ -1,0 +1,164 @@
+.auth-modal{
+    position:fixed;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(8px);
+    opacity:0;
+    visibility:hidden;
+    transition:.3s;
+    z-index:999999;
+}
+
+.auth-modal.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.auth-box{
+
+    width:430px;
+    max-width:92%;
+
+    background:#ffffff;
+    border-radius:24px;
+
+    padding:35px;
+
+    text-align:center;
+
+    animation:popup .35s ease;
+
+    box-shadow:0 25px 80px rgba(0,0,0,.25);
+
+}
+
+@keyframes popup{
+
+from{
+
+transform:translateY(30px) scale(.9);
+opacity:0;
+
+}
+
+to{
+
+transform:translateY(0) scale(1);
+opacity:1;
+
+}
+
+}
+
+.auth-logo{
+
+width:80px;
+height:80px;
+
+margin:auto;
+
+border-radius:50%;
+
+background:linear-gradient(135deg,#6C63FF,#00C6FF);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:38px;
+
+margin-bottom:20px;
+
+color:white;
+
+}
+
+.auth-box h2{
+
+margin:0;
+
+font-size:28px;
+
+}
+
+.auth-box p{
+
+margin:15px 0 30px;
+
+color:#666;
+
+line-height:1.6;
+
+}
+
+.auth-buttons{
+
+display:flex;
+
+gap:12px;
+
+}
+
+.auth-buttons button{
+
+flex:1;
+
+padding:14px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.loginBtn{
+
+background:#6C63FF;
+
+color:white;
+
+}
+
+.signupBtn{
+
+background:#00C6FF;
+
+color:white;
+
+}
+
+.loginBtn:hover,
+.signupBtn:hover{
+
+transform:translateY(-2px);
+
+}
+
+.closeBtn{
+
+margin-top:18px;
+
+background:none;
+
+border:none;
+
+color:#888;
+
+cursor:pointer;
+
+font-size:15px;
+
+}

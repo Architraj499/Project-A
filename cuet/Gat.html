@@ -7,7 +7,7 @@
 
 
 <link rel="icon" href="../assets/images/logo.png  " type="image/png">
-
+<link rel="stylesheet" href="../CSS/popup.css">
     <link rel="stylesheet" href="../CSS/sub.css">
 <link rel="icon" href="../assets/images/logo.png  " type="image/png">
 <link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
@@ -24,10 +24,10 @@
     <a href="../boards/Boards.html">Boards</a> 
     <a href="../cuet/cuet.html" class="active">CUET</a>
     <a href="../ca/cafoundation.html">CA Foundation</a>
-    <a href="../dashboard/Profile.html">Profile</a>
+    <a href="../dashboard/Profile.html" class="auth-required">Profile</a>
   </nav>
   <div class="user-info">
-    Welcome,<a href="../dashboard/Profile.html"> <span id="usernameDisplay">User</span>
+    Hii,<a href="../dashboard/Profile.html"> <span id="usernameDisplay"></span>
 <span id="premiumBadge"></span></a>
    
   </div>
@@ -172,8 +172,8 @@
       <a href="../legal/Privacy.html">Privacy Policy</a>
       <a href="../legal/tou.html">Terms of Use</a>
       <a href="../legal/contactus.html">Contact Us</a>
-      <a href="../legal/acd.html">Account Deletion</a>
-       <a href="../dashboard/personal.html">Personal Dashboard</a>
+      <a href="../legal/acd.html" class="auth-required">Account Deletion</a>
+       <a href="../dashboard/personal.html" class="auth-required">Personal Dashboard</a>
     </div>
   </div>
  <div class="footer-bottom">
@@ -299,7 +299,8 @@
 ];
 
 </script> 
-<script type="module" src="../JavaScript/universal.js"></script> <script>
+<script type="module" src="../JavaScript/universal.js"></script> 
+<script src="../JavaScript/popup.js"></script><script>
   window.Subject = "General Aptitude Test";
   window.Course = "CUET";
 </script> 

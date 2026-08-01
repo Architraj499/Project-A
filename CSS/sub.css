@@ -226,7 +226,7 @@ footer {
   }
 
   .user-info {
-    display: flex; /* Keep welcome, logout & theme toggle visible */
+    display: flex; /* Keep Hii, logout & theme toggle visible */
   }
 }
 /* By default, hide it */

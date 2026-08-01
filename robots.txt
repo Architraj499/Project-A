@@ -1,0 +1,9 @@
+User-agent: *
+
+Allow: /
+
+Disallow: /admin/
+Disallow: /dashboard/Profile.html
+Disallow: /dashboard/personal.html
+
+Sitemap: https://architraj499.github.io/Asprients/sitemap.xml

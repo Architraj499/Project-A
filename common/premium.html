@@ -12,6 +12,7 @@
 
   <link rel="stylesheet" href="../CSS/sub.css">
   <link rel="stylesheet" href="../CSS/premium.css">
+  <link rel="stylesheet" href="../CSS/popup.css">
 
   <link rel="icon" href="../assets/images/logo.png  " type="image/png">
 </head>
@@ -120,9 +121,9 @@
           <li>AI Mock Access</li>
         </ul>
 
-        <button class="buy-btn" data-plan="1 Month">
-          Buy Now
-        </button>
+       <button class="buy-btn auth-required" data-plan="1 Month">
+    Buy Now
+</button>
 
       </div>
 
@@ -145,9 +146,10 @@
           <li>Priority Features</li>
         </ul>
 
-        <button class="buy-btn" data-plan="6 Months">
-          Buy Now
-        </button>
+        <button class="buy-btn auth-required" data-plan="6 Months">
+    Buy Now
+</button>
+
 
       </div>
 
@@ -165,9 +167,9 @@
           <li>Future Features</li>
         </ul>
 
-        <button class="buy-btn" data-plan="12 Months">
-          Buy Now
-        </button>
+        <button class="buy-btn auth-required" data-plan="12 Months">
+    Buy Now
+</button>
 
       </div>
 
@@ -233,8 +235,8 @@
       <a href="../legal/Privacy.html">Privacy Policy</a>
       <a href="../legal/tou.html">Terms of Use</a>
       <a href="../legal/contactus.html">Contact Us</a>
-      <a href="../legal/acd.html">Account Deletion</a>
-       <a href="../dashboard/personal.html">Personal Dashboard</a>
+      <a href="../legal/acd.html" class="auth-required">Account Deletion</a>
+       <a href="../dashboard/personal.html" class="auth-required">Personal Dashboard</a>
     </div>
   </div>
  <div class="footer-bottom">
@@ -245,6 +247,8 @@
 
   </div>
   <script type="module" src="../JavaScript/premium.js"></script>
+  <script type="module" src="../JavaScript/project.js"></script>
+  <script src="../JavaScript/popup.js"></script>
   
 
 </body>

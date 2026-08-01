@@ -948,8 +948,9 @@ sessionStorage.removeItem("userData");
 });
 
 // ---------- Auth ----------
-
+window.isLoggedIn = false;
 onUserLoaded((user, data) => {
+  window.isLoggedIn = !!user;
 
     checkWebsiteMaintenance(user);
 
@@ -1145,3 +1146,34 @@ window.closePremiumModal = function(){
     modal.style.display = "none";
   }
 }
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    document.querySelectorAll(".auth-required").forEach(element => {
+
+        element.addEventListener("click", function (e) {
+
+            // Logged in
+            if (window.isLoggedIn) {
+
+                return;
+
+            }
+
+            // Guest
+
+            e.preventDefault();
+
+            showAuthPopup(`
+                <strong>Login Required</strong><br>
+                Please login or create an account to continue.
+            `);
+
+        });
+
+    });
+
+});

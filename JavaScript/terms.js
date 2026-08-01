@@ -177,7 +177,7 @@ continueBtn.addEventListener("click",async()=>{
         );
 
         continueBtn.innerHTML =
-        "Welcome 🎉";
+        "Hii 🎉";
 
         setTimeout(()=>{
 

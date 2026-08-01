@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <!-- Home -->
+    <url>
+        <loc>https://architraj499.github.io/Asprients/</loc>
+        <lastmod>2026-08-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/dashboard/home.html</loc>
+        <lastmod>2026-08-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.95</priority>
+    </url>
+
+    <!-- Boards -->
+    <url>
+        <loc>https://architraj499.github.io/Asprients/boards/Boards.html</loc>
+        <priority>0.90</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/boards/BoardsAcc.html</loc>
+        <priority>0.85</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/boards/BoardsBSt.html</loc>
+        <priority>0.85</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/boards/BoardsEco.html</loc>
+        <priority>0.85</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/boards/BoardsEng.html</loc>
+        <priority>0.85</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/boards/BoardsHd.html</loc>
+        <priority>0.85</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/boards/BoardsEps.html</loc>
+        <priority>0.85</priority>
+    </url>
+
+    <!-- CUET -->
+    <url>
+        <loc>https://architraj499.github.io/Asprients/cuet/cuet.html</loc>
+        <priority>0.90</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/cuet/Accountancy.html</loc>
+        <priority>0.85</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/cuet/bst.html</loc>
+        <priority>0.85</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/cuet/eco.html</loc>
+        <priority>0.85</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/cuet/eng.html</loc>
+        <priority>0.85</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/cuet/Gat.html</loc>
+        <priority>0.85</priority>
+    </url>
+
+    <!-- CA Foundation -->
+    <url>
+        <loc>https://architraj499.github.io/Asprients/ca/cafoundation.html</loc>
+        <priority>0.90</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/ca/Accounting.html</loc>
+        <priority>0.85</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/ca/law.html</loc>
+        <priority>0.85</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/ca/Quant.html</loc>
+        <priority>0.85</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/ca/B_eco.html</loc>
+        <priority>0.85</priority>
+    </url>
+
+    <!-- Common -->
+    <url>
+        <loc>https://architraj499.github.io/Asprients/common/resources.html</loc>
+        <priority>0.70</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/common/premium.html</loc>
+        <priority>0.70</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/common/soon.html</loc>
+        <priority>0.30</priority>
+    </url>
+
+    <!-- Legal -->
+    <url>
+        <loc>https://architraj499.github.io/Asprients/legal/contactus.html</loc>
+        <priority>0.50</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/legal/Privacy.html</loc>
+        <priority>0.30</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/legal/tou.html</loc>
+        <priority>0.30</priority>
+    </url>
+
+    <url>
+        <loc>https://architraj499.github.io/Asprients/legal/acd.html</loc>
+        <priority>0.30</priority>
+    </url>
+
+</urlset>

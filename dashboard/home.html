@@ -9,7 +9,7 @@
 <link rel="icon" href="../assets/images/logo.png  " type="image/png">
 
 
-
+<link rel="stylesheet" href="../CSS/popup.css">
 <link rel="icon" href="../assets/images/logo.png  " type="image/png">
 
 
@@ -27,14 +27,14 @@
     <a href="../boards/Boards.html" id="acc">Boards</a>
     <a href="../cuet/cuet.html" id="acc">CUET</a>
     <a href="../ca/cafoundation.html" id="acc">CA Foundation</a>
-    <a href="../dashboard/Profile.html" >Profile</a>
+    <a href="../dashboard/Profile.html" class="auth-required">Profile</a>
   </nav>
  
 
 
 
   <div class="user-info">
-    Welcome,<a href="../dashboard/Profile.html"> <span id="usernameDisplay">User</span>
+    Hii,<a href="../dashboard/Profile.html" class="auth-required"> <span id="usernameDisplay"></span>
 <span id="premiumBadge"></span></a>
    
   </div>
@@ -98,9 +98,12 @@
     <div class="card">
       <h3>📝 Personal</h3>
       <p>Planner, journal & progress tracker.</p>
-      <div class="actions">
-        <button type="button" class="play" onclick="window.location.href='../dashboard/personal.html'">Go →</button>
-      </div>
+      <button
+    type="button"
+    class="play auth-required"
+    data-href="../dashboard/personal.html">
+    Go →
+</button>
     </div>
   </div>
 </section>
@@ -114,8 +117,8 @@
       <a href="../legal/Privacy.html">Privacy Policy</a>
       <a href="../legal/tou.html">Terms of Use</a>
       <a href="../legal/contactus.html">Contact Us</a>
-      <a href="../legal/acd.html">Account Deletion</a>
-       <a href="../dashboard/personal.html">Personal Dashboard</a>
+      <a href="../legal/acd.html" class="auth-required">Account Deletion</a>
+       <a href="../dashboard/personal.html" class="auth-required">Personal Dashboard</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -126,7 +129,7 @@
 </div>
 
 <script type="module" src="../JavaScript/home.js"></script>
- <script type="module" src="../JavaScript/auth-guard.js"></script>
+<script src="../JavaScript/popup.js"></script>
 <script type="module" src="../JavaScript/universal.js"></script>  
 </body>
 </html>

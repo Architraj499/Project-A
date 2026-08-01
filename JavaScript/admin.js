@@ -688,7 +688,7 @@ onUserChanged(async (user) => {
         if (!snap.exists()) return;
 
         adminName.textContent =
-        "Welcome Admin, " +
+        "Hii Admin, " +
         snap.data().fullname;
 
         await loadDashboard();
