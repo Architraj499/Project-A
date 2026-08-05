@@ -1,36 +1,51 @@
-// auth-guard.js
+import { ROUTES } from "./config/routes.js";
+import { APP } from "./config/version.js";
 
-import { ROUTES } from "./config/routes.js";import { APP } from "./config/version.js";
-
- 
-import { auth } from "./config/firebase.js";
+import {
+    auth,
+    db,
+    doc,
+    getDoc
+} from "./config/firebase.js";
 
 import { onAuthStateChanged }
 from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
 
-  // Not Logged In
-  if (!user) {
+    // Not logged in
+    if (!user) {
 
-    if (!location.pathname.endsWith(ROUTES.HOME)) {
+        if (!location.pathname.endsWith(ROUTES.HOME)) {
+            location.replace(ROUTES.HOME);
+        }
 
-      window.location.href = ROUTES.HOME;
-
+        return;
     }
 
-    return;
+    const snap = await getDoc(doc(db, "users", user.uid));
 
-  }
+    if (!snap.exists()) return;
 
-  // Logged In User
-  if (
-    location.pathname.endsWith(ROUTES.HOME) ||
-    location.pathname === "/"
-  ) {
+    const data = snap.data();
 
-    window.location.href = ROUTES.DASHBOARD;
+    const accepted =
+        data.termsAccepted &&
+        data.termsVersion === APP.TERMS_VERSION;
 
-  }
+    // User is on login page
+    if (
+        location.pathname.endsWith(ROUTES.HOME) ||
+        location.pathname === "/"
+    ) {
+
+        if (accepted) {
+            location.replace(ROUTES.DASHBOARD);
+        } else {
+            location.replace(ROUTES.TERMS);
+        }
+
+        return;
+    }
 
 });
