@@ -20,7 +20,8 @@ import {
 import { onUserLoaded } from "./core/user.js";
 
 
-import { ROUTES } from "./config/routes.js";import { APP } from "./config/version.js";
+import { ROUTES } from "./config/routes.js";
+import { APP } from "./config/version.js";
 
 const version =
 document.getElementById("version");
@@ -31,6 +32,14 @@ if(version){
     `${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`;
 
 }
+
+
+const lastUpdatedEl =
+document.getElementById("lastUpdated");
+if(lastUpdatedEl){
+    lastUpdatedEl.textContent = APP.UPDATE;
+}
+
 window.ytPlayer = null;
 window.currentLectureId = null;
 window.watchedSeconds = 0;
