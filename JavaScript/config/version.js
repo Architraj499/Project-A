@@ -7,7 +7,7 @@ export const APP = {
     FEATURES: 25,
     IMPROVEMENTS: 15,
     BUGS: 8,
-    RELEASES: 1,
+    RELEASES: 5,
     SECURITY: "Security Upgrade",
     SIZE: "Major Release",
 };
