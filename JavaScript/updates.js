@@ -3,257 +3,315 @@
 // updates.js
 // ======================================
 
-// ------------------------------
-// Smooth Reveal Animation
-// ------------------------------
 import { APP } from "./config/version.js";
 
-const version =
-document.getElementById("version");
+document.addEventListener("DOMContentLoaded", () => {
 
-if(version){
-
-    version.textContent =
-    `${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`;
-
-}
-
-
-const lastUpdatedEl =
-document.getElementById("lastUpdated");
-if(lastUpdatedEl){
-    lastUpdatedEl.textContent = APP.UPDATE;
-}
-
-
-
-const revealElements = document.querySelectorAll(
-".stat-card,.release-card,.update-card,.security-card,.list-item,.timeline-item,.roadmap-card,.feature-box"
-);
-
-const revealObserver = new IntersectionObserver((entries)=>{
-
-entries.forEach(entry=>{
-
-if(entry.isIntersecting){
-
-entry.target.classList.add("show");
-
-}
+    initVersion();
+    initRevealAnimation();
+    initCounters();
+    initBackToTop();
+    initNavbarHighlight();
+    initBlobAnimation();
+    staggerCards();
+    consoleSignature();
 
 });
 
-},{
-threshold:.15
+// ======================================
+// Version Information
+// ======================================
+
+function initVersion(){
+
+const map={
+
+version:`v${APP.VERSION}`,
+
+currentVersion:`v${APP.VERSION}`,
+
+size:APP.SIZE,
+
+type:APP.RELEASE,
+
+upcomingVersion:`v${APP.UPCOMING}`,
+
+security:APP.SECURITY,
+
+releaseVersion:`Version  v${APP.VERSION}`,
+
+releasesVersion:`Version  v${APP.VERSION}`,
+
+tmVersion:`Version  v${APP.VERSION}`,
+
+releaseDate:APP.UPDATE,
+
+rdate:APP.UPDATE,
+
+rddDate:APP.UPDATE,
+
+releaseDateLong:APP.UPDATE,
+
+featureCount:`${APP.FEATURES}+`,
+
+featuresCount:`${APP.FEATURES}+`,
+
+improvementCount:`${APP.IMPROVEMENTS}`,
+
+bugCount:`${APP.BUGS}`,
+
+releaseCount:APP.RELEASES,
+
+releaseType:APP.RELEASE
+
+};
+
+Object.entries(map).forEach(([id,value])=>{
+
+const el=document.getElementById(id);
+
+if(el) el.textContent=value;
+
 });
 
-revealElements.forEach(el=>{
+}
 
-el.classList.add("hidden");
+// ======================================
+// Reveal Animation
+// ======================================
 
-revealObserver.observe(el);
+function initRevealAnimation() {
 
-});
+    const revealElements = document.querySelectorAll(
+        ".stat-card,.release-card,.update-card,.security-card,.list-item,.timeline-item,.roadmap-card,.feature-box"
+    );
 
-// ------------------------------
+    const observer = new IntersectionObserver((entries) => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+                entry.target.classList.add("show");
+            }
+
+        });
+
+    }, {
+        threshold: 0.15
+    });
+
+    revealElements.forEach(el => {
+
+        el.classList.add("hidden");
+
+        observer.observe(el);
+
+    });
+
+}
+
+// ======================================
 // Counter Animation
-// ------------------------------
+// ======================================
 
-const counters=document.querySelectorAll(".stat-card h2");
+function initCounters() {
 
-counters.forEach(counter=>{
+    const counters = document.querySelectorAll(".stat-card h2");
 
-const text=counter.innerText;
+    counters.forEach(counter => {
 
-const number=parseInt(text);
+        const originalText = counter.textContent.trim();
 
-if(isNaN(number)) return;
+        // Animate only numbers like 25 or 25+
+        if (!/^\d+\+?$/.test(originalText))
+            return;
 
-counter.innerText="0";
+        const target = parseInt(originalText);
 
-let current=0;
+        let current = 0;
 
-const speed=Math.ceil(number/50);
+        const increment = Math.max(1, Math.ceil(target / 50));
 
-const update=()=>{
+        counter.textContent = "0";
 
-current+=speed;
+        function updateCounter() {
 
-if(current<number){
+            current += increment;
 
-counter.innerText=current;
+            if (current < target) {
 
-requestAnimationFrame(update);
+                counter.textContent = current;
 
-}else{
+                requestAnimationFrame(updateCounter);
 
-counter.innerText=text;
+            } else {
 
-}
+                counter.textContent = originalText;
 
-}
+            }
 
-update();
+        }
 
-});
+        updateCounter();
 
-// ------------------------------
-// Back To Top Button
-// ------------------------------
-
-const topBtn=document.getElementById("backToTop");
-
-window.addEventListener("scroll",()=>{
-
-if(window.scrollY>400){
-
-topBtn.style.opacity="1";
-
-topBtn.style.pointerEvents="auto";
-
-}else{
-
-topBtn.style.opacity="0";
-
-topBtn.style.pointerEvents="none";
+    });
 
 }
 
-});
+// ======================================
+// Back To Top
+// ======================================
 
-topBtn.addEventListener("click",()=>{
+function initBackToTop() {
 
-window.scrollTo({
+    const topBtn = document.getElementById("backToTop");
 
-top:0,
+    if (!topBtn) return;
 
-behavior:"smooth"
+    window.addEventListener("scroll", () => {
 
-});
+        if (window.scrollY > 400) {
 
-});
+            topBtn.style.opacity = "1";
+            topBtn.style.pointerEvents = "auto";
 
-// ------------------------------
-// Navbar Active Highlight
-// ------------------------------
+        } else {
 
-const sections=document.querySelectorAll("section");
+            topBtn.style.opacity = "0";
+            topBtn.style.pointerEvents = "none";
 
-const navLinks=document.querySelectorAll("nav a");
+        }
 
-window.addEventListener("scroll",()=>{
+    });
 
-let current="";
+    topBtn.addEventListener("click", () => {
 
-sections.forEach(section=>{
+        window.scrollTo({
 
-const top=section.offsetTop-150;
+            top: 0,
 
-const height=section.clientHeight;
+            behavior: "smooth"
 
-if(scrollY>=top){
+        });
 
-current=section.getAttribute("id");
-
-}
-
-});
-
-navLinks.forEach(link=>{
-
-link.classList.remove("active-scroll");
-
-if(link.getAttribute("href")==="#"+current){
-
-link.classList.add("active-scroll");
+    });
 
 }
 
-});
+// ======================================
+// Navbar Active Link
+// ======================================
 
-});
+function initNavbarHighlight() {
 
-// ------------------------------
-// Latest Release Glow
-// ------------------------------
+    const sections = document.querySelectorAll("section");
 
-const release=document.querySelector(".release-card");
+    const navLinks = document.querySelectorAll("nav a");
 
-if(release){
+    if (!sections.length || !navLinks.length) return;
 
-setInterval(()=>{
+    window.addEventListener("scroll", () => {
 
-release.classList.toggle("pulse");
+        let current = "";
 
-},2500);
+        sections.forEach(section => {
+
+            const top = section.offsetTop - 150;
+
+            if (window.scrollY >= top) {
+
+                current = section.id;
+
+            }
+
+        });
+
+        navLinks.forEach(link => {
+
+            link.classList.remove("active-scroll");
+
+            const href = link.getAttribute("href");
+
+            if (href === "#" + current) {
+
+                link.classList.add("active-scroll");
+
+            }
+
+        });
+
+    });
 
 }
 
-// ------------------------------
-// Random Floating Rotation
-// ------------------------------
+// ======================================
+// Floating Background Animation
+// ======================================
 
-document.querySelectorAll(".blob").forEach(blob=>{
+function initBlobAnimation() {
 
-let angle=Math.random()*360;
+    document.querySelectorAll(".blob").forEach(blob => {
 
-setInterval(()=>{
+        let angle = Math.random() * 360;
 
-angle+=0.2;
+        function rotate() {
 
-blob.style.transform=`rotate(${angle}deg)`;
+            angle += 0.15;
 
-},30);
+            blob.style.transform = `rotate(${angle}deg)`;
 
-});
+            requestAnimationFrame(rotate);
 
-// ------------------------------
-// Stagger Cards
-// ------------------------------
+        }
 
-const cards=document.querySelectorAll(".update-card");
+        rotate();
 
-cards.forEach((card,index)=>{
+    });
 
-card.style.transitionDelay=`${index*80}ms`;
+}
 
-});
+// ======================================
+// Card Animation Delay
+// ======================================
 
-// ------------------------------
-// Hover Sound (Optional)
-// ------------------------------
+function staggerCards() {
 
-document.querySelectorAll(".update-card,.roadmap-card").forEach(card=>{
+    document.querySelectorAll(".update-card").forEach((card, index) => {
 
-card.addEventListener("mouseenter",()=>{
+        card.style.transitionDelay = `${index * 80}ms`;
 
-card.style.transform="translateY(-10px) scale(1.02)";
+    });
 
-});
+}
 
-card.addEventListener("mouseleave",()=>{
+// ======================================
+// Console
+// ======================================
 
-card.style.transform="";
+function consoleSignature() {
 
-});
+    console.log(
 
-});
+        `%c🚀 ${APP.NAME}`,
 
-// ------------------------------
-// Console Signature
-// ------------------------------
+        "font-size:22px;color:#8b5cf6;font-weight:bold;"
 
-console.log(
-"%c🚀 Asprients",
-"font-size:22px;color:#8b5cf6;font-weight:bold;"
-);
+    );
 
-console.log(
-"%cVersion 1.0.0",
-"font-size:14px;color:#06b6d4;"
-);
+    console.log(
 
-console.log(
-"%cDeveloped by Archit",
-"font-size:13px;color:#22c55e;"
-);
+        `%cv${APP.VERSION}`,
+
+        "font-size:14px;color:#06b6d4;"
+
+    );
+
+    console.log(
+
+        "%cDeveloped by Archit",
+
+        "font-size:13px;color:#22c55e;"
+
+    );
+
+}
