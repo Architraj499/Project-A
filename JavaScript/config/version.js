@@ -3,6 +3,7 @@ export const APP = {
     VERSION: "2.1.9",
     UPCOMING: "2.2.0",
     RELEASE: "Major Update",
+    TYPE: "Stable",
     UPDATE: " August 06 2026",
     FEATURES: 25,
     IMPROVEMENTS: 15,

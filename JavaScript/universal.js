@@ -29,7 +29,7 @@ document.getElementById("version");
 if(version){
 
     version.textContent =
-    `${APP.NAME} v${APP.VERSION} (${APP.RELEASE})`;
+    `${APP.NAME} v${APP.VERSION} (${APP.TYPE})`;
 
 }
 
