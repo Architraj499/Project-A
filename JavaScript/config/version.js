@@ -11,4 +11,5 @@ export const APP = {
     RELEASES: 5,
     SECURITY: "Security Upgrade",
     SIZE: "Major Release",
+    TERMS_VERSION: "1.2.0",
 };
