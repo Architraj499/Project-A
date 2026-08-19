@@ -136,10 +136,90 @@ function escapeHtml(s) {
     .replace(/'/g, "&apos;");
 }
 
-function minutesToSeconds(min) {
-  if (!min || min === 'TBA') return 0;
-  const n = parseInt(min, 10); // handles "71min"
-  return isNaN(n) ? 0 : n * 60;
+function minutesToSeconds(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return 0;
+    }
+
+    const text =
+        String(value)
+            .trim()
+            .toLowerCase();
+
+    if (!text || text === "tba") {
+        return 0;
+    }
+
+
+    // ------------------------------------------
+    // Pure number
+    // Example: "56"
+    // ------------------------------------------
+
+    if (
+        /^\d+(\.\d+)?$/.test(text)
+    ) {
+
+        return (
+            Number(text) * 60
+        );
+
+    }
+
+
+    // ------------------------------------------
+    // Hours + minutes
+    // Examples:
+    // "1hr 35min"
+    // "1 hour 35 minutes"
+    // "1h 35m"
+    // ------------------------------------------
+
+    const hoursMatch =
+        text.match(
+            /(\d+(?:\.\d+)?)\s*(?:hr|hrs|hour|hours|h)\b/
+        );
+
+    const minutesMatch =
+        text.match(
+            /(\d+(?:\.\d+)?)\s*(?:min|mins|minute|minutes|m)\b/
+        );
+
+
+    const hours =
+        hoursMatch
+            ? Number(hoursMatch[1])
+            : 0;
+
+
+    const minutes =
+        minutesMatch
+            ? Number(minutesMatch[1])
+            : 0;
+
+
+    if (
+        hours > 0 ||
+        minutes > 0
+    ) {
+
+        return (
+            hours * 3600 +
+            minutes * 60
+        );
+
+    }
+
+
+    // ------------------------------------------
+    // Fallback
+    // ------------------------------------------
+
+    return 0;
 }
 window.minutesToSeconds = minutesToSeconds;
 
@@ -498,75 +578,764 @@ if (lecture.premium === true) {
   updateOverall();
 }
 
-// ---------- Video ----------
-function openVideoOriginal(rawUrl, title, lectureId) {
-  
+// ==========================================================
+// YouTube Video Player + Real Progress Tracking
+// ==========================================================
 
-  if (!rawUrl || rawUrl === '#') {
-    alert('Video will be uploaded soon.');
-    return;
-  }
+let ytPlayer = null;
+let currentLectureId = null;
+let currentVideoId = null;
 
-  currentLectureId = lectureId;
-  window.currentLectureId = lectureId;
+let progressSaveInterval = null;
+let lastSavedVideoSecond = 0;
 
-  const iframe = document.getElementById('videoIframe');
-  const modal = document.getElementById('videoModal');
+let youtubeReady = false;
+let playerReady = false;
 
-  if (document.getElementById('modalTitle')) {
-    document.getElementById('modalTitle').innerText = title || 'Lecture';
-  }
 
-  let embed = rawUrl;
-  if (!embed.includes('embed')) {
-    const m =
-      rawUrl.match(/[?&]v=([A-Za-z0-9_-]+)/) ||
-      rawUrl.match(/youtu\.be\/([A-Za-z0-9_-]+)/);
+// ==========================================================
+// YouTube API Ready
+// ==========================================================
 
-    if (m && m[1]) {
-      embed = 'https://www.youtube-nocookie.com/embed/' + m[1];
+window.onYouTubeIframeAPIReady = function () {
+
+    youtubeReady = true;
+
+    console.log(
+        "YouTube IFrame API ready."
+    );
+
+};
+
+
+// ==========================================================
+// Extract YouTube Video ID
+// ==========================================================
+
+function getYouTubeVideoId(rawUrl) {
+
+    if (!rawUrl) return null;
+
+
+    const embedMatch =
+        rawUrl.match(
+            /youtube(?:-nocookie)?\.com\/embed\/([^?&/]+)/
+        );
+
+
+    const watchMatch =
+        rawUrl.match(
+            /[?&]v=([^?&]+)/
+        );
+
+
+    const shortMatch =
+        rawUrl.match(
+            /youtu\.be\/([^?&/]+)/
+        );
+
+
+    if (embedMatch) {
+
+        return embedMatch[1];
+
     }
-  }
 
-  const resumeTime = Number(localStorage.getItem(`yt_${lectureId}`)) || 0;
-  const sep = embed.includes('?') ? '&' : '?';
 
-  iframe.src =
-    embed +
-    sep +
-    `enablejsapi=1&origin=${location.origin}&start=${Math.floor(resumeTime)}&autoplay=1&mute=1&rel=0&modestbranding=1`;
+    if (watchMatch) {
 
-  ytPlayer = iframe;
+        return watchMatch[1];
 
-  modal.classList.add('open');
-  modal.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
+    }
 
-  startLectureTimer();
+
+    if (shortMatch) {
+
+        return shortMatch[1];
+
+    }
+
+
+    return null;
+
 }
+
+
+// ==========================================================
+// Open Video
+// ==========================================================
+
+function openVideoOriginal(
+    rawUrl,
+    title,
+    lectureId
+) {
+
+    if (
+        !rawUrl ||
+        rawUrl === "#"
+    ) {
+
+        alert(
+            "Video will be uploaded soon."
+        );
+
+        return;
+
+    }
+
+
+    const videoId =
+        getYouTubeVideoId(rawUrl);
+
+
+    if (!videoId) {
+
+        console.error(
+            "Invalid YouTube URL:",
+            rawUrl
+        );
+
+        alert(
+            "Invalid YouTube video."
+        );
+
+        return;
+
+    }
+
+
+    currentLectureId =
+        lectureId;
+
+    window.currentLectureId =
+        lectureId;
+
+    currentVideoId =
+        videoId;
+
+
+    const modal =
+        document.getElementById(
+            "videoModal"
+        );
+
+
+    const iframe =
+        document.getElementById(
+            "videoIframe"
+        );
+
+
+    if (!modal || !iframe) {
+
+        console.error(
+            "Video modal/player not found."
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "modalTitle"
+    ).innerText =
+        title || "Lecture";
+
+
+    const savedTime =
+        Number(
+            localStorage.getItem(
+                `yt_${lectureId}`
+            )
+        ) || 0;
+
+
+    lastSavedVideoSecond =
+        savedTime;
+
+
+    modal.classList.add("open");
+
+    modal.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+    document.body.style.overflow =
+        "hidden";
+
+
+    // ======================================================
+    // FIRST OPEN
+    // ======================================================
+
+    if (
+        !ytPlayer ||
+        !playerReady
+    ) {
+
+        createYouTubePlayer(
+            iframe,
+            videoId,
+            savedTime
+        );
+
+    }
+
+    // ======================================================
+    // REOPEN EXISTING PLAYER
+    // ======================================================
+
+    else {
+
+        console.log(
+            "Reusing existing YouTube player."
+        );
+
+
+        try {
+
+            ytPlayer.loadVideoById({
+                videoId: videoId,
+                startSeconds: savedTime
+            });
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Failed to reuse YouTube player:",
+                error
+            );
+
+            // Fallback: recreate player
+
+            playerReady =
+                false;
+
+            createYouTubePlayer(
+                iframe,
+                videoId,
+                savedTime
+            );
+
+        }
+
+    }
+
+
+    startLectureTimer();
+
+}
+
+
+// ==========================================================
+// Create Player
+// ==========================================================
+
+function createYouTubePlayer(
+    iframe,
+    videoId,
+    resumeTime
+) {
+
+    playerReady =
+        false;
+
+
+    if (
+        ytPlayer
+    ) {
+
+        try {
+
+            ytPlayer.destroy();
+
+        }
+
+        catch (error) {
+
+            console.warn(
+                "Old player cleanup:",
+                error
+            );
+
+        }
+
+        ytPlayer =
+            null;
+
+    }
+
+
+    // Set iframe source only when creating
+    // the player for the first time.
+
+    iframe.src =
+        `https://www.youtube.com/embed/${videoId}` +
+        `?enablejsapi=1` +
+        `&origin=${encodeURIComponent(location.origin)}` +
+        `&autoplay=1` +
+        `&mute=1` +
+        `&rel=0` +
+        `&modestbranding=1`;
+
+
+    ytPlayer =
+        new YT.Player(
+            iframe,
+            {
+
+                events: {
+
+                    onReady:
+                        function (event) {
+
+                            playerReady =
+                                true;
+
+
+                            console.log(
+                                "YouTube player ready."
+                            );
+
+
+                            if (
+                                resumeTime > 0
+                            ) {
+
+                                event.target.seekTo(
+                                    resumeTime,
+                                    true
+                                );
+
+                            }
+
+
+                            event.target.playVideo();
+
+                        },
+
+
+                    onStateChange:
+                        function (event) {
+
+                            handleYouTubeState(
+                                event
+                            );
+
+                        },
+
+
+                    onError:
+                        function (event) {
+
+                            console.error(
+                                "YouTube player error:",
+                                event.data
+                            );
+
+                        }
+
+                }
+
+            }
+        );
+
+}
+
+
+// ==========================================================
+// YouTube State
+// ==========================================================
+
+function handleYouTubeState(
+    event
+) {
+
+    if (
+        event.data ===
+        YT.PlayerState.PLAYING
+    ) {
+
+        console.log(
+            "YouTube: PLAYING"
+        );
+
+        startVideoProgressTracking();
+
+    }
+
+    else {
+
+        console.log(
+            "YouTube state:",
+            event.data
+        );
+
+        stopVideoProgressTracking();
+
+        saveCurrentVideoProgress();
+
+    }
+
+}
+
+
+// ==========================================================
+// Progress Tracking
+// ==========================================================
+
+function startVideoProgressTracking() {
+
+    stopVideoProgressTracking();
+
+
+    progressSaveInterval =
+        setInterval(
+            saveCurrentVideoProgress,
+            5000
+        );
+
+}
+
+
+function stopVideoProgressTracking() {
+
+    if (
+        progressSaveInterval
+    ) {
+
+        clearInterval(
+            progressSaveInterval
+        );
+
+        progressSaveInterval =
+            null;
+
+    }
+
+}
+
+
+// ==========================================================
+// Save Actual YouTube Position
+// ==========================================================
+async function saveCurrentVideoProgress() {
+
+    if (
+        !ytPlayer ||
+        !playerReady ||
+        !currentLectureId
+    ) {
+        return;
+    }
+
+    if (
+        typeof ytPlayer.getCurrentTime !== "function" ||
+        typeof ytPlayer.getDuration !== "function"
+    ) {
+        return;
+    }
+
+    try {
+
+        const currentTime =
+            ytPlayer.getCurrentTime();
+
+        const videoDuration =
+            ytPlayer.getDuration();
+
+
+        if (
+            !Number.isFinite(currentTime) ||
+            !Number.isFinite(videoDuration) ||
+            videoDuration <= 0
+        ) {
+            return;
+        }
+
+
+        const seconds =
+            Math.floor(currentTime);
+
+
+        const progress =
+            Math.min(
+                currentTime / videoDuration,
+                1
+            );
+
+
+        const percentage =
+            Math.round(progress * 100);
+
+
+        // ======================================================
+        // LOCAL RESUME POSITION
+        // ======================================================
+
+        localStorage.setItem(
+            `yt_${currentLectureId}`,
+            String(seconds)
+        );
+
+
+        // ======================================================
+        // FIND LECTURE
+        // ======================================================
+
+        const lecture =
+            LECTURES.find(
+                lecture =>
+                    lecture.id === currentLectureId
+            );
+
+
+        if (!lecture) {
+            return;
+        }
+
+
+        lecture.progress =
+            progress;
+
+
+        // ======================================================
+        // COMPLETION
+        // ======================================================
+
+        if (
+            progress >= 0.95 &&
+            !lecture.completed
+        ) {
+
+            lecture.completed =
+                true;
+
+
+            console.log(
+                "🎉 Lecture completed:",
+                currentLectureId,
+                percentage + "%"
+            );
+
+
+            // Use your existing completion function
+            await markCompleted(
+                currentLectureId
+            );
+
+        }
+
+
+        // ======================================================
+        // FIRESTORE PROGRESS
+        // ======================================================
+
+        if (
+            currentUserId
+        ) {
+
+            await saveLectureProgress(
+                currentLectureId,
+                progress
+            );
+
+        }
+
+
+        // ======================================================
+        // UI
+        // ======================================================
+
+        updateOverallUIOnly();
+
+
+        console.log(
+            "Video progress saved:",
+            currentLectureId,
+            seconds + "s",
+            "/" +
+            Math.floor(videoDuration) +
+            "s",
+            percentage + "%"
+        );
+
+
+        lastSavedVideoSecond =
+            seconds;
+
+
+    }
+    catch (error) {
+
+        console.error(
+            "Video progress error:",
+            error
+        );
+
+    }
+
+}
+// ==========================================================
+// UI Progress
+// ==========================================================
+
+function updateOverallUIOnly() {
+
+    if (
+        !LECTURES.length
+    ) {
+
+        return;
+
+    }
+
+
+    const avg =
+        Math.round(
+
+            (
+                LECTURES.reduce(
+                    (
+                        total,
+                        lecture
+                    ) =>
+
+                        total +
+                        (
+                            lecture.progress ||
+                            0
+                        ),
+
+                    0
+                )
+
+                /
+
+                LECTURES.length
+
+            ) * 100
+
+        );
+
+
+    const overallPercent =
+        document.getElementById(
+            "overallPercent"
+        );
+
+
+    const ringPercent =
+        document.getElementById(
+            "ringPercent"
+        );
+
+
+    const overallBar =
+        document.getElementById(
+            "overallBar"
+        );
+
+
+    if (overallPercent) {
+
+        overallPercent.innerText =
+            avg + "%";
+
+    }
+
+
+    if (ringPercent) {
+
+        ringPercent.innerText =
+            avg + "%";
+
+    }
+
+
+    if (overallBar) {
+
+        overallBar.style.width =
+            avg + "%";
+
+    }
+
+}
+
+
+// ==========================================================
+// Close Modal
+// ==========================================================
 
 function closeModal() {
-  const iframe = document.getElementById('videoIframe');
-  const modal = document.getElementById('videoModal');
 
-  if (ytPlayer && ytPlayer.contentWindow) {
-    ytPlayer.contentWindow.postMessage(
-      '{"event":"command","func":"getCurrentTime","args":""}',
-      '*'
-    );
-  }
+    // Save position BEFORE closing
 
-  if (iframe) iframe.src = '';
+    saveCurrentVideoProgress();
 
-  if (modal) {
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden', 'true');
-  }
 
-  document.body.style.overflow = '';
-  stopLectureTimer();
+    stopVideoProgressTracking();
+
+
+    // IMPORTANT:
+    // Do NOT destroy the YouTube player.
+    // Do NOT clear iframe.src.
+
+    if (
+        ytPlayer &&
+        playerReady
+    ) {
+
+        try {
+
+            ytPlayer.pauseVideo();
+
+        }
+
+        catch (error) {
+
+            console.warn(
+                "Could not pause YouTube player:",
+                error
+            );
+
+        }
+
+    }
+
+
+    const modal =
+        document.getElementById(
+            "videoModal"
+        );
+
+
+    if (modal) {
+
+        modal.classList.remove(
+            "open"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+    }
+
+
+    document.body.style.overflow =
+        "";
+
+
+    stopLectureTimer();
+
 }
-
 // ---------- Tabs ----------
 function openTab(e) {
   const tab = e.currentTarget.dataset.tab;
@@ -620,21 +1389,46 @@ async function saveLectureProgress(lectureId, value) {
   }
 }
 
-function markCompleted(lectureId) {
-  const lec = LECTURES.find(l => l.id === lectureId);
-  if (!lec) return;
+async function markCompleted(lectureId) {
 
-  if (lec.progress < 1) {
+    const lec =
+        LECTURES.find(
+            l => l.id === lectureId
+        );
+
+    if (!lec) return;
+
+    // Already completed
+    if (lec.progress >= 1) {
+        return;
+    }
+
     lec.progress = 1;
-    updateOverall();
-    saveLectureProgress(lectureId, 1);
+    lec.completed = true;
 
-    saveActivity("lecture_completed", lec.title, lectureId, {
-      action: "completed"
-    });
-  }
+    console.log(
+        "🎉 Lecture completed:",
+        lectureId
+    );
 
-  renderAll();
+    // ONE progress write
+    await saveLectureProgress(
+        lectureId,
+        1
+    );
+
+    saveActivity(
+        "lecture_completed",
+        lec.title,
+        lectureId,
+        {
+            action: "completed"
+        }
+    );
+
+    updateOverallUIOnly();
+
+    renderAll();
 }
 
 // ---------- Timers ----------
@@ -716,7 +1510,6 @@ async function syncUserTime() {
 
 
 
-
 function startLectureTimer() {
 
     if (lectureTimerInterval)
@@ -732,37 +1525,21 @@ function startLectureTimer() {
         updateLectureTimeDisplay();
 
         // Save every 30 seconds
-        if (lectureSeconds - lastLectureSave >= 30) {
+        if (
+            lectureSeconds -
+            lastLectureSave >= 30
+        ) {
 
-            lastLectureSave = lectureSeconds;
+            lastLectureSave =
+                lectureSeconds;
 
             syncUserTime();
 
         }
 
-        const lec =
-        LECTURES.find(l => l.id === currentLectureId);
-
-        if (!lec || lec.progress >= 1)
-            return;
-
-        const totalSeconds =
-        minutesToSeconds(lec.min);
-
-        if (!totalSeconds)
-            return;
-
-        if (watchedSeconds / totalSeconds >= 0.8) {
-
-            markCompleted(currentLectureId);
-
-        }
-
-    },1000);
-
+    }, 1000);
 
 }
-
 function stopLectureTimer() {
   clearInterval(lectureTimerInterval);
   lectureTimerInterval = null;
