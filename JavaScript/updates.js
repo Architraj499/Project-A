@@ -284,34 +284,3 @@ function staggerCards() {
 
 }
 
-// ======================================
-// Console
-// ======================================
-
-function consoleSignature() {
-
-    console.log(
-
-        `%c🚀 ${APP.NAME}`,
-
-        "font-size:22px;color:#8b5cf6;font-weight:bold;"
-
-    );
-
-    console.log(
-
-        `%cv${APP.VERSION}`,
-
-        "font-size:14px;color:#06b6d4;"
-
-    );
-
-    console.log(
-
-        "%cDeveloped by Archit",
-
-        "font-size:13px;color:#22c55e;"
-
-    );
-
-}

@@ -627,10 +627,7 @@ window.onYouTubeIframeAPIReady = function () {
 
     youtubeReady = true;
 
-    console.log(
-        "YouTube IFrame API ready."
-    );
-
+    
 };
 
 
@@ -816,9 +813,7 @@ function openVideoOriginal(
 
     else {
 
-        console.log(
-            "Reusing existing YouTube player."
-        );
+       
 
 
         try {
@@ -924,9 +919,7 @@ function createYouTubePlayer(
                                 true;
 
 
-                            console.log(
-                                "YouTube player ready."
-                            );
+                           
 
 
                             if (
@@ -987,9 +980,7 @@ function handleYouTubeState(
         YT.PlayerState.PLAYING
     ) {
 
-        console.log(
-            "YouTube: PLAYING"
-        );
+        
 
         startVideoProgressTracking();
 
@@ -997,10 +988,7 @@ function handleYouTubeState(
 
     else {
 
-        console.log(
-            "YouTube state:",
-            event.data
-        );
+       
 
         stopVideoProgressTracking();
 
@@ -1147,12 +1135,7 @@ updateLectureProgressUI(
                 true;
 
 
-            console.log(
-                "🎉 Lecture completed:",
-                currentLectureId,
-                percentage + "%"
-            );
-
+           
 
             // Use your existing completion function
             await markCompleted(
@@ -1185,15 +1168,7 @@ updateLectureProgressUI(
         updateOverallUIOnly();
 
 
-        console.log(
-            "Video progress saved:",
-            currentLectureId,
-            seconds + "s",
-            "/" +
-            Math.floor(videoDuration) +
-            "s",
-            percentage + "%"
-        );
+       
 
 
         lastSavedVideoSecond =
@@ -1605,10 +1580,7 @@ async function markCompleted(lectureId) {
     lec.progress = 1;
     lec.completed = true;
 
-    console.log(
-        "🎉 Lecture completed:",
-        lectureId
-    );
+   
 
     // ONE progress write
     await saveLectureProgress(
