@@ -959,3 +959,17 @@ a:-webkit-any-link {
     cursor:pointer;
 
 }
+
+#newFeatureBtn{
+
+     display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 90px;
+
+    margin:50px;
+
+   
+
+}
