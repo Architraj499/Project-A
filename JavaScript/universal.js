@@ -348,8 +348,13 @@ function renderAll() {
     grid.appendChild(lectureContainer.container);
 
     sectionLectures.forEach(l => {
-      const div = document.createElement('div');
-      div.className = 'card';
+      const div =
+    document.createElement('div');
+
+div.className = 'card';
+
+div.dataset.lectureId =
+    l.id;
 
       div.innerHTML = `
         <div class="row">
@@ -359,23 +364,44 @@ function renderAll() {
 
         <div class="chapter-title">${l.title}</div>
 
-        <div class="muted">
-          ${l.progress >= 1
-            ? '<span style="color:#22c55e;font-weight:600">✔ Completed</span>'
-            : '<span style="color:#f97316">⏳ Pending</span>'
-          }
-        </div>
+       <div
+    class="muted"
+    data-progress-status
+>
+    ${l.progress >= 1
+        ? '<span style="color:#22c55e;font-weight:600">✔ Completed</span>'
+        : '<span style="color:#f97316">⏳ Pending</span>'
+    }
+</div>
 
         <div class="muted">Lecture: 1 • Duration — ${l.min || "TBA"}</div>
 
-        <div style="display:flex; gap:12px; align-items:center">
-          <div class="ring">${Math.round((l.progress || 0) * 100)}%</div>
-          <div style="flex:1">
-            <div class="progress">
-              <i style="width:${(l.progress || 0) * 100}%"></i>
-            </div>
-          </div>
-        </div>
+        <div
+  style="display:flex; gap:12px; align-items:center"
+  data-lecture-id="${l.id}"
+>
+
+  <div
+    class="ring"
+    data-progress-percent="${l.id}"
+  >
+    ${Math.round((l.progress || 0) * 100)}%
+  </div>
+
+  <div style="flex:1">
+
+    <div class="progress">
+
+      <i
+        data-progress-bar="${l.id}"
+        style="width:${(l.progress || 0) * 100}%"
+      ></i>
+
+    </div>
+
+  </div>
+
+</div>
 
        <div class="actions">
   <button class="small play"
@@ -1101,8 +1127,12 @@ async function saveCurrentVideoProgress() {
 
 
         lecture.progress =
-            progress;
+    progress;
 
+updateLectureProgressUI(
+    currentLectureId,
+    progress
+);
 
         // ======================================================
         // COMPLETION
@@ -1184,6 +1214,90 @@ async function saveCurrentVideoProgress() {
 // ==========================================================
 // UI Progress
 // ==========================================================
+// ==========================================================
+// Update Single Lecture Progress UI
+// ==========================================================
+function updateLectureProgressUI(lectureId, progress) {
+
+    const percentage =
+        Math.round(
+            progress * 100
+        );
+
+
+    // Find elements belonging to this lecture.
+    // Your lecture card should have data-lecture-id.
+
+    const elements =
+        document.querySelectorAll(
+            `[data-lecture-id="${lectureId}"]`
+        );
+
+
+    if (!elements.length) {
+        return;
+    }
+
+
+    elements.forEach(
+        element => {
+
+            // ------------------------------------------
+            // Progress percentage
+            // ------------------------------------------
+
+            const percentEl =
+                element.querySelector(
+                    "[data-progress-percent]"
+                );
+
+
+            if (percentEl) {
+
+                percentEl.textContent =
+                    percentage + "%";
+
+            }
+
+
+            // ------------------------------------------
+            // Progress bar
+            // ------------------------------------------
+
+            const barEl =
+                element.querySelector(
+                    "[data-progress-bar]"
+                );
+
+
+            if (barEl) {
+
+                barEl.style.width =
+                    percentage + "%";
+
+            }
+
+
+            // ------------------------------------------
+            // Completed state
+            // ------------------------------------------
+
+            if (
+                progress >= 0.95
+            ) {
+
+                element.classList.add(
+                    "completed"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
 
 function updateOverallUIOnly() {
 
@@ -1274,7 +1388,92 @@ function updateOverallUIOnly() {
 
 function closeModal() {
 
-    // Save position BEFORE closing
+// ==========================================================
+// Live Frontend Lecture Progress
+// ==========================================================
+function updateLectureProgressUI(
+    lectureId,
+    progress
+) {
+
+    const percentage =
+        Math.round(
+            progress * 100
+        );
+
+
+    // Find the card belonging to this lecture
+
+    const card =
+        document.querySelector(
+            `.card[data-lecture-id="${lectureId}"]`
+        );
+
+
+    if (!card) {
+        return;
+    }
+
+
+    // Percentage ring
+
+    const percentEl =
+        card.querySelector(
+            `[data-progress-percent="${lectureId}"]`
+        );
+
+
+    if (percentEl) {
+
+        percentEl.textContent =
+            percentage + "%";
+
+    }
+
+
+    // Progress bar
+
+    const progressBar =
+        card.querySelector(
+            `[data-progress-bar="${lectureId}"]`
+        );
+
+
+    if (progressBar) {
+
+        progressBar.style.width =
+            percentage + "%";
+
+    }
+
+
+    // Completion label
+
+    const statusEl =
+        card.querySelector(
+            "[data-progress-status]"
+        );
+
+
+    if (statusEl) {
+
+        if (
+            progress >= 0.95
+        ) {
+
+            statusEl.innerHTML =
+                '<span style="color:#22c55e;font-weight:600">✔ Completed</span>';
+
+        } else {
+
+            statusEl.innerHTML =
+                '<span style="color:#f97316">⏳ Pending</span>';
+
+        }
+
+    }
+
+}
 
     saveCurrentVideoProgress();
 
