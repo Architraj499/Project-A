@@ -1,15 +1,29 @@
 export const APP = {
+
     NAME: "Asprients",
-    VERSION: "2.1.9",
-    UPCOMING: "2.2.0",
+
+    VERSION: "2.2.0",
+
+    UPCOMING: "2.3.0",
+
     RELEASE: "Major Update",
+
     TYPE: "Stable",
-    UPDATE: " August 06 2026",
-    FEATURES: 25,
-    IMPROVEMENTS: 15,
-    BUGS: 8,
-    RELEASES: 5,
+
+    UPDATE: "August 19 2026",
+
+    FEATURES: 3,
+
+    IMPROVEMENTS: 3,
+
+    BUGS: 3,
+
+    RELEASES: 6,
+
     SECURITY: "Security Upgrade",
+
     SIZE: "Major Release",
+
     TERMS_VERSION: "1.2.0",
+
 };

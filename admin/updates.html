@@ -231,11 +231,7 @@ Released on
 
 <div class="release-description">
 
-This is the first official public release of
-Asprients. It introduces the complete study
-platform for Boards, CUET and CA Foundation,
-along with user authentication, progress
-tracking, dashboards and many other features.
+Asprients 2.2.0 introduces a major upgrade to lecture progress tracking. Lecture progress is now calculated directly from actual YouTube playback, synchronized with Firebase, reflected live on the frontend, and automatically marked complete when the lecture is substantially watched.
 
 </div>
 
@@ -309,15 +305,15 @@ Security Upgrade
 <div class="cards-grid">
 
 <div class="update-card">
-<i class="fa-solid fa-user-shield"></i>
-<h3>Authentication</h3>
+<i class="fa-solid fa-chart-gantt"></i>
+<h3> YouTube Progress Tracking</h3>
 <p>Secure Firebase Authentication with login, signup and protected pages.</p>
 </div>
 
 <div class="update-card">
-<i class="fa-solid fa-user"></i>
-<h3>User Profile</h3>
-<p>Personal profile page with account information and progress.</p>
+<i class="fa-solid fa-arrow-trend-up"></i>
+<h3>Live Progress Updates</h3>
+<p>Lecture cards now update their progress percentage and progress bar while the video is playing.</p>
 </div>
 
 <div class="update-card">
@@ -327,57 +323,9 @@ Security Upgrade
 </div>
 
 <div class="update-card">
-<i class="fa-solid fa-book"></i>
-<h3>Boards Section</h3>
-<p>Dedicated study material for Class 12 Boards.</p>
-</div>
-
-<div class="update-card">
-<i class="fa-solid fa-graduation-cap"></i>
-<h3>CUET Preparation</h3>
-<p>Organized lectures, notes and PYQs for CUET.</p>
-</div>
-
-<div class="update-card">
-<i class="fa-solid fa-calculator"></i>
-<h3>CA Foundation</h3>
-<p>Accounting, Law, Quant and Economics resources.</p>
-</div>
-
-<div class="update-card">
-<i class="fa-solid fa-magnifying-glass"></i>
-<h3>Lecture Search</h3>
-<p>Instantly search any lecture or chapter.</p>
-</div>
-
-<div class="update-card">
-<i class="fa-solid fa-circle-play"></i>
-<h3>Lecture Player</h3>
-<p>Watch YouTube lectures directly inside Asprients.</p>
-</div>
-
-<div class="update-card">
-<i class="fa-solid fa-file-lines"></i>
-<h3>Notes & PYQs</h3>
-<p>Access notes and previous year questions from one place.</p>
-</div>
-
-<div class="update-card">
-<i class="fa-solid fa-sun"></i>
-<h3>Theme Toggle</h3>
-<p>Switch between light and dark mode.</p>
-</div>
-
-<div class="update-card">
-<i class="fa-solid fa-mobile-screen-button"></i>
-<h3>Responsive Design</h3>
-<p>Optimized for desktop, tablet and mobile devices.</p>
-</div>
-
-<div class="update-card">
-<i class="fa-solid fa-gauge-high"></i>
-<h3>Fast Performance</h3>
-<p>Improved loading speed across the website.</p>
+<i class="fa-regular fa-circle-check"></i>
+<h3>Automatic Completion Tracking</h3>
+<p>Lectures are automatically marked completed after reaching the configured completion threshold.</p>
 </div>
 
 </div>
@@ -402,42 +350,17 @@ Security Upgrade
 
 <div class="list-item">
 <i class="fa-solid fa-check"></i>
-Improved website loading performance.
+More accurate lecture progress calculation
 </div>
 
 <div class="list-item">
 <i class="fa-solid fa-check"></i>
-Cleaner and modern interface.
+Improved Firebase progress synchronization.
 </div>
 
 <div class="list-item">
 <i class="fa-solid fa-check"></i>
-Better mobile responsiveness.
-</div>
-
-<div class="list-item">
-<i class="fa-solid fa-check"></i>
-Enhanced navigation experience.
-</div>
-
-<div class="list-item">
-<i class="fa-solid fa-check"></i>
-Improved lecture organization.
-</div>
-
-<div class="list-item">
-<i class="fa-solid fa-check"></i>
-Optimized search functionality.
-</div>
-
-<div class="list-item">
-<i class="fa-solid fa-check"></i>
-Improved accessibility.
-</div>
-
-<div class="list-item">
-<i class="fa-solid fa-check"></i>
-Consistent UI across all pages.
+More efficient live UI updates without rebuilding the entire lecture list.
 </div>
 
 </div>
@@ -462,12 +385,12 @@ Consistent UI across all pages.
 
 <div class="list-item">
 <i class="fa-solid fa-bug"></i>
-Fixed login redirection.
+Fixed lecture progress incorrectly remaining at 0%.
 </div>
 
 <div class="list-item">
 <i class="fa-solid fa-bug"></i>
-Fixed profile loading issues.
+Fixed inaccurate progress percentage for YouTube lectures.
 </div>
 
 <div class="list-item">
@@ -477,28 +400,9 @@ Corrected progress calculation.
 
 <div class="list-item">
 <i class="fa-solid fa-bug"></i>
-Fixed lecture search bugs.
+Fixed the lecture player becoming unresponsive after closing and reopening the player.
 </div>
 
-<div class="list-item">
-<i class="fa-solid fa-bug"></i>
-Fixed responsive layout issues.
-</div>
-
-<div class="list-item">
-<i class="fa-solid fa-bug"></i>
-Resolved broken navigation links.
-</div>
-
-<div class="list-item">
-<i class="fa-solid fa-bug"></i>
-Fixed theme switching glitches.
-</div>
-
-<div class="list-item">
-<i class="fa-solid fa-bug"></i>
-Improved overall stability.
-</div>
 
 </div>
 
@@ -563,51 +467,10 @@ Improved overall stability.
 
 <div class="timeline">
 
-<div class="timeline-item active">
 
-<div class="timeline-dot"></div>
-
-<div class="timeline-content">
-
-<span class="timeline-date">
-<span id="rdate"></span>
-</span>
-
-<h3 id="tmVersion"></h3>
-
-<span class="timeline-badge major">
-
-<span id="size"></span>
-
-</span>
-
-<ul>
-
-<li>Authentication System</li>
-
-<li>User Profiles</li>
-
-<li>Personal Dashboard</li>
-
-<li>Boards Platform</li>
-
-<li>CUET Platform</li>
-
-<li>CA Foundation Platform</li>
-
-<li>Lecture Player</li>
-
-<li>Progress Tracking</li>
-
-<li>Search System</li>
-
-<li>Responsive Design</li>
-
-</ul>
-
-</div>
-
-</div>
+<!-- ========================================= -->
+<!-- VERSION 2.3.0 — UPCOMING -->
+<!-- ========================================= -->
 
 <div class="timeline-item">
 
@@ -644,6 +507,107 @@ Upcoming
 </div>
 
 </div>
+
+<!-- ========================================= -->
+<!-- VERSION 2.2.0 — CURRENT -->
+<!-- ========================================= -->
+
+<div class="timeline-item active">
+
+<div class="timeline-dot"></div>
+
+<div class="timeline-content">
+
+<span class="timeline-date">
+<span id="rdate"></span>
+</span>
+
+<h3 id="tmVersion"></h3>
+
+<span class="timeline-badge major">
+
+<span id="size"></span>
+
+</span>
+
+<ul>
+
+<li>YouTube Progress Tracking</li>
+
+<li>Live Progress Updates</li>
+
+<li>Firebase Progress Synchronization</li>
+
+<li>Automatic Lecture Completion</li>
+
+<li>Lecture Resume Support</li>
+
+<li>Actual Video Duration Tracking</li>
+
+<li>Improved Lecture Player</li>
+
+<li>Optimized Progress UI Updates</li>
+
+<li>Improved Progress Accuracy</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+<!-- ========================================= -->
+<!-- VERSION 1.0.0 — ORIGINAL RELEASE -->
+<!-- ========================================= -->
+
+<div class="timeline-item">
+
+<div class="timeline-dot"></div>
+
+<div class="timeline-content">
+
+<span class="timeline-date">
+August 06 2026
+</span>
+
+<h3>Version 1.0.0</h3>
+
+<span class="timeline-badge major">
+
+Major Release
+
+</span>
+
+<ul>
+
+<li>Authentication System</li>
+
+<li>User Profiles</li>
+
+<li>Personal Dashboard</li>
+
+<li>Boards Platform</li>
+
+<li>CUET Platform</li>
+
+<li>CA Foundation Platform</li>
+
+<li>Lecture Player</li>
+
+<li>Progress Tracking</li>
+
+<li>Search System</li>
+
+<li>Responsive Design</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
 
 </div>
 
