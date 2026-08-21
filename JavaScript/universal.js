@@ -261,6 +261,7 @@ async function saveActivity(type, title, lectureId = "", extra = {}) {
 
 // ---------- Subject Progress ----------
 async function saveSubjectProgress(course, subject, percent) {
+ 
   const key = "progress_" + course + "_" + subject;
 
   // keep local for fast UI
@@ -688,11 +689,9 @@ function getYouTubeVideoId(rawUrl) {
 // Open Video
 // ==========================================================
 
-function openVideoOriginal(
-    rawUrl,
-    title,
-    lectureId
-) {
+function openVideoOriginal(lectureId, rawUrl, title) {
+
+    
 
     if (
         !rawUrl ||
@@ -767,12 +766,31 @@ function openVideoOriginal(
         title || "Lecture";
 
 
-    const savedTime =
-        Number(
-            localStorage.getItem(
-                `yt_${lectureId}`
-            )
-        ) || 0;
+    // ======================================================
+// RESUME POSITION
+// Firebase = primary
+// localStorage = fallback
+// ======================================================
+
+const firebasePosition =
+    Number(
+        currentUserData?.videoPosition?.[lectureId]
+    );
+
+const localPosition =
+    Number(
+        localStorage.getItem(
+            `yt_${lectureId}`
+        )
+    ) || 0;
+
+const savedTime =
+    Number.isFinite(firebasePosition) &&
+    firebasePosition > 0
+        ? firebasePosition
+        : localPosition;
+
+
 
 
     lastSavedVideoSecond =
@@ -856,53 +874,59 @@ function openVideoOriginal(
 // ==========================================================
 // Create Player
 // ==========================================================
-
 function createYouTubePlayer(
     iframe,
     videoId,
     resumeTime
 ) {
 
-    playerReady =
-        false;
+    playerReady = false;
 
 
-    if (
-        ytPlayer
-    ) {
+    if (ytPlayer) {
 
         try {
-
             ytPlayer.destroy();
-
         }
 
         catch (error) {
-
             console.warn(
                 "Old player cleanup:",
                 error
             );
-
         }
 
-        ytPlayer =
-            null;
-
+        ytPlayer = null;
     }
 
 
-    // Set iframe source only when creating
-    // the player for the first time.
+    // ==========================================
+    // YouTube iframe configuration
+    // ==========================================
+
+    iframe.setAttribute(
+        "referrerpolicy",
+        "strict-origin-when-cross-origin"
+    );
+
+    iframe.setAttribute(
+        "allow",
+        "autoplay; encrypted-media; picture-in-picture"
+    );
+
+
+    const origin =
+        window.location.origin;
+
 
     iframe.src =
         `https://www.youtube.com/embed/${videoId}` +
         `?enablejsapi=1` +
-        `&origin=${encodeURIComponent(location.origin)}` +
+        `&origin=${encodeURIComponent(origin)}` +
+        `&playsinline=1` +
         `&autoplay=1` +
         `&mute=1` +
-        `&rel=0` +
-        `&modestbranding=1`;
+        `&rel=0`;
 
 
     ytPlayer =
@@ -915,11 +939,9 @@ function createYouTubePlayer(
                     onReady:
                         function (event) {
 
-                            playerReady =
-                                true;
+                            playerReady = true;
 
-
-                           
+                          
 
 
                             if (
@@ -956,6 +978,14 @@ function createYouTubePlayer(
                                 "YouTube player error:",
                                 event.data
                             );
+
+                        },
+
+
+                    onAutoplayBlocked:
+                        function () {
+
+                          
 
                         }
 
@@ -1039,6 +1069,7 @@ function stopVideoProgressTracking() {
 // Save Actual YouTube Position
 // ==========================================================
 async function saveCurrentVideoProgress() {
+   
 
     if (
         !ytPlayer ||
@@ -1097,7 +1128,18 @@ async function saveCurrentVideoProgress() {
             String(seconds)
         );
 
+// ======================================================
+// FIREBASE RESUME POSITION
+// ======================================================
 
+if (currentUserId) {
+
+    await saveVideoPosition(
+        currentLectureId,
+        seconds
+    );
+
+}
         // ======================================================
         // FIND LECTURE
         // ======================================================
@@ -1273,57 +1315,28 @@ function updateLectureProgressUI(lectureId, progress) {
 }
 
 
-
 function updateOverallUIOnly() {
 
-    if (
-        !LECTURES.length
-    ) {
-
-        return;
-
-    }
-
-
-    const avg =
-        Math.round(
-
-            (
-                LECTURES.reduce(
-                    (
-                        total,
-                        lecture
-                    ) =>
-
-                        total +
-                        (
-                            lecture.progress ||
-                            0
-                        ),
-
-                    0
-                )
-
-                /
-
-                LECTURES.length
-
-            ) * 100
-
+    const total =
+        LECTURES.reduce(
+            (sum, lecture) =>
+                sum +
+                (Number(lecture.progress) || 0),
+            0
         );
+
+    const percentage =
+        LECTURES.length
+            ? Math.round(
+                (total / LECTURES.length) * 100
+            )
+            : 0;
 
 
     const overallPercent =
         document.getElementById(
             "overallPercent"
         );
-
-
-    const ringPercent =
-        document.getElementById(
-            "ringPercent"
-        );
-
 
     const overallBar =
         document.getElementById(
@@ -1334,15 +1347,7 @@ function updateOverallUIOnly() {
     if (overallPercent) {
 
         overallPercent.innerText =
-            avg + "%";
-
-    }
-
-
-    if (ringPercent) {
-
-        ringPercent.innerText =
-            avg + "%";
+            percentage + "%";
 
     }
 
@@ -1350,13 +1355,11 @@ function updateOverallUIOnly() {
     if (overallBar) {
 
         overallBar.style.width =
-            avg + "%";
+            percentage + "%";
 
     }
 
 }
-
-
 // ==========================================================
 // Close Modal
 // ==========================================================
@@ -1552,6 +1555,7 @@ function filterBy(mode, event) {
 
 // ---------- Lecture Progress ----------
 async function saveLectureProgress(lectureId, value) {
+   
   if (!currentUserId) return;
   try {
     const userRef = doc(db, "users", currentUserId);
@@ -1597,11 +1601,55 @@ async function markCompleted(lectureId) {
         }
     );
 
-    updateOverallUIOnly();
+   updateOverallUIOnly();
 
     renderAll();
 }
+// ==========================================================
+// Save Actual YouTube Position
+// ==========================================================
 
+async function saveVideoPosition(lectureId, seconds) {
+
+   
+
+    if (!currentUserId) {
+        console.warn("❌ No currentUserId");
+        return;
+    }
+
+    const safeSeconds =
+        Math.max(
+            0,
+            Math.floor(Number(seconds) || 0)
+        );
+
+    try {
+
+        await updateDoc(
+            doc(
+                db,
+                "users",
+                currentUserId
+            ),
+            {
+                [`videoPosition.${lectureId}`]:
+                    safeSeconds
+            }
+        );
+
+        
+
+    }
+    catch (error) {
+
+        console.error(
+            "❌ VIDEO POSITION FIREBASE ERROR:",
+            error
+        );
+
+    }
+}
 // ---------- Timers ----------
 let siteSeconds = 0;
 let siteTimerInterval = null;
@@ -1650,6 +1698,7 @@ function startSiteTimer() {
 
 // ---------- Lecture Timer ----------
 async function syncUserTime() {
+    
 
     if (!currentUserId) return;
 
@@ -1731,7 +1780,7 @@ window.openVideo = function (rawUrl, title, lectureId) {
     action: "play"
   });
 
-  openVideoOriginal(rawUrl, title, lectureId);
+ openVideoOriginal(lectureId, rawUrl, title);
 };
 
 window.closeModal = closeModal;
@@ -1907,15 +1956,47 @@ sessionStorage.removeItem("userData");
 // ---------- Auth ----------
 window.isLoggedIn = false;
 onUserLoaded((user, data) => {
-  window.isLoggedIn = !!user;
 
-    checkWebsiteMaintenance(user);
-
+   
     if (!user) return;
     if (!data) return;
 
-    currentUserId = user.uid;
-    currentUserData = data;
+    currentUserId =
+        user.uid;
+
+    currentUserData =
+        data;
+
+
+    // ==========================================
+    // FIREBASE → LECTURES
+    // ==========================================
+
+    const firebaseProgress =
+        data.progress || {};
+
+    LECTURES.forEach(lecture => {
+
+        if (
+            firebaseProgress[lecture.id] !== undefined
+        ) {
+
+            lecture.progress =
+                Number(
+                    firebaseProgress[lecture.id]
+                ) || 0;
+
+            lecture.completed =
+                lecture.progress >= 0.95;
+
+        }
+
+    });
+
+
+  
+
+
     const premiumPlans = [
     "1 Month",
     "6 Months",

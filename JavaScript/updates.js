@@ -38,6 +38,8 @@ upcomingVersion:`v${APP.UPCOMING}`,
 
 security:APP.SECURITY,
 
+securityVersion:`v${APP.VERSION}`,
+
 releaseVersion:`Version  v${APP.VERSION}`,
 
 releasesVersion:`Version  v${APP.VERSION}`,
