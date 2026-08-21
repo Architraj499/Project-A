@@ -2,7 +2,7 @@ export const APP = {
 
     NAME: "Asprients",
 
-    VERSION: "2.2.0",
+    VERSION: "2.2.1",
 
     UPCOMING: "2.3.0",
 
