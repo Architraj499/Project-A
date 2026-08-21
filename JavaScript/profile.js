@@ -12,6 +12,7 @@ if(versionEl){
 
 }
 
+
 import {
     auth,
     signOut
@@ -66,13 +67,22 @@ document.getElementById("premiumBadge");
 
 onUserLoaded((user, data) => {
 
-  if(!user){
 
-    window.location.href = ROUTES.HOME;
+   
 
-    return;
+    if (!user) {
 
-  }
+        console.warn(
+            "🚨 PROFILE THINKS USER IS LOGGED OUT"
+        );
+
+        window.location.href =
+            ROUTES.HOME;
+
+        return;
+    }
+
+    // existing profile code...
 
   // BASIC INFO
 

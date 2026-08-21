@@ -1956,6 +1956,7 @@ sessionStorage.removeItem("userData");
 // ---------- Auth ----------
 window.isLoggedIn = false;
 onUserLoaded((user, data) => {
+     window.isLoggedIn = !!user;
 
    
     if (!user) return;

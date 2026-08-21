@@ -5,18 +5,18 @@ import {
     auth,
     db,
     doc,
-    getDoc
+    getDoc,
+    onAuthStateChanged
 } from "./config/firebase.js";
-
-import { onAuthStateChanged }
-from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-
 onAuthStateChanged(auth, async (user) => {
 
     // Not logged in
     if (!user) {
 
+        
+
         if (!location.pathname.endsWith(ROUTES.HOME)) {
+            
             location.replace(ROUTES.HOME);
         }
 
